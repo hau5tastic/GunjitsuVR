@@ -10,10 +10,13 @@ public class Note : MonoBehaviour
 
     public float initialPosition { get; set; }
 
+    public bool destroyed { get; set; }
+
     // ------------------------------------------------------------
     void Awake()
     {
         meshRenderer = GetComponent<MeshRenderer>();
+        destroyed = false;
     }
     // ------------------------------------------------------------
     void Update()
@@ -25,6 +28,14 @@ public class Note : MonoBehaviour
     // Called by the managing Lane!
     public void UpdatePosition(Vector3 newPosition, bool visible)
     {
+        //TODO!! garbage code incoming
+            //please move this code elsewhere
+        if (destroyed) {
+            GetComponent<Collider>().enabled = false;
+            meshRenderer.enabled = false;
+            return;
+        }
+
         meshRenderer.enabled = visible;
         if (visible) {
             this.transform.position = newPosition;

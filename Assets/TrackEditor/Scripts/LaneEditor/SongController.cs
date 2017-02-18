@@ -39,7 +39,7 @@ public class SongController : MonoBehaviour
     {
        // Debug.Log("Song Position: " + currentSong.time);
 
-        songSlider.value = currentSong.time / currentSong.clip.length;
+        //songSlider.value = currentSong.time / currentSong.clip.length;
     }
 
     // ------------------------------------------------------------

@@ -23,9 +23,8 @@ GameObject:
   - component: {fileID: 65164188632302944}
   - component: {fileID: 23214828166918668}
   - component: {fileID: 114572066807174222}
-  - component: {fileID: 114907711176341120}
   m_Layer: 0
-  m_Name: SimpleNote
+  m_Name: EditorNote
   m_TagString: Note
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -105,16 +104,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eddfdfa58317e404b914dc28a0fe2089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114907711176341120
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1792946469700008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5de620038024b8448da407d652e4c03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reticlePrefab: {fileID: 1803367791817658, guid: 4ff39308d4a3d19438da72a06e262964,
-    type: 2}

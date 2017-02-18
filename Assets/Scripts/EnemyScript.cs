@@ -5,19 +5,19 @@ using UnityEngine;
 public class EnemyScript : MonoBehaviour {
 
     GameObject g;
-    Rigidbody r;
+
+    public GameObject reticlePrefab;
 
 	void Start () {
         g = GameObject.FindGameObjectWithTag("Player");
-        r = GetComponent<Rigidbody>();
+        GameObject reticle = Instantiate(reticlePrefab) as GameObject;
+        reticle.transform.SetParent(GameObject.Find("WorldCanvas").transform);
 
-        Destroy(gameObject, 2.5f);
-
+        reticle.GetComponent<ReticleScript>().SetTarget(gameObject);
 	}
 	
 	void Update () {
         transform.LookAt(g.transform);
-        r.AddForce(transform.forward * 0.3f, ForceMode.VelocityChange);
     }
     public void Kill()
     {

@@ -37,9 +37,14 @@ public class ShootScript : MonoBehaviour {
 
         if (Physics.Raycast(transform.position, transform.forward, out hit, 100f))
         {
-            Rigidbody r = hit.collider.GetComponent<Rigidbody>();
-            if (r)
-                r.GetComponent<EnemyScript>().Kill();
+            Debug.Log(hit.transform.tag);
+            if (hit.transform.tag == "Note")
+            {
+                hit.transform.GetComponent<Note>().destroyed = true;
+            }
+            //Rigidbody r = hit.collider.GetComponent<Rigidbody>();
+            //if (r)
+            //    r.GetComponent<EnemyScript>().Kill();
         }
 
 

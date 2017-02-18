@@ -14,7 +14,7 @@ public class Track : MonoBehaviour
     int scrollSpeed = 5;
     int startOffset = 1000; // in milliseconds
     int gridDivisions = 1; // 1 ~ 16 recommended [Used for track editing]
-    string trackName = "Nameless";
+    string trackName = "NewP";
 
     public TRACK_MODE trackMode = TRACK_MODE.GAMEPLAY;
 

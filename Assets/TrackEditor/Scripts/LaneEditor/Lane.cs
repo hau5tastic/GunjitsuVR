@@ -85,7 +85,7 @@ public class Lane : MonoBehaviour
             Vector3 initialPosition = note.initialPosition * scrollSpeedOffset;
             Vector3 newPosition = this.transform.position + songPosition
                 + initialPosition + gridStartOffset;
-            note.UpdatePosition(newPosition, song.Time() < note.initialPosition);
+            note.UpdatePosition(newPosition, song.Time() < note.initialPosition + track.getStartOffset()/1000);
         }
 
         //TODO make more efficient

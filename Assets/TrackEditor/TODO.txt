@@ -13,4 +13,8 @@ another scene for track selection/creation :D
 Bob Ross
 ---
 bos ross 174 bpm 111550 offset is decent o_o"" or (1550)
+polkka 119 bpm 10 scroll 750 offset
+polkka homura 119 bpm 10 scroll 8600 offset
+
+ex bugs: Gridline/bpm/offset not too accurate over time?
 
