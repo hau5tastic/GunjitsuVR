@@ -1,0 +1,53 @@
+﻿// ------------------------------------------------------------
+// Note - A single note within a Lane. 
+// ------------------------------------------------------------
+using UnityEngine;
+
+public class Note : MonoBehaviour
+{
+    // ------------------------------------------------------------
+    MeshRenderer meshRenderer;
+
+    public float initialPosition { get; set; }
+
+    // ------------------------------------------------------------
+    void Awake()
+    {
+        meshRenderer = GetComponent<MeshRenderer>();
+    }
+    // ------------------------------------------------------------
+    void Update()
+    {
+        //TODO editor only
+        HandleNoteDeletion();
+    }
+    // ------------------------------------------------------------
+    // Called by the managing Lane!
+    public void UpdatePosition(Vector3 newPosition, bool visible)
+    {
+        meshRenderer.enabled = visible;
+        if (visible) {
+            this.transform.position = newPosition;
+        }
+    }
+    // ------------------------------------------------------------
+    void HandleNoteDeletion()
+    {
+        //TODO Editor FindObjectOfType once instead of per frame;
+        //TODO reduce redundantly
+        if (Input.GetMouseButtonDown(0))
+        {
+            Camera cam = FindObjectOfType<Camera>();
+
+            RaycastHit hit;
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.transform.gameObject != this.gameObject) return;
+                this.GetComponentInParent<Lane>().removeNote(this);
+            }
+        }
+    }
+    // ------------------------------------------------------------
+}

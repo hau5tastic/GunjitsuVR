@@ -1,0 +1,16 @@
+Extra Improvements
+---
+bug: When offset is really high, noteplacement is fucked. And they start being invisible
+---
+dynamic audio song loading based on name
+lane/note rotation
+---
+consistency in getcomponent vs serialzed fields??
+Colouring diff gridline divisions. Different colour notes. polish, anchors.
+improve code redundancy(quit,collision..), efficiency/flow, semantics, dividing editor vs normal gameplay functionality
+another scene for track selection/creation :D
+
+Bob Ross
+---
+bos ross 174 bpm 111550 offset is decent o_o"" or (1550)
+
