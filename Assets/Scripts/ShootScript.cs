@@ -40,7 +40,7 @@ public class ShootScript : MonoBehaviour {
             Debug.Log(hit.transform.tag);
             if (hit.transform.tag == "Note")
             {
-                hit.transform.GetComponent<Note>().destroyed = true;
+                //hit.transform.GetComponent<Note>().destroyed = true;
             }
             //Rigidbody r = hit.collider.GetComponent<Rigidbody>();
             //if (r)

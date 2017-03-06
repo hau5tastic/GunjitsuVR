@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: sky04_2
+  m_Shader: {fileID: 104, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _BackTex
+      second:
+        m_Texture: {fileID: 2800000, guid: c616b977206278f41831538b939246d0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _DownTex
+      second:
+        m_Texture: {fileID: 2800000, guid: ae7d1858a2916734891e21aaf83fce80, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _FrontTex
+      second:
+        m_Texture: {fileID: 2800000, guid: 002e801cc45802744b19f4a8816a9df5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _LeftTex
+      second:
+        m_Texture: {fileID: 2800000, guid: 63e72fd08c0be4e429533286b8f10249, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _RightTex
+      second:
+        m_Texture: {fileID: 2800000, guid: 0b33a5036d8f4184baed8c4f742c7064, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _UpTex
+      second:
+        m_Texture: {fileID: 2800000, guid: bfd5c82807372f447a38cbdb99489f3e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats: []
+    m_Colors:
+    - first:
+        name: _Color
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _Tint
+      second: {r: 0.41787413, g: 0.4893352, b: 0.9632353, a: 0.5019608}
