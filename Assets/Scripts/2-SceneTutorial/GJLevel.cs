@@ -6,7 +6,7 @@ using UnityEditor;
 
 public class GJLevel : MonoBehaviour {
 
-    const string FILEPATH_PREFIX = "Assets/TrackEditor/Tracks/";
+    const string FILEPATH_PREFIX = "Assets/Resources/Tracks/";
     const string FILE_EXTENSION = ".gj";
     const float VERSION_NUMBER = 1f;
 
