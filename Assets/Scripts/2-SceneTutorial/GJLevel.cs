@@ -20,6 +20,8 @@ public class GJLevel : MonoBehaviour {
     [Header("Track File")]
     public string trackName;
 
+    public bool isPlaying = false;
+
 
 
     [Header("Level Spawners")]
@@ -47,16 +49,14 @@ public class GJLevel : MonoBehaviour {
         // Time.fixedDeltaTime = 0.02f * Time.timeScale;
         currentTrack = new GJSongTrack();
         readFromFile();
-
-
-        Reset();
-
     }
 
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.Tab)) {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
             Reset();
         }
+
+        if (!isPlaying) return;
         elapsedTime += Time.deltaTime;
 
         /// Each spawner has a corresponding index pointer that points to the current note in that lane.
@@ -161,6 +161,9 @@ public class GJLevel : MonoBehaviour {
     }
 
     void Reset() {
+        isPlaying = true;
+        RenderSettings.ambientIntensity = 1f; // temporary paused indicator
+        GetComponent<AudioSource>().volume = 1f;
         GetComponent<AudioSource>().Stop();
         GetComponent<AudioSource>().Play();
 
