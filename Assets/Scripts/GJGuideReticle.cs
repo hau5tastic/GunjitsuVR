@@ -63,7 +63,8 @@ public class GJGuideReticle : MonoBehaviour {
             float t = 1f - (currentDist / totalDist);
 
             Vector3 retOffset = (player.transform.position - target.transform.position).normalized * reticleOffset; 
-            GetComponent<RectTransform>().position = Vector3.Lerp(oldSpawnPos, killPos + retOffset, t);
+            GetComponent<RectTransform>().position = Vector3.Slerp(oldSpawnPos, killPos + retOffset, t);
+            
             // GetComponent<RectTransform>().localScale = Vector3.Lerp(new Vector3(1,1,1) * 0.2f, new Vector3(1, 1, 1), t);
             // GetComponent<Renderer>().material.color = Color.Lerp(Color.green, Color.red, t);
         }

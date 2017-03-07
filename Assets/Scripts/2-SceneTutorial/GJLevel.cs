@@ -114,8 +114,14 @@ public class GJLevel : MonoBehaviour {
                 GameSettings.playSpeed = currentTrack.scrollSpeed;
 
                 if (overridePlaySpeed > 0) GameSettings.playSpeed = overridePlaySpeed;
-                GameSettings.timeOffset = -((GameSettings.spawnRange - GameSettings.killRange)/(GameSettings.playSpeed)) ;
-                GameSettings.timeOffset -= manualOffset;
+
+
+                GameSettings.timeOffset = -((GameSettings.spawnRange - GameSettings.killRange) / (GameSettings.playSpeed));
+                GameSettings.timeOffset += currentTrack.startOffset / 1000f;
+                Debug.Log("Editor Offset: " + currentTrack.startOffset);
+                if (manualOffset > 0) {
+                    GameSettings.timeOffset = manualOffset;
+                }
 
                 currentTrack.notes = new List<float[]>();
               
@@ -127,6 +133,7 @@ public class GJLevel : MonoBehaviour {
                     // Load that many notes
                     for (int i = 0; i < noteCount; i++) {
                         spawnerNotes[i] = file.ReadSingle();
+                        Debug.Log(spawnerNotes[i]);
                     }
 
                     currentTrack.notes.Add(spawnerNotes);
