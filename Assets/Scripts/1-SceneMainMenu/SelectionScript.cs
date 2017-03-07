@@ -5,36 +5,47 @@ using UnityEngine.UI;
 
 public class SelectionScript : MonoBehaviour {
 
-    public string labelText;
-    public float rotationSpeed;
-    GameObject selectionSpotlight;
-    GameObject UILabel;
+    public GameObject spotLightPrefab;
+    public string selectionLabel;
+    public Color labelColor;
+    public Font labelFont;
+
+    Transform centerLight;
+    GameObject spotLight;
 
 	void Start () {
-        selectionSpotlight = new GameObject("Selection Spotlight");
-        Light lightComp = selectionSpotlight.AddComponent<Light>();
-        lightComp.color = Color.white;
-        lightComp.type = LightType.Spot;
-        lightComp.spotAngle = 30;
-        lightComp.range = 90;
-        lightComp.shadows = LightShadows.Hard;
-        lightComp.intensity = 2.0f;
+        CreateLabel();
 
-        selectionSpotlight.transform.position = new Vector3(0, 10, 0);
-        selectionSpotlight.transform.LookAt(transform);
-
-        UILabel = new GameObject("Selection Label");
-        Text textComp = UILabel.AddComponent<Text>();
-
-        UILabel.GetComponent<RectTransform>().SetParent(GameObject.Find("WorldCanvas").transform);
-        UILabel.GetComponent<RectTransform>().position = new Vector3(transform.position.x, 5, transform.position.y);
-        textComp.text = labelText;
-        textComp.font = (Font)Resources.Load<Font>("Fonts/Gunplay rd.ttf");
+        centerLight = GameObject.Find("CenterLight").transform;
+        CreateSpotlight();
     }
-	
-	void Update () {
-        transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime, Space.Self);
-        UILabel.GetComponent<RectTransform>().LookAt(Camera.main.transform);
 
-	}
+    void CreateLabel() {
+        GameObject label = new GameObject("SelectionLabel");
+        Text labelText = label.AddComponent<Text>();
+
+        labelText.text = selectionLabel;
+        labelText.color = labelColor;
+        labelText.font = labelFont;
+        labelText.alignment = TextAnchor.MiddleCenter;
+        labelText.fontSize = 6;
+        labelText.rectTransform.localScale *= 0.1f;
+        label.transform.position = transform.position + transform.up * 3f;
+        label.transform.SetParent(GameObject.Find("WorldCanvas").transform);
+        label.transform.LookAt(Camera.main.transform);
+        label.transform.Rotate(0f, 180f, 0f);
+
+        ContentSizeFitter labelFitter = label.AddComponent<ContentSizeFitter>();
+        labelFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+        labelFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+    }
+
+    void CreateSpotlight() {
+        spotLight = Instantiate(spotLightPrefab, centerLight);
+        spotLight.transform.localPosition = Vector3.zero;
+        spotLight.transform.LookAt(transform);
+    }
+
+
+	
 }
