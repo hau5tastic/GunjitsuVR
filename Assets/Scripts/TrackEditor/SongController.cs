@@ -12,12 +12,12 @@ public class SongController : MonoBehaviour
     // Dependencies
     [SerializeField]
     AudioSource currentSong;
-
     [SerializeField]
     Slider songSlider;
-
     [SerializeField]
     Text songTimeText;
+    [SerializeField]
+    Slider playbackSpeedSlider;
     // ------------------------------------------------------------
     // Internals
     //songSliderMutable is used to prevent the Slider from updating the song's time on Update().
@@ -92,8 +92,6 @@ public class SongController : MonoBehaviour
     // ------------------------------------------------------------
     // ------------------------------------------------------------
     // Properties 
-        //Debug.Log("Time: " + Time + ", " + value);
-
     // ------------------------------------------------------------
     // ------------------------------------------------------------
     public float Time
@@ -121,6 +119,10 @@ public class SongController : MonoBehaviour
         get { return currentSong.clip == null ? 0 : currentSong.clip.length; }
     }
     // ------------------------------------------------------------
+    // ------------------------------------------------------------
+    // UI Updating
+    // ------------------------------------------------------------
+    // ------------------------------------------------------------
     public void UpdateSongTimeText()
     {
         int currentMinutes = (int)(Time / 60);
@@ -141,6 +143,11 @@ public class SongController : MonoBehaviour
     {
         if (!songSliderMutable) return;
         currentSong.time = songSlider.value * Length;
+    }
+    // ------------------------------------------------------------
+    public void SetPlaybackSpeed()
+    {
+        currentSong.pitch = playbackSpeedSlider.value;
     }
     // ------------------------------------------------------------
 }
