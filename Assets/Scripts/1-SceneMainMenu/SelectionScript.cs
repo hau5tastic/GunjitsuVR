@@ -14,7 +14,8 @@ public class SelectionScript : MonoBehaviour {
     GameObject spotLight;
 
 	void Start () {
-        CreateLabel();
+        if (selectionLabel.Length > 0)
+            CreateLabel();
 
         centerLight = GameObject.Find("CenterLight").transform;
         CreateSpotlight();
