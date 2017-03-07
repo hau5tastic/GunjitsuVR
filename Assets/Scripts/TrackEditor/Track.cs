@@ -27,7 +27,7 @@ public class Track : MonoBehaviour
     [SerializeField]
     InputField bpmInputField;
     [SerializeField]
-    Dropdown divisionsDropdown;
+    Slider divisionsSlider;
     [SerializeField]
     Lane[] lanes;
     [SerializeField]
@@ -40,7 +40,7 @@ public class Track : MonoBehaviour
     void Start()
     {
         if (lanes == null || lanes.Length != 8 || !bpmInputField
-            || !offsetInputField || !divisionsDropdown || !trackInfoText
+            || !offsetInputField || !divisionsSlider || !trackInfoText
             || !songController)
         {
             Util.Quit("Track is not initialized properly, you shit!");
@@ -90,7 +90,7 @@ public class Track : MonoBehaviour
     // ------------------------------------------------------------
     public void UpdateGridDivisions()
     {
-        gridDivisionsIndex = divisionsDropdown.value;
+        gridDivisionsIndex = (int)divisionsSlider.value;
         NotifyLanesOnChange();
     }
     // ------------------------------------------------------------
@@ -112,7 +112,7 @@ public class Track : MonoBehaviour
     {
         bpmInputField.text = "" + bpm;
         offsetInputField.text = "" + startOffset;
-        divisionsDropdown.value = gridDivisionsIndex; //default
+        divisionsSlider.value = gridDivisionsIndex; //default
         trackInfoText.text = trackName + "\n" + songName;
     }
     // ------------------------------------------------------------
