@@ -80,11 +80,11 @@ public class Loader : MonoBehaviour
         if (cursors[CURSOR_SONG] > songNames.Count - 1) cursors[CURSOR_SONG] = songNames.Count - 1;
         UpdateListTexts();
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)
-                || Input.GetKeyDown(KeyCode.KeypadEnter))
-        {
-            loadCurrentTrack();
-        }
+        //if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)
+        //        || Input.GetKeyDown(KeyCode.KeypadEnter))
+        //{
+        //    loadCurrentTrack();
+        //}
     }
     // ------------------------------------------------------------
     public void UpdateListTexts()
