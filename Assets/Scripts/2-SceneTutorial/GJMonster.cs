@@ -28,4 +28,9 @@ public class GJMonster : MonoBehaviour {
     bool IsWithinKillRange() {
         return (Vector3.Distance(Camera.main.transform.position, transform.position) <= GameSettings.killRange);
     }
+
+    public void Kill()
+    {
+        Destroy(gameObject);
+    }
 }

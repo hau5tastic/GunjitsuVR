@@ -78,8 +78,8 @@ public class GJLevel : MonoBehaviour {
                 float currentNote = spawnerNotes[notePointers[i]];
                 // Debug.Log("currentNote: " + currentNote + " elapsedTime: " + elapsedTime);
                 if (currentNote + GameSettings.timeOffset <= elapsedTime) {
-                    // SpawnMonsterOnSpawner(Random.Range(0, 8), 0); // The random version
-                    SpawnMonsterOnSpawner(i, 0); // The legit version
+                    SpawnMonsterOnSpawner(Random.Range(0, 8), 0); // The random version
+                    //SpawnMonsterOnSpawner(i, 0); // The legit version
                     notePointers[i]++;
                 }
                 

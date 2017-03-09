@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  heightOffset: 0
-  lockTime: 1
+  heightOffset: 0.5
+  lockTime: 0.3
 --- !u!114 &114927742216088350
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -165,9 +165,9 @@ Animation:
   m_GameObject: {fileID: 1437172502386542}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: f3cc8d3a499c03141a1430cf76170bcb, type: 2}
+  m_Animation: {fileID: 0}
   m_Animations:
-  - {fileID: 7400000, guid: f3cc8d3a499c03141a1430cf76170bcb, type: 2}
+  - {fileID: 0}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
@@ -240,7 +240,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -35868512
+  randomSeed: 1774651197
   InitialModule:
     serializedVersion: 3
     enabled: 1

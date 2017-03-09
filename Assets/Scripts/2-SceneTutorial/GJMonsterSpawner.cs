@@ -10,7 +10,15 @@ public class GJMonsterSpawner : MonoBehaviour {
     }
 
     public void Spawn(GameObject monsterPrefab) {
-        GJGuideReticle.rReticleQ.Enqueue(Instantiate(monsterPrefab, transform.position, Quaternion.identity));
+        int i = Random.Range(0, 2);
+        if (i == 0)
+        {
+            GJGuideReticle.rReticleQ.Enqueue(Instantiate(monsterPrefab, transform.position, Quaternion.identity));
+        } else
+        {
+            GJGuideReticle.lReticleQ.Enqueue(Instantiate(monsterPrefab, transform.position, Quaternion.identity));
+        }
+
     }
 
     void NormalizePosition() {

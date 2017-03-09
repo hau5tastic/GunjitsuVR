@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4794374208615896}
   - component: {fileID: 137654631995632800}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ModelSlime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,7 +35,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4642271942645368}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Slime_Joint02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,7 +50,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4093843169203924}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ GameObject:
   - component: {fileID: 65992519452120756}
   - component: {fileID: 114981899499053638}
   - component: {fileID: 54560765498065992}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GJSlime
   m_TagString: GJMonster
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4835105223631022}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Slime_Joint01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4508051726937744}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Slime_Joint03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1329506091724726}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15.61, y: 1.56, z: -1.6}
+  m_LocalPosition: {x: 0.25017247, y: 0, z: 8.654133}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 4794374208615896}
@@ -214,8 +214,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.35, z: 0.1}
-  m_Center: {x: 0, y: 0.2, z: 0}
+  m_Size: {x: 0.9, y: 0.6, z: 0.9}
+  m_Center: {x: 0, y: 0.4, z: -0.03}
 --- !u!111 &111736655647981872
 Animation:
   m_ObjectHideFlags: 1
