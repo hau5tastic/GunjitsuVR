@@ -242,8 +242,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb326da6b46469f478802427fa4056fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particlePrefab: {fileID: 1505953381500202, guid: fd0132eca92ab73459bfd54ad1dcc568,
+    type: 2}
   indicatorPrefab: {fileID: 1257461749962070, guid: 6acc7c2cbef8b6f49bdf740c7f643345,
     type: 2}
+  paused: 0
 --- !u!137 &137654631995632800
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
