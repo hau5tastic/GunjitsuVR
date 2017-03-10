@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GJMonster : MonoBehaviour {
 
+    public GameObject particlePrefab;
     public GameObject indicatorPrefab;
     public bool paused = false;
 
@@ -22,7 +23,7 @@ public class GJMonster : MonoBehaviour {
         
         transform.position += transform.forward * GameSettings.playSpeed * Time.deltaTime;
 
-        if (IsWithinKillRange()) Destroy(gameObject);
+        if (IsWithinKillRange()) Kill();
 	}
 
     bool IsWithinKillRange() {
@@ -31,6 +32,7 @@ public class GJMonster : MonoBehaviour {
 
     public void Kill()
     {
+        Destroy(Instantiate(particlePrefab, transform.position, Quaternion.identity), .5f);
         Destroy(gameObject);
     }
 }

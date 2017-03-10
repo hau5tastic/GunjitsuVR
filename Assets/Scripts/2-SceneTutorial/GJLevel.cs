@@ -49,11 +49,12 @@ public class GJLevel : MonoBehaviour {
     }
 
     void Start() {
-
+        
         // Time.timeScale = 0.5f;
         // Time.fixedDeltaTime = 0.02f * Time.timeScale;
         currentTrack = new GJSongTrack();
         readFromFile();
+
     }
 
 	void Update () {
