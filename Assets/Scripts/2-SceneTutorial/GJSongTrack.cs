@@ -10,5 +10,14 @@ public class GJSongTrack {
     public int scrollSpeed;
     public int startOffset;
     public List<float[]> notes;
+    public int noteCount;
+
+
+    public void countNotes() {
+        noteCount = 0;
+        foreach (float[] fA in notes) {
+            noteCount += fA.Length;
+        }
+    }
      
 }

@@ -9,6 +9,8 @@ public class GJLevel : MonoBehaviour {
 
     public GameObject introMenu;
     public GameObject levelMenu;
+    public float closingDelay;
+    float closingTime;
 
     const string FILEPATH_PREFIX = "Assets/Resources/Tracks/";
     const string FILE_EXTENSION = ".gj";
@@ -31,6 +33,7 @@ public class GJLevel : MonoBehaviour {
     [Header("Level Spawners")]
     public GJMonsterSpawner[] monsterSpawners;
     int[] notePointers;
+    int notesSpawned;
 
     [Header("Level Monster Types")]
     public GameObject[] monsterPrefabs;
@@ -46,15 +49,18 @@ public class GJLevel : MonoBehaviour {
     void Awake() {
         GameSettings.spawnRange = spawnRange;
         GameSettings.killRange = killRange;
+
     }
 
     void Start() {
-        
+
         // Time.timeScale = 0.5f;
         // Time.fixedDeltaTime = 0.02f * Time.timeScale;
+
         currentTrack = new GJSongTrack();
         readFromFile();
-
+        currentTrack.countNotes();
+        closingTime = closingDelay;
     }
 
 	void Update () {
@@ -64,6 +70,14 @@ public class GJLevel : MonoBehaviour {
 
         if (!isPlaying) return;
         elapsedTime += Time.deltaTime;
+
+        if (notesSpawned >= currentTrack.noteCount) {
+            // Track is Over.. Do Something...
+            closingTime -= Time.deltaTime;
+            if (closingTime <= 0) {
+                PauseGame();
+            }
+        }
 
         /// Each spawner has a corresponding index pointer that points to the current note in that lane.
         /// this is so that every update it will only look at those values instead of the whole list, (assuming that the notes are already sorted)
@@ -87,6 +101,7 @@ public class GJLevel : MonoBehaviour {
                     // SpawnMonsterOnSpawner(Random.Range(0, 8), 0); // The random version
                     SpawnMonsterOnSpawner(i, 0); // The legit version
                     notePointers[i]++;
+                    notesSpawned++;
                 }
                 
             }
@@ -167,6 +182,8 @@ public class GJLevel : MonoBehaviour {
     }
 
     void Reset() {
+        closingTime = closingDelay;
+        notesSpawned = 0;
         isPlaying = true;
         Time.timeScale = 1f;
         RenderSettings.ambientIntensity = 1f; // temporary paused indicator
