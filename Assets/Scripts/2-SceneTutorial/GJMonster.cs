@@ -5,6 +5,7 @@ using UnityEngine;
 public class GJMonster : MonoBehaviour {
 
     public GameObject indicatorPrefab;
+    public bool paused = false;
 
 	void Start () {
 
@@ -17,8 +18,7 @@ public class GJMonster : MonoBehaviour {
     }
 	
 	void Update () {
-        // GetComponent<Rigidbody>().AddForce(transform.forward * GameSettings.playSpeed, ForceMode.VelocityChange);
-        // 
+        if (paused) return;
         
         transform.position += transform.forward * GameSettings.playSpeed * Time.deltaTime;
 

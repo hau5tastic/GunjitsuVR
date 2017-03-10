@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 
 public class GJLevel : MonoBehaviour {
+
+    public GameObject introMenu;
+    public GameObject levelMenu;
 
     const string FILEPATH_PREFIX = "Assets/Resources/Tracks/";
     const string FILE_EXTENSION = ".gj";
@@ -45,6 +49,7 @@ public class GJLevel : MonoBehaviour {
     }
 
     void Start() {
+
         // Time.timeScale = 0.5f;
         // Time.fixedDeltaTime = 0.02f * Time.timeScale;
         currentTrack = new GJSongTrack();
@@ -53,7 +58,7 @@ public class GJLevel : MonoBehaviour {
 
 	void Update () {
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
-            Reset();
+            PauseGame();
         }
 
         if (!isPlaying) return;
@@ -61,7 +66,7 @@ public class GJLevel : MonoBehaviour {
 
         /// Each spawner has a corresponding index pointer that points to the current note in that lane.
         /// this is so that every update it will only look at those values instead of the whole list, (assuming that the notes are already sorted)
-
+        /// 
         // We check the number of pointers we have.. this should be == to the number of spawners
         for (int i = 0; i < notePointers.Length; ++i) {
 
@@ -78,8 +83,8 @@ public class GJLevel : MonoBehaviour {
                 float currentNote = spawnerNotes[notePointers[i]];
                 // Debug.Log("currentNote: " + currentNote + " elapsedTime: " + elapsedTime);
                 if (currentNote + GameSettings.timeOffset <= elapsedTime) {
-                    SpawnMonsterOnSpawner(Random.Range(0, 8), 0); // The random version
-                    //SpawnMonsterOnSpawner(i, 0); // The legit version
+                    // SpawnMonsterOnSpawner(Random.Range(0, 8), 0); // The random version
+                    SpawnMonsterOnSpawner(i, 0); // The legit version
                     notePointers[i]++;
                 }
                 
@@ -162,8 +167,9 @@ public class GJLevel : MonoBehaviour {
 
     void Reset() {
         isPlaying = true;
+        Time.timeScale = 1f;
         RenderSettings.ambientIntensity = 1f; // temporary paused indicator
-        GetComponent<AudioSource>().volume = 1f;
+        GetComponent<AudioSource>().volume = 0.5f;
         GetComponent<AudioSource>().Stop();
         GetComponent<AudioSource>().Play();
 
@@ -182,6 +188,48 @@ public class GJLevel : MonoBehaviour {
 
         GJGuideReticle.rReticleQ.Clear();
         GJGuideReticle.lReticleQ.Clear();
+    }
+
+
+    // UI Methods
+
+    public void ReturnToMain() {
+        SceneManager.LoadScene("MainMenuScene");
+    }
+
+    public void PauseGame() {
+        levelMenu.SetActive(true);
+        Time.timeScale = 0f;
+        if (GetComponent<AudioSource>().isPlaying) {
+            GetComponent<AudioSource>().Pause();
+        }
+
+        GameObject[] monsters = GameObject.FindGameObjectsWithTag("GJMonster");
+        foreach (GameObject go in monsters) {
+            go.GetComponent<GJMonster>().paused = true;
+        }
+
+        RenderSettings.ambientIntensity = 0f;
+        isPlaying = false;
+        levelMenu.SetActive(true);
+    }
+
+    public void ResumeGame() {
+        RenderSettings.ambientIntensity = 1f;
+        Time.timeScale = 1f;
+        GameObject[] monsters = GameObject.FindGameObjectsWithTag("GJMonster");
+        foreach (GameObject go in monsters) {
+            go.GetComponent<GJMonster>().paused = false;
+        }
+        GetComponent<AudioSource>().UnPause();
+        isPlaying = true;
+        levelMenu.SetActive(false);
+    }
+
+    public void RestartGame() {
+        introMenu.SetActive(false);
+        levelMenu.SetActive(false);
+        Reset();
     }
 
 

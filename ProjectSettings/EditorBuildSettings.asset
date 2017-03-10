@@ -5,13 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/TrackOpen.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TrackEdit.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TutorialScene.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainMenuScene.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/GJReticleTest.unity
+  - enabled: 0
+    path: Assets/Scenes/TrackOpen.unity

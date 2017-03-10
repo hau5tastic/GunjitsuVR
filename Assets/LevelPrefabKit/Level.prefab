@@ -132,20 +132,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee6235270f08d9041b327b6b806c4291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnRange: 20
-  killRange: 5
+  introMenu: {fileID: 0}
+  levelMenu: {fileID: 0}
+  spawnRange: 0
+  killRange: 0
   overridePlaySpeed: 0
   manualOffset: 0
-  trackName: Journey
+  trackName: 
   isPlaying: 0
-  monsterSpawners:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  monsterPrefabs:
-  - {fileID: 1329506091724726, guid: 2a706dc8c71c43045a36806f093a6709, type: 2}
+  monsterSpawners: []
+  monsterPrefabs: []
