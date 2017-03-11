@@ -73,8 +73,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  heightOffset: 2
-  lockTime: 0.4
+  heightOffset: 1
+  lockTime: 0.35
 --- !u!114 &114637603223703646
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -149,7 +149,7 @@ RectTransform:
   m_GameObject: {fileID: 1257461749962070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.35, y: 0.35, z: 1}
   m_Children:
   - {fileID: 224240410378362444}
   - {fileID: 224836958462383402}

@@ -19,5 +19,11 @@ public class GJSongTrack {
             noteCount += fA.Length;
         }
     }
+
+    public void sortNotes() {
+        foreach (float[] fA in notes) {
+            System.Array.Sort(fA);
+        }
+    }
      
 }

@@ -7,8 +7,13 @@ using UnityEngine.SceneManagement;
 
 public class GJLevel : MonoBehaviour {
 
-    public GameObject introMenu;
-    public GameObject levelMenu;
+    [SerializeField]
+    GameObject introMenu;
+    [SerializeField]
+    GameObject levelMenu;
+    [SerializeField]
+    VictoryMenu victoryMenu; 
+
     public float closingDelay;
     float closingTime;
 
@@ -27,6 +32,7 @@ public class GJLevel : MonoBehaviour {
     public string trackName;
 
     public bool isPlaying = false;
+    bool trackEnded = false;
 
 
 
@@ -41,6 +47,8 @@ public class GJLevel : MonoBehaviour {
     float elapsedTime;
 
     [Header("Player Properties")]
+    public static int accuracy = 100;
+    public static int fortune = 12000;
     // float synchronization; // HP
     // int fortune; // Score
 
@@ -56,10 +64,9 @@ public class GJLevel : MonoBehaviour {
 
         // Time.timeScale = 0.5f;
         // Time.fixedDeltaTime = 0.02f * Time.timeScale;
-
-        currentTrack = new GJSongTrack();
         readFromFile();
         currentTrack.countNotes();
+        currentTrack.sortNotes();
         closingTime = closingDelay;
     }
 
@@ -69,13 +76,17 @@ public class GJLevel : MonoBehaviour {
         }
 
         if (!isPlaying) return;
+        if (trackEnded) {
+            victoryEnd();
+        }
         elapsedTime += Time.deltaTime;
 
         if (notesSpawned >= currentTrack.noteCount) {
+
             // Track is Over.. Do Something...
             closingTime -= Time.deltaTime;
             if (closingTime <= 0) {
-                PauseGame();
+                trackEnded = true;
             }
         }
 
@@ -115,7 +126,7 @@ public class GJLevel : MonoBehaviour {
     }
 
     public void readFromFile() {
-        
+        currentTrack = new GJSongTrack();
         Debug.Log("Reading the track from: " + getFileName());
         if (File.Exists(getFileName())) {
             BinaryReader file =
@@ -248,6 +259,15 @@ public class GJLevel : MonoBehaviour {
         introMenu.SetActive(false);
         levelMenu.SetActive(false);
         Reset();
+    }
+
+    public void victoryEnd() {
+        GetComponent<AudioSource>().volume -= 0.01f;
+        if (GetComponent<AudioSource>().volume <= 0) {
+            victoryMenu.gameObject.SetActive(true);
+            victoryMenu.newAccuracy = accuracy;
+            victoryMenu.newFortune = fortune;
+        }
     }
 
 
