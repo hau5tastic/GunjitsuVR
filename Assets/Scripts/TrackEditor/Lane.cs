@@ -46,7 +46,7 @@ public class Lane : MonoBehaviour
         //Validation
         if (!lineRenderer || !track || !parentTransform || !camera)
         {
-            Util.Quit("Grid is not initialized properly, you shit!");
+            Util.Quit("Lane.cs/Start() - Not initialized properly!");
         }
     }
     // ------------------------------------------------------------
@@ -61,7 +61,7 @@ public class Lane : MonoBehaviour
     // Calculates the relevant points of the grid and adds it to LineRenderer
     public void calculateGrid()
     {
-        Debug.Log("Lane/Calculating grid.");
+        //Debug.Log("Lane.cs/calculateGrid()");
 
         //Setup line renderer and grid drawing variables
         lineRenderer.numPositions = (int)(track.BPM * (track.Song.Length / 60)) * 2 * track.GridDivisions + 3;
@@ -129,7 +129,7 @@ public class Lane : MonoBehaviour
                 Note n = hit.transform.GetComponent<Note>();
                 notes.Remove(n);
                 Destroy(n.gameObject);
-                Debug.Log("Note destroyed.");
+                Debug.Log("Lane/handleClick() - Note destroyed.");
                 return;
             }
 
@@ -138,9 +138,8 @@ public class Lane : MonoBehaviour
             {
                 if (Mathf.Abs(gridPoints[i].x + this.transform.position.x - pt.x) < NOTE_ADD_LENIENCE)
                 {
-                    
                     notes.Add(createNote((float)i / track.GridDivisions / ((float)track.BPM / 60)));
-                    Debug.Log("Note Created.");
+                    Debug.Log("Lane/handleClick() - Note created.");
                     return;
                 }
             }
@@ -185,7 +184,7 @@ public class Lane : MonoBehaviour
 
         for (int i = notes.Count - 1; i >= 0; i--)
         {
-            notes[i].Destroy();
+            Destroy(notes[i]);
         }
         notes.Clear();
     }

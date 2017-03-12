@@ -43,7 +43,7 @@ public class Track : MonoBehaviour
             || !offsetInputField || !divisionsSlider || !trackInfoText
             || !songController)
         {
-            Util.Quit("Track is not initialized properly, you shit!");
+            Util.Quit("Track.cs/Start() - Not initialized properly!");
         }
         trackName = TrackInfo.TrackName;
         songName = TrackInfo.SongName;
@@ -53,8 +53,6 @@ public class Track : MonoBehaviour
             readFromFile();
         } else
         { //create empty track
-
-            Debug.Log("TrackData Check: " + bpm + ", " + ScrollSpeed + ", " + StartOffset);
             songController.loadSong(songName);
         }
 
@@ -175,7 +173,7 @@ public class Track : MonoBehaviour
                 bpm = file.ReadInt32();
                 startOffset = file.ReadInt32();
                 scrollSpeed = file.ReadInt32();
-                Debug.Log("Track/Loading Data: " + songName + ", " + bpm + " " + startOffset + " " + scrollSpeed);
+                Debug.Log("Track.cs/readFromFile() - " + songName + ", " + bpm + " " + startOffset + " " + scrollSpeed);
                 foreach (Lane lane in lanes)
                 {
                     lane.readFromFile(file);
@@ -184,12 +182,12 @@ public class Track : MonoBehaviour
 
             catch (EndOfStreamException e)
             {
-                Debug.Log("You made me read an empty/corrupted file, douchebag! " + e.Message);
+                Debug.Log("Track.cs/readFromFile() - Unexpectedly reached end of file." + e.Message);
             }
-            //catch (System.Exception e)
-            //{
-            //    Debug.Log(e.Message);
-            //}
+            catch (System.Exception e)
+            {
+                Debug.Log(e.Message);
+            }
             finally
             {
                 file.Close();
@@ -210,7 +208,7 @@ public class Track : MonoBehaviour
             return;
         }
 
-        Debug.Log("We saving the track to: " + getFileName());
+        Debug.Log("Track.cs/writeToFile() - Saving track to: " + getFileName());
         using (BinaryWriter file =
             new BinaryWriter(File.Open(getFileName(), FileMode.Create)))
         {

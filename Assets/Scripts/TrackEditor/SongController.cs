@@ -33,7 +33,7 @@ public class SongController : MonoBehaviour
     {
         if (!currentSong || !songSlider || !songTimeText)
         {
-            Util.Quit("SongController is not initialized properly, you shit!");
+            Util.Quit("SongController.cs/Start() - Not initialized properly!");
         }
 
         playbackSpeedSlider.value = 2;
@@ -75,8 +75,8 @@ public class SongController : MonoBehaviour
         currentSong = GetComponent<AudioSource>();
         currentSong.clip = Resources.Load<AudioClip>(Util.SONG_PREFIX + file);
 
-        Debug.Log("Song loaded: " + file);
-        Debug.Log("Song loaded: " + currentSong.clip.name + ", " + file);
+        Debug.Log("SongController.cs/loadSong() - File: " + file);
+        Debug.Log("SongController.cs/loadSong() - Loaded: " + currentSong.clip.name);
     }
     // ------------------------------------------------------------
     public void Play()

@@ -12,9 +12,11 @@ public class Util
     public const string TRACK_FILE_EXTENSION = ".gj";
     public const float VERSION_NUMBER = 1f;
     // ------------------------------------------------------------
-    public static void Quit(string message = "")
+    // Exit the game due to an unexpected circumstance.  
+    public static void Quit(string logMessage = "")
     {
-        if (message != "") { Debug.LogError(message); }
+        if (logMessage != "") { Debug.LogError(logMessage); }
+        Debug.Log("Util.cs/Quit() - Exiting game unexpectedly.");
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else

@@ -6,8 +6,13 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Note : MonoBehaviour
 {
+    public enum NOTE_TYPE {LEFT=0, RIGHT=1};
     // ------------------------------------------------------------
+    // State
     public float initialPosition { get; set; }
+    public NOTE_TYPE noteType { get; set; }
+    // ------------------------------------------------------------
+    // Dependencies 
     SpriteRenderer sprite;
     // ------------------------------------------------------------
     void Awake()
@@ -22,11 +27,5 @@ public class Note : MonoBehaviour
         if (visible) {
             this.transform.position = newPosition;
         }
-    }
-    // ------------------------------------------------------------
-    public void Destroy()
-    {
-        Debug.Log("Note destroyed lol");
-        Destroy(gameObject);
     }
 }
