@@ -11,7 +11,7 @@ public class Lane : MonoBehaviour
 {
     // ------------------------------------------------------------
     //Constants
-    const float NOTE_ADD_LENIENCE = 0.5f;
+    const float NOTE_ADD_LENIENCE = 0.2f;
     const float GRID_WIDTH = 0.5f;
     // ------------------------------------------------------------
     //Internals
@@ -46,7 +46,8 @@ public class Lane : MonoBehaviour
         //Validation
         if (!lineRenderer || !track || !parentTransform || !camera)
         {
-            Util.Quit("Grid is not initialized properly, you shit!");
+            Util.Quit("Lane.cs/Start() - Not initialized properly!");
+            return;
         }
     }
     // ------------------------------------------------------------
@@ -61,7 +62,7 @@ public class Lane : MonoBehaviour
     // Calculates the relevant points of the grid and adds it to LineRenderer
     public void calculateGrid()
     {
-        Debug.Log("Lane/Calculating grid.");
+        //Debug.Log("Lane.cs/calculateGrid()");
 
         //Setup line renderer and grid drawing variables
         lineRenderer.numPositions = (int)(track.BPM * (track.Song.Length / 60)) * 2 * track.GridDivisions + 3;
@@ -112,8 +113,13 @@ public class Lane : MonoBehaviour
     // ------------------------------------------------------------
     public void handleClick()
     {
-        if (Input.GetMouseButtonDown(0))
+        bool LMB = Input.GetMouseButtonDown(0);
+        bool RMB = Input.GetMouseButtonDown(1);
+        bool clickRegistered = LMB || RMB;
+
+        if (clickRegistered)
         {
+            // Is mouse within lane?
             Vector3 pt = camera.ScreenToWorldPoint(Input.mousePosition);
 
             if (Mathf.Abs(originalPosition.y - pt.y) > GRID_WIDTH)
@@ -129,18 +135,19 @@ public class Lane : MonoBehaviour
                 Note n = hit.transform.GetComponent<Note>();
                 notes.Remove(n);
                 Destroy(n.gameObject);
-                Debug.Log("Note destroyed.");
+                Debug.Log("Lane/handleClick() - Note destroyed.");
                 return;
             }
 
             // Handle Note Creation
+            Note.NOTE_TYPE noteType = LMB ? Note.NOTE_TYPE.LEFT : Note.NOTE_TYPE.RIGHT; //Assumption: There are only two note types 
             for (int i = 0; i < gridPoints.Length; i++)
             {
                 if (Mathf.Abs(gridPoints[i].x + this.transform.position.x - pt.x) < NOTE_ADD_LENIENCE)
                 {
-                    
-                    notes.Add(createNote((float)i / track.GridDivisions / ((float)track.BPM / 60)));
-                    Debug.Log("Note Created.");
+                    float notePosition = (float)i / track.GridDivisions / ((float)track.BPM / 60);
+                    notes.Add(createNote(notePosition, noteType));
+                    Debug.Log("Lane/handleClick() - Note created.");
                     return;
                 }
             }
@@ -167,11 +174,12 @@ public class Lane : MonoBehaviour
         this.transform.position = songPosition;
     }
     // ------------------------------------------------------------
-    Note createNote(float initialPosition)
+    Note createNote(float initialPosition, Note.NOTE_TYPE noteType)
     {
         GameObject tempGO = Instantiate(notePrefab, this.transform);
         Note tempNote = tempGO.GetComponent<Note>();
         tempNote.initialPosition = initialPosition;
+        tempNote.setNoteType(noteType);
         return tempNote;
     }
     // -------------------------------------------------------------
@@ -185,7 +193,7 @@ public class Lane : MonoBehaviour
 
         for (int i = notes.Count - 1; i >= 0; i--)
         {
-            notes[i].Destroy();
+            Destroy(notes[i]);
         }
         notes.Clear();
     }
@@ -196,16 +204,20 @@ public class Lane : MonoBehaviour
         int noteCount = file.ReadInt32();
         for (int i = 0; i < noteCount; i++)
         {
-            notes.Add(createNote(file.ReadSingle()));
+            notes.Add(createNote
+                (file.ReadSingle(), (Note.NOTE_TYPE)file.ReadInt32()) 
+            );
         }
     }
     // -------------------------------------------------------------
     public void writeToFile(BinaryWriter file)
     {
+        notes.Sort();
         file.Write(notes.Count);
         for (int i = 0; i < notes.Count; i++)
         {
             file.Write(notes[i].initialPosition);
+            file.Write((int)notes[i].getNoteType());
         }
     }
     // -------------------------------------------------------------

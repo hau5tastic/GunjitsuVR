@@ -33,10 +33,8 @@ public class SongController : MonoBehaviour
     {
         if (!currentSong || !songSlider || !songTimeText)
         {
-            Util.Quit("SongController is not initialized properly, you shit!");
+            Util.Quit("SongController.cs/Start() - Not initialized properly!");
         }
-
-        playbackSpeedSlider.value = 2;
     }
     // ------------------------------------------------------------
     // Update is called once per frame
@@ -72,11 +70,17 @@ public class SongController : MonoBehaviour
     // ------------------------------------------------------------
     public void loadSong(string file)
     {
+        if (file == null)
+        {
+            Util.Quit("Please load a song before opening TrackEdit scene.");
+            return;
+        }
+
         currentSong = GetComponent<AudioSource>();
         currentSong.clip = Resources.Load<AudioClip>(Util.SONG_PREFIX + file);
 
-        Debug.Log("Song loaded: " + file);
-        Debug.Log("Song loaded: " + currentSong.clip.name + ", " + file);
+        Debug.Log("SongController.cs/loadSong() - File: " + file);
+        Debug.Log("SongController.cs/loadSong() - Loaded: " + currentSong.clip.name);
     }
     // ------------------------------------------------------------
     public void Play()
@@ -149,15 +153,18 @@ public class SongController : MonoBehaviour
     // ------------------------------------------------------------
     public void SetPlaybackSpeed()
     {
+        const float MINIMUM_PLAYBACK_SPEED = 0.3f;
+
         if (playbackSpeedSlider.value == 0)
         {
-            currentSong.pitch = 0.3f;
+            currentSong.pitch = MINIMUM_PLAYBACK_SPEED;
         }
         else
         {
+            //Divide by two due to a limitation in UI Sliders only allowing discrete selection of whole numbers, but not real numbers.
+            //We want to let the user select speeds 0.5x, 1x, 1.5x, and 2x with ease, so we scale the slider domain to [0~4]
             currentSong.pitch = playbackSpeedSlider.value/2;
         }
-        
     }
     // ------------------------------------------------------------
 }

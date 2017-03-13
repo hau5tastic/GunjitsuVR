@@ -73,7 +73,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88c07a7be59ef6e4c81f67277c332a9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: 2
+  size: 0.6
   sizeOffset: 0.5
   angleOffset: 45
   angularSpeed: 180
@@ -115,9 +115,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cd07318ba45aa24eb3967bbe6898089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reticleOffset: 1
-  indicationRange: 3
-  drawLines: 0
+  reticleOffset: 1.5
+  indicationRange: 5
+  drawLines: 1
   reticleType: 2
   isOnScreen: 0
   player: {fileID: 0}
@@ -166,7 +166,7 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1619946777571174}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -177,7 +177,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -275.5, y: -220.5}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224729329369900924

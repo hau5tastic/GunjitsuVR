@@ -11,7 +11,8 @@ using UnityEngine.SceneManagement;
 // ------------------------------------------------------------
 public class Loader : MonoBehaviour
 {
-
+    // ------------------------------------------------------------
+    string[] APPROVED_SONG_EXTENSIONS = { "wav", "mp3" };
     // ------------------------------------------------------------
     //Dependencies
     [SerializeField]
@@ -35,29 +36,35 @@ public class Loader : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        if (trackTexts == null || songTexts == null)
-        {
-            Util.Quit("Loader is not initialized properly!!!");
-        }
-
         trackNames = new List<string>();
         songNames = new List<string>();
         cursors = new int[CURSOR_NUM];
-
-        var dir = new DirectoryInfo(Util.TRACK_DIR_PREFIX);
-        var files = dir.GetFiles("*" + Util.TRACK_FILE_EXTENSION);
-        foreach (FileInfo file in files)
+        if (trackTexts == null || songTexts == null)
         {
-            trackNames.Add(file.Name);
+            Util.Quit("Loader.cs/Start() - Loader is not initialized properly!");
+            return;
+        }
+        LoadTrackAndSongNames();
+    }
+    // ------------------------------------------------------------
+    void LoadTrackAndSongNames()
+    {
+        AddFilesToList(Util.TRACK_DIR_PREFIX, "*" + Util.TRACK_FILE_EXTENSION, trackNames);
+        foreach (string extension in APPROVED_SONG_EXTENSIONS)
+        {
+            AddFilesToList(Util.SONG_DIR_PREFIX, "*." + extension, songNames);
         }
 
-        dir = new DirectoryInfo(Util.SONG_DIR_PREFIX); //TODO Handle multiple file exts.
-        files = dir.GetFiles("*.wav");
+    }
+    // ------------------------------------------------------------
+    void AddFilesToList(string directory, string pattern, List<string> list)
+    {
+        var dir = new DirectoryInfo(directory);
+        var files = dir.GetFiles(pattern);
         foreach (FileInfo file in files)
         {
-            songNames.Add(file.Name.Remove(file.Name.Length-4));
+            list.Add(file.Name);
         }
-
     }
     // ------------------------------------------------------------
     // Update is called once per frame
@@ -79,12 +86,6 @@ public class Loader : MonoBehaviour
         if (cursors[CURSOR_TRACK] > trackNames.Count - 1) cursors[CURSOR_TRACK] = trackNames.Count - 1;
         if (cursors[CURSOR_SONG] > songNames.Count - 1) cursors[CURSOR_SONG] = songNames.Count - 1;
         UpdateListTexts();
-
-        //if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)
-        //        || Input.GetKeyDown(KeyCode.KeypadEnter))
-        //{
-        //    loadCurrentTrack();
-        //}
     }
     // ------------------------------------------------------------
     public void UpdateListTexts()
@@ -133,7 +134,7 @@ public class Loader : MonoBehaviour
                 float versionNumber = file.ReadSingle();
                 if (versionNumber != Util.VERSION_NUMBER)
                 {
-                    throw new System.Exception("Editor is incompatible with this track version: " + versionNumber);
+                    throw new System.Exception("Loader.cs/loadCurrentTrack() - Editor is incompatible with this track version: " + versionNumber);
                 }
 
                 TrackInfo.FullFilePath = dir;
@@ -143,7 +144,7 @@ public class Loader : MonoBehaviour
             }
             catch (EndOfStreamException e)
             {
-                Debug.Log("You made me read an empty/corrupted file, douchebag! " + e.Message);
+                Debug.Log("Loader.cs/loadCurrentTrack() - Unexpected end of file. " + e.Message);
             }
             catch (System.Exception e)
             {
@@ -157,16 +158,17 @@ public class Loader : MonoBehaviour
         }
         else
         {
-            Debug.Log("File does not exist, fool!");
+            Debug.Log("Loader.cs/loadCurrentTrack() - File does not exist.");
         }
     }
     // ------------------------------------------------------------
     public void createNewTrack()
     {
-        Debug.Log("Loader/ Creating new track.");
+        Debug.Log("Loader.cs/createNewTrack() - Creating new track.");
         TrackInfo.LOAD_TRACK = false;
         TrackInfo.TrackName = trackNameInput.text + Util.TRACK_FILE_EXTENSION;
-        TrackInfo.SongName = songNames[cursors[CURSOR_SONG]];
+        int songNameLength = songNames[cursors[CURSOR_SONG]].Length;
+        TrackInfo.SongName = songNames[cursors[CURSOR_SONG]].Remove(songNameLength - 4); //Remove Extension
         SceneManager.LoadScene(Util.SCENE_EDIT);
     }
     // ------------------------------------------------------------
