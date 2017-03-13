@@ -5,11 +5,6 @@ using System.IO;
 using UnityEditor;
 
 public class GJLevel : MonoBehaviour {
-
-    const string FILEPATH_PREFIX = "Assets/Resources/Tracks/";
-    const string FILE_EXTENSION = ".gj";
-    const float VERSION_NUMBER = 1f;
-
     [Header("Game Settings")]
     public float spawnRange;
     public float killRange;
@@ -21,8 +16,6 @@ public class GJLevel : MonoBehaviour {
     public string trackName;
 
     public bool isPlaying = false;
-
-
 
     [Header("Level Spawners")]
     public GJMonsterSpawner[] monsterSpawners;
@@ -67,6 +60,7 @@ public class GJLevel : MonoBehaviour {
 
             // for each those pointers, we get the corresponding spawner note list (each spawner has its own list of notes)
             float[] spawnerNotes = currentTrack.notes[i];
+            int[] spawnerNoteTypes = currentTrack.noteTypes[i];
 
             // Next, we need to get the specific note from a specific spawner from the spawners current note index,
             // but first, need to check if the pointer is valid.
@@ -79,7 +73,7 @@ public class GJLevel : MonoBehaviour {
                 // Debug.Log("currentNote: " + currentNote + " elapsedTime: " + elapsedTime);
                 if (currentNote + GameSettings.timeOffset <= elapsedTime) {
                     // SpawnMonsterOnSpawner(Random.Range(0, 8), 0); // The random version
-                    SpawnMonsterOnSpawner(i, 0); // The legit version
+                    SpawnMonsterOnSpawner(i, 0, spawnerNoteTypes[notePointers[i]]); // The legit version
                     notePointers[i]++;
                 }
                 
@@ -89,12 +83,11 @@ public class GJLevel : MonoBehaviour {
 
 	}
 
-    void SpawnMonsterOnSpawner(int spawnerIndex, int monsterTypeIndex) {
-        monsterSpawners[spawnerIndex].Spawn(monsterPrefabs[monsterTypeIndex]);
+    void SpawnMonsterOnSpawner(int spawnerIndex, int monsterTypeIndex, int spawnerNoteType) {
+        monsterSpawners[spawnerIndex].Spawn(monsterPrefabs[monsterTypeIndex], spawnerNoteType);
     }
 
     public void readFromFile() {
-        
         Debug.Log("Reading the track from: " + getFileName());
         if (File.Exists(getFileName())) {
             BinaryReader file =
@@ -102,7 +95,7 @@ public class GJLevel : MonoBehaviour {
             try {
                 // Version Number
                 float versionNumber = file.ReadSingle();
-                if (versionNumber != VERSION_NUMBER) {
+                if (versionNumber != Util.VERSION_NUMBER) {
                      throw new System.Exception("Editor is incompatible with this track version: " + versionNumber);
                 }
                 
@@ -124,19 +117,23 @@ public class GJLevel : MonoBehaviour {
                 }
 
                 currentTrack.notes = new List<float[]>();
+                currentTrack.noteTypes = new List<int[]>();
               
                 // For each spawner
                 foreach (GJMonsterSpawner ms in monsterSpawners ) {
                     int noteCount = file.ReadInt32(); // read the number of notes of 'this' spawner
                     float[] spawnerNotes = new float[noteCount];
+                    int[] spawnerNoteTypes = new int[noteCount];
 
                     // Load that many notes
                     for (int i = 0; i < noteCount; i++) {
                         spawnerNotes[i] = file.ReadSingle();
-                        // Debug.Log(spawnerNotes[i]);
+                        spawnerNoteTypes[i] = file.ReadInt32();
+                        Debug.Log(spawnerNoteTypes[i]);
                     }
 
                     currentTrack.notes.Add(spawnerNotes);
+                    currentTrack.noteTypes.Add(spawnerNoteTypes);
                 }
             }
 
@@ -157,7 +154,7 @@ public class GJLevel : MonoBehaviour {
     }
 
     public string getFileName() {
-        return FILEPATH_PREFIX + trackName + FILE_EXTENSION;
+        return Util.TRACK_DIR_PREFIX + trackName + Util.TRACK_FILE_EXTENSION;
     }
 
     void Reset() {

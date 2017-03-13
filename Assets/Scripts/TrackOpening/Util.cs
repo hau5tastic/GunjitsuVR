@@ -10,7 +10,7 @@ public class Util
     public const string SCENE_OPEN = "TrackOpen";
     public const string SCENE_EDIT = "TrackEdit";
     public const string TRACK_FILE_EXTENSION = ".gj";
-    public const float VERSION_NUMBER = 1f;
+    public const float VERSION_NUMBER = 1.1f;
     // ------------------------------------------------------------
     // Exit the game due to an unexpected circumstance.  
     public static void Quit(string logMessage = "")

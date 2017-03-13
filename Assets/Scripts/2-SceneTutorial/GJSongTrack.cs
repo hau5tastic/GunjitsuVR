@@ -10,5 +10,6 @@ public class GJSongTrack {
     public int scrollSpeed;
     public int startOffset;
     public List<float[]> notes;
+    public List<int[]> noteTypes;
      
 }

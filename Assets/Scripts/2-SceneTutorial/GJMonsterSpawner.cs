@@ -9,8 +9,14 @@ public class GJMonsterSpawner : MonoBehaviour {
         NormalizePosition();
     }
 
-    public void Spawn(GameObject monsterPrefab) {
-        GJGuideReticle.rReticleQ.Enqueue(Instantiate(monsterPrefab, transform.position, Quaternion.identity));
+    public void Spawn(GameObject monsterPrefab, int noteType) {
+        if ((Note.NOTE_TYPE)noteType == Note.NOTE_TYPE.LEFT)
+        {
+            GJGuideReticle.lReticleQ.Enqueue(Instantiate(monsterPrefab, transform.position, Quaternion.identity));
+        } else //Assume right :7
+        {
+            GJGuideReticle.rReticleQ.Enqueue(Instantiate(monsterPrefab, transform.position, Quaternion.identity));
+        }
     }
 
     void NormalizePosition() {
