@@ -41,7 +41,8 @@ public class Loader : MonoBehaviour
         cursors = new int[CURSOR_NUM];
         if (trackTexts == null || songTexts == null)
         {
-            Util.Quit("Loader is not initialized properly!!!");
+            Util.Quit("Loader.cs/Start() - Loader is not initialized properly!");
+            return;
         }
         LoadTrackAndSongNames();
     }

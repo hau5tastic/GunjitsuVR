@@ -47,6 +47,7 @@ public class Lane : MonoBehaviour
         if (!lineRenderer || !track || !parentTransform || !camera)
         {
             Util.Quit("Lane.cs/Start() - Not initialized properly!");
+            return;
         }
     }
     // ------------------------------------------------------------
