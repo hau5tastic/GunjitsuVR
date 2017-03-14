@@ -28,8 +28,8 @@ public class GJLevel : MonoBehaviour {
     public enum TrackDifficulty { NONE, BEGINNER }
     [Header("Track File")]
     public string customTrackName;
-    [Range(0.0f, 1.0f)]
-    public float musicStartTime;
+    // [Range(0.0f, 1.0f)]
+    // public float musicStartTime;
     public float trackStartOffset;
     public TrackDifficulty trackDifficulty = TrackDifficulty.NONE;
     float elapsedTime;
@@ -66,7 +66,6 @@ public class GJLevel : MonoBehaviour {
         currentTrack.countNotes();
         currentTrack.sortNotes();
         closingTime = closingDelay;
-        GetComponent<AudioSource>().time = musicStartTime * GetComponent<AudioSource>().clip.length;
     }
 
 	void Update () {
@@ -85,7 +84,6 @@ public class GJLevel : MonoBehaviour {
         }
 
         if (notesSpawned >= currentTrack.noteCount) {
-
             // Track is Over.. Do Something...
             closingTime -= Time.deltaTime;
             if (closingTime <= 0) {
@@ -215,6 +213,11 @@ public class GJLevel : MonoBehaviour {
     }
 
     void Reset() {
+        // GetComponent<AudioSource>().time = musicStartTime * GetComponent<AudioSource>().clip.length;
+        // elapsedTime = musicStartTime * GetComponent<AudioSource>().clip.length;
+        elapsedTime = -trackStartOffset;
+
+        trackEnded = false;
         closingTime = closingDelay;
         notesSpawned = 0;
         isPlaying = true;
@@ -229,8 +232,7 @@ public class GJLevel : MonoBehaviour {
             Destroy(go);
         }
 
-        
-        elapsedTime = -trackStartOffset;
+
         notePointers = new int[currentTrack.notes.Count];
 
         for (int i = 0; i < currentTrack.notes.Count; ++i) {
@@ -280,6 +282,7 @@ public class GJLevel : MonoBehaviour {
     public void RestartGame() {
         introMenu.SetActive(false);
         levelMenu.SetActive(false);
+        // victoryMenu.gameObject.SetActive(false);
         Reset();
     }
 
