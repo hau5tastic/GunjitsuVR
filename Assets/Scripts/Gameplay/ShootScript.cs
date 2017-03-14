@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(AudioSource))]
 public class ShootScript : MonoBehaviour {
@@ -21,6 +22,8 @@ public class ShootScript : MonoBehaviour {
     void Update()
     {
         Debug.DrawRay(transform.position + new  Vector3(0,0.085f,0), transform.forward * 100f, Color.red);
+
+        TestRaycast();
     }
 
     private void OnEnable()
@@ -47,15 +50,30 @@ public class ShootScript : MonoBehaviour {
             if (hit.transform.tag == "GJMonster")
             {
                 hit.collider.GetComponent<GJMonster>().Kill();
-                //hit.transform.GetComponent<Note>().destroyed = true;
             }
-            //Rigidbody r = hit.collider.GetComponent<Rigidbody>();
-            //if (r)
-            //    r.GetComponent<EnemyScript>().Kill();
         }
-
-
-
     }
 
+    public void TestRaycast()
+    {
+        PointerEventData pointerData = new PointerEventData(EventSystem.current);
+
+        pointerData.position = Input.mousePosition;
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerData, results);
+
+        if (results.Count > 0)
+        {
+            //WorldUI is my layer name
+            if (results[0].gameObject.layer == LayerMask.NameToLayer("UI"))
+            {
+                string dbg = "Root Element: {0} \n GrandChild Element: {1}";
+                Debug.Log(string.Format(dbg, results[results.Count - 1].gameObject.name, results[0].gameObject.name));
+                //Debug.Log("Root Element: "+results[results.Count-1].gameObject.name);
+                //Debug.Log("GrandChild Element: "+results[0].gameObject.name);
+                results.Clear();
+            }
+        }
+    }
 }
