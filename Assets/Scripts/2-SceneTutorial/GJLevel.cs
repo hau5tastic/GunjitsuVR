@@ -6,6 +6,8 @@ using UnityEditor;
 using UnityEngine.SceneManagement;
 
 public class GJLevel : MonoBehaviour {
+
+    [Header("UI Prefabs / Scripts")]
     [SerializeField]
     GameObject introMenu;
     [SerializeField]
@@ -23,10 +25,16 @@ public class GJLevel : MonoBehaviour {
     public float manualOffset;
 
 
+    public enum TrackDifficulty { NONE, BEGINNER }
     [Header("Track File")]
-    public string trackName;
+    public string customTrackName;
+    [Range(0.0f, 1.0f)]
+    public float musicStartTime;
+    public float trackStartOffset;
+    public TrackDifficulty trackDifficulty = TrackDifficulty.NONE;
+    float elapsedTime;
 
-    public bool isPlaying = false;
+    bool isPlaying = false;
     bool trackEnded = false;
 
     [Header("Level Spawners")]
@@ -37,7 +45,7 @@ public class GJLevel : MonoBehaviour {
     [Header("Level Monster Types")]
     public GameObject[] monsterPrefabs;
 
-    float elapsedTime;
+
 
     [Header("Player Properties")]
     public static int accuracy = 100;
@@ -54,13 +62,11 @@ public class GJLevel : MonoBehaviour {
     }
 
     void Start() {
-
-        // Time.timeScale = 0.5f;
-        // Time.fixedDeltaTime = 0.02f * Time.timeScale;
         readFromFile();
         currentTrack.countNotes();
         currentTrack.sortNotes();
         closingTime = closingDelay;
+        GetComponent<AudioSource>().time = musicStartTime * GetComponent<AudioSource>().clip.length;
     }
 
 	void Update () {
@@ -73,6 +79,10 @@ public class GJLevel : MonoBehaviour {
             victoryEnd();
         }
         elapsedTime += Time.deltaTime;
+
+        if (elapsedTime >= 0) {
+            if (!GetComponent<AudioSource>().isPlaying) GetComponent<AudioSource>().Play();
+        }
 
         if (notesSpawned >= currentTrack.noteCount) {
 
@@ -104,7 +114,7 @@ public class GJLevel : MonoBehaviour {
                 // Debug.Log("currentNote: " + currentNote + " elapsedTime: " + elapsedTime);
                 if (currentNote + GameSettings.timeOffset <= elapsedTime) {
                     // SpawnMonsterOnSpawner(Random.Range(0, 8), 0); // The random version
-                    SpawnMonsterOnSpawner(i, 0, spawnerNoteTypes[notePointers[i]]); // The legit version
+                    SpawnMonsterOnSpawner(i, spawnerNoteTypes[notePointers[i]], spawnerNoteTypes[notePointers[i]]); // The legit version
                     notePointers[i]++;
                     notesSpawned++;
                 }
@@ -188,7 +198,20 @@ public class GJLevel : MonoBehaviour {
     }
 
     public string getFileName() {
-        return Util.TRACK_DIR_PREFIX + trackName + Util.TRACK_FILE_EXTENSION;
+        string difficultyTag = "";
+        switch (trackDifficulty) {
+            case TrackDifficulty.BEGINNER:
+            // case TrackDifficulty.INTERMEDIATE:
+            // case TrackDifficulty.EXPERT:
+                difficultyTag = " [BEGINNER]";
+                break;
+            default:
+                break;
+
+        }
+
+        if (customTrackName == "" ) customTrackName = GetComponent<AudioSource>().clip.name + difficultyTag;
+        return Util.TRACK_DIR_PREFIX + customTrackName  + Util.TRACK_FILE_EXTENSION;
     }
 
     void Reset() {
@@ -199,7 +222,7 @@ public class GJLevel : MonoBehaviour {
         RenderSettings.ambientIntensity = 1f; // temporary paused indicator
         GetComponent<AudioSource>().volume = 0.5f;
         GetComponent<AudioSource>().Stop();
-        GetComponent<AudioSource>().Play();
+
 
         GameObject[] monsters = GameObject.FindGameObjectsWithTag("GJMonster");
         foreach (GameObject go in monsters) {
@@ -207,7 +230,7 @@ public class GJLevel : MonoBehaviour {
         }
 
         
-        elapsedTime = 0f;
+        elapsedTime = -trackStartOffset;
         notePointers = new int[currentTrack.notes.Count];
 
         for (int i = 0; i < currentTrack.notes.Count; ++i) {
@@ -268,6 +291,8 @@ public class GJLevel : MonoBehaviour {
             victoryMenu.newFortune = fortune;
         }
     }
+
+
 
 
 }
