@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class GameSettings {
 
-    // Don't touch this file.
+    // Don't touch this file. ^_^;
     public static float killRange;
     public static float spawnRange;
     public static float playSpeed;

@@ -6,7 +6,7 @@ public class BulletTracking : MonoBehaviour {
 
     // Creates a line renderer that follows a Sin() function
     // and animates it.
-
+    
     LineRenderer lineRenderer;
     public Color color = Color.yellow;
     public int lengthOfLineRenderer = 3;
