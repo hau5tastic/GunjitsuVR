@@ -124,6 +124,10 @@ public class SongController : MonoBehaviour
     {
         get { return currentSong.clip == null ? 0 : currentSong.clip.length; }
     }
+    public string SongName
+    {
+        get { return currentSong.clip.name; }
+    }
     // ------------------------------------------------------------
     // ------------------------------------------------------------
     // UI Updating

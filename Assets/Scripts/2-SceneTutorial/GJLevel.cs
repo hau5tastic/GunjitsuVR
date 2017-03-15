@@ -6,7 +6,6 @@ using UnityEditor;
 using UnityEngine.SceneManagement;
 
 public class GJLevel : MonoBehaviour {
-
     [Header("UI Prefabs / Scripts")]
     [SerializeField]
     GameObject introMenu;
@@ -23,7 +22,6 @@ public class GJLevel : MonoBehaviour {
     public float killRange;
     public float overridePlaySpeed;
     public float manualOffset;
-
 
     public enum TrackDifficulty { NONE, BEGINNER }
     [Header("Track File")]
@@ -44,8 +42,6 @@ public class GJLevel : MonoBehaviour {
 
     [Header("Level Monster Types")]
     public GameObject[] monsterPrefabs;
-
-
 
     [Header("Player Properties")]
     public static int accuracy = 100;
