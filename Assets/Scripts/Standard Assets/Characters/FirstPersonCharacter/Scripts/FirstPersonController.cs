@@ -10,6 +10,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
     [RequireComponent(typeof (AudioSource))]
     public class FirstPersonController : MonoBehaviour
     {
+        [Header ("Sound Effect")]
+        [SerializeField] AudioClip audioClip;
+
+        [Header ("FPS Settings")]
         [SerializeField] private bool m_IsWalking;
         [SerializeField] private float m_WalkSpeed;
         [SerializeField] private float m_RunSpeed;
@@ -209,6 +213,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             bool waswalking = m_IsWalking;
 
+            if(Input.GetMouseButtonDown(0))
+            {
+                Shoot();
+            }
+
 #if !MOBILE_INPUT
             // On standalone builds, walk/run speed is modified by a key press.
             // keep track of whether or not the character is walking or running
@@ -254,6 +263,23 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 return;
             }
             body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
+        }
+
+        public void Shoot()
+        {
+            //// Play SFX
+            GetComponent<AudioSource>().PlayOneShot(audioClip, 0.3f);
+
+            Debug.Log("Gun/Shoot() - Raycast attempt");
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.forward, out hit, 100f))
+            {
+                Debug.Log("Gun/Shoot() -  Raycasted against " + hit.transform.tag);
+                if (hit.transform.tag == "GJMonster")
+                {
+                    hit.collider.GetComponent<GJMonster>().Kill();
+                }
+            }
         }
     }
 }

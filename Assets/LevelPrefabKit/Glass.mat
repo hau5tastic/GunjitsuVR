@@ -78,6 +78,9 @@ Material:
         name: _Cutoff
       second: 0.5
     - first:
+        name: _Darken
+      second: 0
+    - first:
         name: _DetailNormalMapScale
       second: 1
     - first:
@@ -105,6 +108,9 @@ Material:
         name: _Parallax
       second: 0.02
     - first:
+        name: _SeeThru
+      second: 0.25
+    - first:
         name: _SmoothnessTextureChannel
       second: 0
     - first:
@@ -119,6 +125,9 @@ Material:
     - first:
         name: _ZWrite
       second: 0
+    - first:
+        name: g_flOutlineWidth
+      second: 0.005
     m_Colors:
     - first:
         name: _Color
@@ -126,3 +135,12 @@ Material:
     - first:
         name: _EmissionColor
       second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _SceneTint
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _TintColor
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: g_vOutlineColor
+      second: {r: 0.5, g: 0.5, b: 0.5, a: 1}

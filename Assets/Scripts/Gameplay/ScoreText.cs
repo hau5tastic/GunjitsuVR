@@ -10,8 +10,12 @@ public class ScoreText : MonoBehaviour {
     Text scoreText;
     int score = 0;
 
-	void Start () {
+    void Awake()
+    {
         reference = this;
+    }
+
+	void Start () {
         scoreText = GetComponent<Text>();
 	}
 

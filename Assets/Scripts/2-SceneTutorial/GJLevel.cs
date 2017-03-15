@@ -70,6 +70,10 @@ public class GJLevel : MonoBehaviour {
 
 	void Update () {
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            RestartGame();
+        }
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
             PauseGame();
         }
 
