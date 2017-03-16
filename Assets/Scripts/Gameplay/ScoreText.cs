@@ -21,7 +21,8 @@ public class ScoreText : MonoBehaviour {
 
     void Update()
     {
-        //scoreText.text = "Score: " + score;
+        scoreText.text = "Score: " + score;
+        GJLevel.fortune = score; //wtf??
     }
 
 	public void AddScore(int val)
