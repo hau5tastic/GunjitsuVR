@@ -43,6 +43,7 @@ public class GJMonster : MonoBehaviour {
             GJLevel.hitCount++;
         } else {
             particle.GetComponent<AudioSource>().Play();
+            GJLevel.synchronization-=5;
         }
 
         Destroy(gameObject);

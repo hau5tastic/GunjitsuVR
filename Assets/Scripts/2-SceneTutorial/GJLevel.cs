@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.IO;
 #if UNITY_EDITOR
     using UnityEditor;
@@ -81,10 +82,12 @@ public class GJLevel : MonoBehaviour {
 
 
     [Header("Player Properties")]
+    public Slider synchroSlider;
     public static int hitCount = 0;
     public static int fortune = 12000;
-    // float synchronization; // HP
-    // int fortune; // Score
+    public static float synchronization = 100; // HP
+    static float punishmentValue = 1; // per miss
+    static float regenerationValue = 1; // per second
 
     GJSongTrack currentTrack;
 
@@ -123,6 +126,17 @@ public class GJLevel : MonoBehaviour {
     }
 
 	void Update () {
+        
+        if (synchronization < 100) {
+            synchronization += regenerationValue * Time.deltaTime;
+        } else if (synchronization < 0) {
+            synchronization = 0;
+        } else if (synchronization > 100) {
+            synchronization = 100;
+        }
+        synchroSlider.value = synchronization;
+
+
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
             RestartGame();
         }
@@ -352,6 +366,8 @@ public class GJLevel : MonoBehaviour {
             victoryMenu.newFortune = fortune;
         }
     }
+
+
 
 
 
