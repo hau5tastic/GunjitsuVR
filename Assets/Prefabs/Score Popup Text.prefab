@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 222002578194452516}
   - component: {fileID: 114184643193293428}
   - component: {fileID: 114194822983272784}
+  - component: {fileID: 114294166113919262}
   m_Layer: 5
   m_Name: Score Popup Text
   m_TagString: Untagged
@@ -73,6 +74,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 727d6b9a7ff6d394f8054806cf270e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114294166113919262
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1678603672714268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!222 &222002578194452516
 CanvasRenderer:
   m_ObjectHideFlags: 1
