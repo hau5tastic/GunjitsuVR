@@ -37,6 +37,7 @@ public class GJMonster : MonoBehaviour {
         if(killedByShot)
         {
             CreateScorePopup();
+            GJLevel.hitCount++;
         }
         Destroy(Instantiate(particlePrefab, transform.position, Quaternion.identity), .5f);
         Destroy(gameObject);
