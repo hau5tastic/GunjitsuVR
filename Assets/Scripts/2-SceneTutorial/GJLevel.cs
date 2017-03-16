@@ -26,7 +26,7 @@ public class GJLevel : MonoBehaviour {
     [SerializeField]
     GameObject levelMenu;
     [SerializeField]
-    VictoryMenu victoryMenu; 
+    VictoryMenu victoryMenu;
 
     public float closingDelay;
     float closingTime;
@@ -352,6 +352,7 @@ public class GJLevel : MonoBehaviour {
             victoryMenu.newFortune = fortune;
         }
     }
+
 
 
 

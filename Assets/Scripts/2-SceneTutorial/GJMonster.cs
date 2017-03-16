@@ -10,7 +10,7 @@ public class GJMonster : MonoBehaviour {
     public GameObject scorePrefab;
     public bool paused = false;
 
-	void Start () {
+    void Start () {
 
         GetComponent<Rigidbody>().freezeRotation = true;
         GameObject go = Instantiate(indicatorPrefab, GameObject.Find("WorldCanvas").transform, true);
@@ -34,12 +34,17 @@ public class GJMonster : MonoBehaviour {
 
     public void Kill(bool killedByShot)
     {
-        if(killedByShot)
+        GameObject particle = Instantiate(particlePrefab, transform.position, Quaternion.identity);
+        Destroy(particle, .5f);
+
+        if (killedByShot)
         {
             CreateScorePopup();
             GJLevel.hitCount++;
+        } else {
+            particle.GetComponent<AudioSource>().Play();
         }
-        Destroy(Instantiate(particlePrefab, transform.position, Quaternion.identity), .5f);
+
         Destroy(gameObject);
     }
 
