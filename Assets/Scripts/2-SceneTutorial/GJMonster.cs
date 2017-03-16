@@ -25,16 +25,19 @@ public class GJMonster : MonoBehaviour {
         
         transform.position += transform.forward * GameSettings.playSpeed * Time.deltaTime;
 
-        if (IsWithinKillRange()) Kill();
+        if (IsWithinKillRange()) Kill(false);
 	}
 
     bool IsWithinKillRange() {
         return (Vector3.Distance(Camera.main.transform.position, transform.position) <= GameSettings.killRange - 0.5f);
     }
 
-    public void Kill()
+    public void Kill(bool killedByShot)
     {
-        CreateScorePopup();
+        if(killedByShot)
+        {
+            CreateScorePopup();
+        }
         Destroy(Instantiate(particlePrefab, transform.position, Quaternion.identity), .5f);
         Destroy(gameObject);
     }

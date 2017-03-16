@@ -66,7 +66,7 @@ public class ShootScript : MonoBehaviour {
             Debug.Log("ShootScript/Shoot() -  Raycasted against " + hit.transform.tag);
             if (hit.transform.tag == "GJMonster")
             {
-                hit.collider.GetComponent<GJMonster>().Kill();
+                hit.collider.GetComponent<GJMonster>().Kill(true);
             }
         }
     }
