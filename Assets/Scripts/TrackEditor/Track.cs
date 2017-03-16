@@ -4,7 +4,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
-using UnityEditor;
+
+#if UNITY_EDITOR
+    using UnityEditor;
+#endif
+
 using UnityEngine.SceneManagement;
 // ------------------------------------------------------------
 public class Track : MonoBehaviour
@@ -212,12 +216,15 @@ public class Track : MonoBehaviour
     // ------------------------------------------------------------
     public void writeToFile()
     {
-        if (!EditorUtility.DisplayDialog("Save this track?",
-            "Are you sure you want to save \"" + trackName
-            + "\"?", "Save", "Do Not Save"))
-        {
-            return;
-        }
+
+        #if UNITY_EDITOR
+            if (!EditorUtility.DisplayDialog("Save this track?",
+                "Are you sure you want to save \"" + trackName
+                + "\"?", "Save", "Do Not Save"))
+            {
+                return;
+            }
+        #endif
 
         Debug.Log("Track.cs/writeToFile() - Saving track to: " + getFileName());
         using (BinaryWriter file =
@@ -237,12 +244,15 @@ public class Track : MonoBehaviour
     // ------------------------------------------------------------
     public void QuitTrackEditing()
     {
-        if (!EditorUtility.DisplayDialog("Quit editing this track?",
-            "Are you sure you want to quit editing \"" + trackName
-            + "\"? Make sure you have saved your work.", "Quit", "Do Not Quit"))
-        {
-            return;
-        }
+        #if UNITY_EDITOR
+             if (!EditorUtility.DisplayDialog("Quit editing this track?",
+                "Are you sure you want to quit editing \"" + trackName
+                + "\"? Make sure you have saved your work.", "Quit", "Do Not Quit"))
+            {
+                return;
+            }   
+        #endif
+
         SceneManager.LoadScene(Util.SCENE_OPEN);
     }
     // ------------------------------------------------------------

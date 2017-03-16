@@ -7,6 +7,7 @@ public class GJMonster : MonoBehaviour {
 
     public GameObject particlePrefab;
     public GameObject indicatorPrefab;
+    public GameObject scorePrefab;
     public bool paused = false;
 
 	void Start () {
@@ -28,35 +29,47 @@ public class GJMonster : MonoBehaviour {
 	}
 
     bool IsWithinKillRange() {
-        return (Vector3.Distance(Camera.main.transform.position, transform.position) <= GameSettings.killRange);
+        return (Vector3.Distance(Camera.main.transform.position, transform.position) <= GameSettings.killRange - 0.5f);
     }
 
     public void Kill()
     {
+        CreateScorePopup();
         Destroy(Instantiate(particlePrefab, transform.position, Quaternion.identity), .5f);
         Destroy(gameObject);
     }
 
-    void OnDestroy()
+    void CreateScorePopup()
     {
         float distance = Vector3.Distance(Camera.main.transform.position, transform.position);
 
-        /*ScoreSettings settings = GetComponent<GJScorePopup>().settings;
-        if(distance <=  settings.perfect)
+        GameObject go = Instantiate(scorePrefab, GameObject.Find("ScoreCanvas").transform, true);
+        go.transform.position = transform.position + (transform.up * 1.2f);
+
+        if (distance <= GameSettings.perfect)
         {
-            ScoreText.reference.AddScore(settings.perfectScore);
+            ScoreText.reference.AddScore(GameSettings.perfectScore);
+            go.GetComponent<GJScorePopup>().Init(GJAccuracy.PERFECT);
         }
-        else if(distance <= settings.great)
+        else if(distance <= GameSettings.great)
         {
-            ScoreText.reference.AddScore(settings.greatScore);
+            ScoreText.reference.AddScore(GameSettings.greatScore);
+            go.GetComponent<GJScorePopup>().Init(GJAccuracy.GREAT);
         }
-        else if(distance <= settings.good)
+        else if(distance <= GameSettings.good)
         {
-            ScoreText.reference.AddScore(settings.goodScore);
+            ScoreText.reference.AddScore(GameSettings.goodScore);
+            go.GetComponent<GJScorePopup>().Init(GJAccuracy.GOOD);
         }
         else
         {
-            ScoreText.reference.AddScore(settings.okScore);
-        }*/ 
+            ScoreText.reference.AddScore(GameSettings.okScore);
+            go.GetComponent<GJScorePopup>().Init(GJAccuracy.OK);
+        }
+
+        Debug.Log(distance);
+
+        go.transform.LookAt(Camera.main.transform);
+        go.transform.Rotate(0, 180, 0);
     }
 }

@@ -32,6 +32,7 @@ public class GJShootIndicator : MonoBehaviour {
             return;
         }
 
+
         transform.LookAt(Camera.main.transform); // Disable this if underneath indication
         transform.position = target.transform.position + (target.transform.up * heightOffset);
 
@@ -40,6 +41,11 @@ public class GJShootIndicator : MonoBehaviour {
             indicators[1].color = new Color(1, 1, 1, 1);
             currentTime += Time.deltaTime;
             float completion = currentTime / lockTime;
+
+            if (completion >= 1f)
+            {
+                Destroy(gameObject);
+            }
             indicators[0].GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1) * completion;
         }
 

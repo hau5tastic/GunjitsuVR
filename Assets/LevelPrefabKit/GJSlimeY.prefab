@@ -246,6 +246,8 @@ MonoBehaviour:
     type: 2}
   indicatorPrefab: {fileID: 1257461749962070, guid: 6acc7c2cbef8b6f49bdf740c7f643345,
     type: 2}
+  scorePrefab: {fileID: 1678603672714268, guid: 61e6bfa918d16784aa435797526be367,
+    type: 2}
   paused: 0
 --- !u!137 &137002177949635082
 SkinnedMeshRenderer:

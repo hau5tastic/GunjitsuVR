@@ -2,8 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using UnityEditor;
+#if UNITY_EDITOR
+    using UnityEditor;
+#endif
 using UnityEngine.SceneManagement;
+
+namespace GJScore
+{
+    public enum GJAccuracy
+    {
+        PERFECT,
+        GREAT,
+        GOOD,
+        OK
+    }
+}
 
 public class GJLevel : MonoBehaviour {
 
@@ -24,6 +37,26 @@ public class GJLevel : MonoBehaviour {
     public float overridePlaySpeed;
     public float manualOffset;
 
+    [Header("Score Accuracy")]
+    public float perfect = 0.125f;
+    public float great = 0.25f;
+    public float good = 0.5f;
+    public float ok = 1.0f;
+
+    [Header("Score Points")]
+    public int perfectScore = 1000;
+    public int greatScore = 500;
+    public int goodScore = 250;
+    public int okScore = 100;
+
+    [Header("Score Colors")]
+    public Color perfectColor = Color.green;
+    public Color greatColor = Color.blue;
+    public Color goodColor = Color.yellow;
+    public Color okColor = Color.red;
+
+    [Header("Display Time")]
+    public float displayTime = 1.5f;
 
     public enum TrackDifficulty { NONE, BEGINNER }
     [Header("Track File")]
@@ -55,10 +88,31 @@ public class GJLevel : MonoBehaviour {
 
     GJSongTrack currentTrack;
 
-    void Awake() {
+    void SetGameSettings()
+    {
         GameSettings.spawnRange = spawnRange;
         GameSettings.killRange = killRange;
 
+        GameSettings.perfect = perfect;
+        GameSettings.great = great;
+        GameSettings.good = good;
+        GameSettings.ok = ok;
+
+        GameSettings.perfectScore = perfectScore;
+        GameSettings.greatScore = greatScore;
+        GameSettings.goodScore = goodScore;
+        GameSettings.okScore = okScore;
+
+        GameSettings.perfectColor = perfectColor;
+        GameSettings.greatColor = greatColor;
+        GameSettings.goodColor = goodColor;
+        GameSettings.okColor = okColor;
+
+        GameSettings.displayTime = displayTime;
+    }
+
+    void Awake() {
+        SetGameSettings();
     }
 
     void Start() {

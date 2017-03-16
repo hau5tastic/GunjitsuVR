@@ -7,13 +7,17 @@ using GJScore;
 
 public class GJScorePopup : MonoBehaviour {
 
-    public ScoreSettings settings = new ScoreSettings();
-
     private GJAccuracy accuracy;
     private Color color;
+    private Text text;
 
-	void Start () {
-        Destroy(this.gameObject, settings.displayTime);
+    void Awake()
+    {
+        text = GetComponent<Text>();
+    }
+
+    void Start () {      
+        Destroy(this.gameObject, GameSettings.displayTime);
 	}
 
     public void Init(GJAccuracy _accuracy)
@@ -22,20 +26,26 @@ public class GJScorePopup : MonoBehaviour {
         switch(accuracy)
         {
             case GJAccuracy.PERFECT:
-                color = settings.perfectColor;
+                color = GameSettings.perfectColor;
+                text.text = "Perfect!";
                 break;
             case GJAccuracy.GREAT:
-                color = settings.greatColor;
+                color = GameSettings.greatColor;
+                text.text = "Great!";
                 break;
             case GJAccuracy.GOOD:
-                color = settings.goodColor;
+                color = GameSettings.goodColor;
+                text.text = "Good";
                 break;
             case GJAccuracy.OK:
-                color = settings.okColor;
+                color = GameSettings.okColor;
+                text.text = "OK";
                 break;
             default:
                 color = Color.white;
                 break;
         }
+
+        text.color = color;
     }
 }

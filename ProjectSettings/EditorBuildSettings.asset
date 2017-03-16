@@ -15,7 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/GJReticleTest.unity
   - enabled: 0
     path: Assets/Scenes/TrackOpen.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TrackEditorScenes/TrackOpen.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TrackEditorScenes/TrackEdit.unity
+  - enabled: 1
+    path: Assets/Scenes/TutorialScene/TutorialScene.unity
