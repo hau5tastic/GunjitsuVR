@@ -28,6 +28,8 @@ public class GJLevel : MonoBehaviour {
     GameObject levelMenu;
     [SerializeField]
     VictoryMenu victoryMenu;
+    [SerializeField]
+    VictoryMenu defeatMenu;
 
     public float closingDelay;
     float closingTime;
@@ -86,7 +88,6 @@ public class GJLevel : MonoBehaviour {
     public static int hitCount = 0;
     public static int fortune = 12000;
     public static float synchronization = 100; // HP
-    static float punishmentValue = 1; // per miss
     static float regenerationValue = 1; // per second
 
     GJSongTrack currentTrack;
@@ -128,12 +129,15 @@ public class GJLevel : MonoBehaviour {
 	void Update () {
         
         if (synchronization < 100) {
-            synchronization += regenerationValue * Time.deltaTime;
-        } else if (synchronization < 0) {
-            synchronization = 0;
-        } else if (synchronization > 100) {
+            if (synchronization <= 0) {
+                Debug.Log("Defeat");
+                synchronization = 0;
+                defeatEnd();
+            }
+        }  else if (synchronization > 100) {
             synchronization = 100;
         }
+
         synchroSlider.value = synchronization;
 
 
@@ -146,6 +150,7 @@ public class GJLevel : MonoBehaviour {
         }
 
         if (!isPlaying) return;
+        synchronization += regenerationValue * Time.deltaTime;
         if (trackEnded) {
             victoryEnd();
         }
@@ -313,6 +318,9 @@ public class GJLevel : MonoBehaviour {
 
         GJGuideReticle.rReticleQ.Clear();
         GJGuideReticle.lReticleQ.Clear();
+
+        victoryMenu.GetComponent<AudioSource>().Stop();
+        defeatMenu.GetComponent<AudioSource>().Stop();
     }
 
 
@@ -323,7 +331,6 @@ public class GJLevel : MonoBehaviour {
     }
 
     public void PauseGame() {
-        levelMenu.SetActive(true);
         Time.timeScale = 0f;
         if (GetComponent<AudioSource>().isPlaying) {
             GetComponent<AudioSource>().Pause();
@@ -365,6 +372,30 @@ public class GJLevel : MonoBehaviour {
             victoryMenu.newAccuracy = (float)hitCount/notesSpawned;
             victoryMenu.newFortune = fortune;
         }
+    }
+
+    public void defeatEnd() {
+        isPlaying = false;
+        GetComponent<AudioSource>().volume -= 0.01f;
+        if (GetComponent<AudioSource>().volume <= 0) {
+            defeatMenu.gameObject.SetActive(true);
+            defeatMenu.newAccuracy = (float)hitCount / notesSpawned;
+            defeatMenu.newFortune = fortune;
+
+            if (GetComponent<AudioSource>().isPlaying) {
+                GetComponent<AudioSource>().Pause();
+            }
+
+            GameObject[] monsters = GameObject.FindGameObjectsWithTag("GJMonster");
+            foreach (GameObject go in monsters) {
+                go.GetComponent<GJMonster>().paused = true;
+            }
+
+            RenderSettings.ambientIntensity = 0f;
+
+        }
+
+
     }
 
 
