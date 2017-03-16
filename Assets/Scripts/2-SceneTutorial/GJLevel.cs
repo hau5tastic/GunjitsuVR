@@ -81,7 +81,7 @@ public class GJLevel : MonoBehaviour {
 
 
     [Header("Player Properties")]
-    public static int accuracy = 100;
+    public static int hitCount = 0;
     public static int fortune = 12000;
     // float synchronization; // HP
     // int fortune; // Score
@@ -348,7 +348,7 @@ public class GJLevel : MonoBehaviour {
         GetComponent<AudioSource>().volume -= 0.01f;
         if (GetComponent<AudioSource>().volume <= 0) {
             victoryMenu.gameObject.SetActive(true);
-            victoryMenu.newAccuracy = accuracy;
+            victoryMenu.newAccuracy = (float)hitCount/notesSpawned;
             victoryMenu.newFortune = fortune;
         }
     }
