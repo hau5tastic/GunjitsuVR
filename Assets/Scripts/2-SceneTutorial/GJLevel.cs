@@ -23,6 +23,8 @@ public class GJLevel : MonoBehaviour {
 
     [Header("UI Prefabs / Scripts")]
     [SerializeField]
+    GameObject worldCanvas;
+    [SerializeField]
     GameObject introMenu;
     [SerializeField]
     GameObject levelMenu;
@@ -117,6 +119,7 @@ public class GJLevel : MonoBehaviour {
 
     void Awake() {
         SetGameSettings();
+        worldCanvas.SetActive(true);
     }
 
     void Start() {

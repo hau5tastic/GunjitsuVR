@@ -62,7 +62,7 @@ public class ShootScript : MonoBehaviour {
         //// Play SFX
         audioSource.PlayOneShot(audioSource.clip, 0.3f);
 
-        Destroy(Instantiate(bullet, transform.position + transform.forward * 0.2f + transform.up * 0.05f, transform.rotation), 2.0f);
+        Destroy(Instantiate(bullet, transform.position + (transform.forward * 0.18f) + (transform.up * 0.05f) + (transform.right * -0.02f), transform.rotation), 2.0f);
 
         Debug.Log("ShootScript/Shoot() - Raycast attempt");
         if (Physics.Raycast(transform.position + new Vector3(0, 0.085f, 0), transform.forward, out hit, 100f))
