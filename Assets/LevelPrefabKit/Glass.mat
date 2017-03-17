@@ -7,12 +7,11 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Glass
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 0ee0c86dac5512f40a5c118571d81117, type: 3}
   m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _EMISSION _NORMALMAP
   m_LightmapFlags: 1
-  m_CustomRenderQueue: 3000
-  stringTagMap:
-    RenderType: Transparent
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -120,6 +119,9 @@ Material:
         name: _SrcBlend
       second: 1
     - first:
+        name: _Thickness
+      second: 1
+    - first:
         name: _UVSec
       second: 0
     - first:
@@ -131,7 +133,7 @@ Material:
     m_Colors:
     - first:
         name: _Color
-      second: {r: 0.37856188, g: 0.83823526, b: 0.26991177, a: 0.222}
+      second: {r: 0.40482527, g: 0.88235295, b: 0.29195502, a: 0.222}
     - first:
         name: _EmissionColor
       second: {r: 0, g: 0, b: 0, a: 1}
