@@ -8,6 +8,8 @@ public class ShootScript : MonoBehaviour {
     [SerializeField]
     SteamVR_TrackedController _controller;
 
+    public GameObject bullet;
+
     RaycastHit hit;
 
     AudioSource audioSource;
@@ -60,9 +62,13 @@ public class ShootScript : MonoBehaviour {
         //// Play SFX
         audioSource.PlayOneShot(audioSource.clip, 0.3f);
 
+        Destroy(Instantiate(bullet, transform.position + transform.forward * 0.2f + transform.up * 0.05f, transform.rotation), 2.0f);
+
         Debug.Log("ShootScript/Shoot() - Raycast attempt");
         if (Physics.Raycast(transform.position + new Vector3(0, 0.085f, 0), transform.forward, out hit, 100f))
         {
+
+
             Debug.Log("ShootScript/Shoot() -  Raycasted against " + hit.transform.tag);
             if (hit.transform.tag == "GJMonster")
             {
@@ -84,7 +90,7 @@ public class ShootScript : MonoBehaviour {
 
         if (results.Count > 0)
         {
-            Debug.Log("ShootScript/TestRaycast() - Raycast Results Found " + results.Count);
+            //Debug.Log("ShootScript/TestRaycast() - Raycast Results Found " + results.Count);
             //WorldUI is my layer name;
             if (results[0].gameObject.layer == LayerMask.NameToLayer("UI"))
             {
@@ -96,7 +102,7 @@ public class ShootScript : MonoBehaviour {
             }
         } else
         {
-            Debug.Log("ShootScript/TestRaycast() - No Targets Found.");
+            //Debug.Log("ShootScript/TestRaycast() - No Targets Found.");
         }
     }
 }

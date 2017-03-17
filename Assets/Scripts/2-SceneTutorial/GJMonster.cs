@@ -5,7 +5,8 @@ using GJScore;
 
 public class GJMonster : MonoBehaviour {
 
-    public GameObject particlePrefab;
+    public GameObject killedParticlePrefab;
+    public GameObject killParticlePrefab;
     public GameObject indicatorPrefab;
     public GameObject scorePrefab;
     public bool paused = false;
@@ -34,18 +35,19 @@ public class GJMonster : MonoBehaviour {
 
     public void Kill(bool killedByShot)
     {
-        GameObject particle = Instantiate(particlePrefab, transform.position, Quaternion.identity);
-        Destroy(particle, .5f);
-
         if (killedByShot)
         {
             CreateScorePopup();
             GJLevel.hitCount++;
+            GameObject particle = Instantiate(killedParticlePrefab, transform.position, Quaternion.identity);
+            Destroy(particle, .5f);
         } else {
-            particle.GetComponent<AudioSource>().Play();
             GJLevel.synchronization-=5;
+            GameObject particle = Instantiate(killParticlePrefab, transform.position, Quaternion.identity);
+            particle.GetComponent<AudioSource>().Play();
+            Destroy(particle, .5f);
         }
-
+        
         Destroy(gameObject);
     }
 

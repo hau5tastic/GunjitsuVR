@@ -29,4 +29,9 @@ public class ScoreText : MonoBehaviour {
     {
         score += val;
     }
+
+    public void Reset()
+    {
+        score = 0;
+    }
 }

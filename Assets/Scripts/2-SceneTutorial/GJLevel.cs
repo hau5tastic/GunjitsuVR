@@ -296,13 +296,15 @@ public class GJLevel : MonoBehaviour {
 
         trackEnded = false;
         closingTime = closingDelay;
-        notesSpawned = 0;
+        notesSpawned = hitCount = 0;
         isPlaying = true;
         Time.timeScale = 1f;
         RenderSettings.ambientIntensity = 1f; // temporary paused indicator
         GetComponent<AudioSource>().volume = 0.5f;
         GetComponent<AudioSource>().Stop();
-
+        synchronization = 100;
+        fortune = 0;
+        ScoreText.reference.Reset();
 
         GameObject[] monsters = GameObject.FindGameObjectsWithTag("GJMonster");
         foreach (GameObject go in monsters) {
@@ -361,7 +363,8 @@ public class GJLevel : MonoBehaviour {
     public void RestartGame() {
         introMenu.SetActive(false);
         levelMenu.SetActive(false);
-        // victoryMenu.gameObject.SetActive(false);
+        victoryMenu.gameObject.SetActive(false);
+        defeatMenu.gameObject.SetActive(false);
         Reset();
     }
 
@@ -369,7 +372,7 @@ public class GJLevel : MonoBehaviour {
         GetComponent<AudioSource>().volume -= 0.01f;
         if (GetComponent<AudioSource>().volume <= 0) {
             victoryMenu.gameObject.SetActive(true);
-            victoryMenu.newAccuracy = (float)hitCount/notesSpawned;
+            victoryMenu.newAccuracy = (float)hitCount / notesSpawned * 100.0f;
             victoryMenu.newFortune = fortune;
         }
     }
@@ -379,7 +382,7 @@ public class GJLevel : MonoBehaviour {
         GetComponent<AudioSource>().volume -= 0.01f;
         if (GetComponent<AudioSource>().volume <= 0) {
             defeatMenu.gameObject.SetActive(true);
-            defeatMenu.newAccuracy = (float)hitCount / notesSpawned;
+            defeatMenu.newAccuracy = (float)hitCount / notesSpawned * 100.0f;
             defeatMenu.newFortune = fortune;
 
             if (GetComponent<AudioSource>().isPlaying) {
@@ -390,18 +393,7 @@ public class GJLevel : MonoBehaviour {
             foreach (GameObject go in monsters) {
                 go.GetComponent<GJMonster>().paused = true;
             }
-
-            RenderSettings.ambientIntensity = 0f;
-
+            //RenderSettings.ambientIntensity = 0f;
         }
-
-
     }
-
-
-
-
-
-
-
 }

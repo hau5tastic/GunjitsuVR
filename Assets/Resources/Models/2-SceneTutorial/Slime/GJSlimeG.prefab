@@ -242,14 +242,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb326da6b46469f478802427fa4056fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particlePrefab: {fileID: 1505953381500202, guid: fd0132eca92ab73459bfd54ad1dcc568,
+  killedParticlePrefab: {fileID: 1505953381500202, guid: fd0132eca92ab73459bfd54ad1dcc568,
+    type: 2}
+  killParticlePrefab: {fileID: 1505953381500202, guid: a024e517b28a770489b8aee6b8cf53e8,
     type: 2}
   indicatorPrefab: {fileID: 1257461749962070, guid: 6acc7c2cbef8b6f49bdf740c7f643345,
     type: 2}
   scorePrefab: {fileID: 1678603672714268, guid: 61e6bfa918d16784aa435797526be367,
     type: 2}
   paused: 0
-  attackSFX: {fileID: 8300000, guid: 54e905aa29f73db40882a969065487db, type: 3}
 --- !u!137 &137654631995632800
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
