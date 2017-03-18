@@ -150,7 +150,7 @@ Material:
       second: 0.02
     - first:
         name: _Rotation
-      second: 23
+      second: 64
     - first:
         name: _RotationSpeed
       second: 1
@@ -162,7 +162,7 @@ Material:
       second: 1
     - first:
         name: _Speed
-      second: 1.21
+      second: 1
     - first:
         name: _SrcBlend
       second: 1
