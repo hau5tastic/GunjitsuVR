@@ -24,11 +24,14 @@ public class PulseSpawn : MonoBehaviour {
 
         pulseQueue = new Queue<GameObject>();
         foreach (GameObject go in gameObjects) {
-            if (go.GetComponent<MeshFilter>() == null) continue;
-            if (go == this.gameObject) continue;
-            if (go.name == "[CameraRig]") continue;
-            pulseQueue.Enqueue(go);
-            go.SetActive(false);
+            if (LayerMask.LayerToName(go.layer) == "MeshBuild") 
+            {
+                pulseQueue.Enqueue(go);
+                go.SetActive(false);
+            }
+            //if (go.GetComponent<MeshFilter>() == null) continue;
+            //if (go == this.gameObject) continue;
+            //if (go.name == "[CameraRig]") continue;
         }
 
     }
