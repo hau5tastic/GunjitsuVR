@@ -23,10 +23,11 @@ SubShader {
 	half4 _Tint;
 	half _Exposure;
 	float _Rotation;
+	float _Speed;
 
 	float3 RotateAroundYInDegrees (float3 vertex, float degrees)
 	{
-		float newRotation = degrees * _Time % 360.0; // EZ skybox
+		float newRotation = degrees * _Speed * _Time % 360.0; // EZ skybox
 		float alpha = newRotation * UNITY_PI / 180.0;
 		float sina, cosa;
 		sincos(alpha, sina, cosa);
