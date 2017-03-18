@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: RightGunTexture
+  m_Name: LeftGunTexture
   m_Shader: {fileID: 4800000, guid: 2fd7d2ad6e49f5b44ac540005c095ff5, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
@@ -37,7 +37,7 @@ Material:
     m_Colors:
     - first:
         name: _Color
-      second: {r: 0.9338235, g: 0.5296085, b: 0.26778755, a: 1}
+      second: {r: 0.2677875, g: 0.5755421, b: 0.9338235, a: 1}
     - first:
         name: _SpecColor
       second: {r: 0.5, g: 0.5, b: 0.5, a: 1}

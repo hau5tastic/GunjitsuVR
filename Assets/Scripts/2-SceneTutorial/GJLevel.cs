@@ -141,8 +141,8 @@ public class GJLevel : MonoBehaviour {
             synchronization = 100;
         }
 
-        synchroSlider.value = synchronization;
-
+        //synchroSlider.value = synchronization;
+        HealthIndicator.reference.SetHealth(synchronization);
 
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
             RestartGame();

@@ -14,9 +14,9 @@ public class GJMonster : MonoBehaviour {
     void Start () {
 
         GetComponent<Rigidbody>().freezeRotation = true;
-        GameObject go = Instantiate(indicatorPrefab, GameObject.Find("WorldCanvas").transform, true);
-        go.transform.position = transform.position;
-        go.GetComponent<GJShootIndicator>().target = gameObject;
+        //GameObject go = Instantiate(indicatorPrefab, GameObject.Find("WorldCanvas").transform, true);
+        //go.transform.position = transform.position;
+        //go.GetComponent<GJShootIndicator>().target = gameObject;
         transform.LookAt(Camera.main.transform);
 
     }
