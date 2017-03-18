@@ -45,7 +45,7 @@ public class Note : MonoBehaviour, IComparable
         switch (noteType)
         {
             case NOTE_TYPE.LEFT:
-                newColor = Color.blue;
+                newColor = new Color(0, 0.75f, 1.0f);
                 break;
             case NOTE_TYPE.RIGHT:
                 newColor = Color.red;
