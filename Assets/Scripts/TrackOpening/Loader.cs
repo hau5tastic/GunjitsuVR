@@ -1,5 +1,5 @@
 ﻿// ------------------------------------------------------------
-// Loader - Loads and handles Tracks and Songs.
+// Loader - Loads and handles Tracks and Songs. Also acts as Menu for TrackOpen.
 // ------------------------------------------------------------
 using System.Collections;
 using System.Collections.Generic;

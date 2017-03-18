@@ -28,14 +28,14 @@ public class Util
         Application.Quit();
 #endif
     }
-
+    // ------------------------------------------------------------
     public static List<string> getTrackNames()
     {
         List<string> trackNames = new List<string>();
         AddFilesToList(Util.TRACK_DIR_PREFIX, "*" + Util.TRACK_FILE_EXTENSION, trackNames);
         return trackNames;
     }
-
+    // ------------------------------------------------------------
     public static List<string> getSongNames()
     {
         List<string> songNames = new List<string>();
@@ -45,6 +45,7 @@ public class Util
         } 
         return songNames;
     }
+    // ------------------------------------------------------------
     public static void AddFilesToList(string directory, string pattern, List<string> list)
     {
         var dir = new DirectoryInfo(directory);
@@ -53,6 +54,20 @@ public class Util
         {
             list.Add(file.Name);
         }
-
     }
+    // ------------------------------------------------------------
+    public static void loadAudioClip(AudioSource audioSource, string file)
+    {
+        if (file == null)
+        {
+            Util.Quit("Song file could not be found.");
+            return;
+        }
+
+        audioSource.clip = Resources.Load<AudioClip>(Util.SONG_PREFIX + file);
+
+        Debug.Log("Util.cs/loadAudioClip() - File: " + file);
+        Debug.Log("Util.cs/loadAudioClip() - Loaded: " + audioSource.clip.name);
+    }
+    // -----------------------------------------------------------
 }

@@ -70,17 +70,7 @@ public class SongController : MonoBehaviour
     // ------------------------------------------------------------
     public void loadSong(string file)
     {
-        if (file == null)
-        {
-            Util.Quit("Please load a song before opening TrackEdit scene.");
-            return;
-        }
-
-        currentSong = GetComponent<AudioSource>();
-        currentSong.clip = Resources.Load<AudioClip>(Util.SONG_PREFIX + file);
-
-        Debug.Log("SongController.cs/loadSong() - File: " + file);
-        Debug.Log("SongController.cs/loadSong() - Loaded: " + currentSong.clip.name);
+        Util.loadAudioClip(currentSong, file);
     }
     // ------------------------------------------------------------
     public void Play()

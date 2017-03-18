@@ -58,7 +58,14 @@ public class GJLevel : MonoBehaviour {
     }
 
     void Start() {
+        //GJLevel now waits for another class to activate it.
+    }
+
+    public void StartLevel()
+    {
+        loadTrackName();
         readFromFile();
+        loadSong();
         currentTrack.countNotes();
         currentTrack.sortNotes();
         closingTime = closingDelay;
@@ -138,6 +145,7 @@ public class GJLevel : MonoBehaviour {
                 }
                 
                 currentTrack.songName = file.ReadString();
+                TrackInfo.SongName = currentTrack.songName;
                 currentTrack.bpm = file.ReadInt32();
                 currentTrack.startOffset = file.ReadInt32();
                 currentTrack.scrollSpeed = file.ReadInt32();
@@ -190,22 +198,32 @@ public class GJLevel : MonoBehaviour {
         }
         
     }
+    public void loadTrackName()
+    {
+        customTrackName = TrackInfo.TrackName;
+    }
 
+    public void loadSong()
+    {
+        AudioSource audioSource = GetComponent<AudioSource>();
+        Util.loadAudioClip(audioSource, TrackInfo.SongName);
+    }
+    
     public string getFileName() {
-        string difficultyTag = "";
-        switch (trackDifficulty) {
-            case TrackDifficulty.BEGINNER:
-            // case TrackDifficulty.INTERMEDIATE:
-            // case TrackDifficulty.EXPERT:
-                difficultyTag = " [BEGINNER]";
-                break;
-            default:
-                break;
+        //string difficultyTag = "";
+        //switch (trackDifficulty) {
+        //    case TrackDifficulty.BEGINNER:
+        //    // case TrackDifficulty.INTERMEDIATE:
+        //    // case TrackDifficulty.EXPERT:
+        //        difficultyTag = " [BEGINNER]";
+        //        break;
+        //    default:
+        //        break;
 
-        }
+        //}
 
-        if (customTrackName == "" ) customTrackName = GetComponent<AudioSource>().clip.name + difficultyTag;
-        return Util.TRACK_DIR_PREFIX + customTrackName  + Util.TRACK_FILE_EXTENSION;
+        //if (customTrackName == "" ) customTrackName = GetComponent<AudioSource>().clip.name + difficultyTag;
+        return Util.TRACK_DIR_PREFIX + customTrackName; 
     }
 
     void Reset() {
