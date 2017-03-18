@@ -12,8 +12,6 @@ using UnityEngine.SceneManagement;
 public class Loader : MonoBehaviour
 {
     // ------------------------------------------------------------
-    string[] APPROVED_SONG_EXTENSIONS = { "wav", "mp3" };
-    // ------------------------------------------------------------
     //Dependencies
     [SerializeField]
     Text[] trackTexts;
@@ -37,30 +35,29 @@ public class Loader : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        trackNames = new List<string>();
-        songNames = new List<string>();
         if (trackTexts == null || songTexts == null 
             || !songNameSlider || !trackNameSlider || !trackNameInput)
         {
             Util.Quit("Loader.cs/Start() - Loader is not initialized properly!");
             return;
         }
-        LoadTrackAndSongNames();
+        InitLists();
+        InitSliders();
+        UpdateListTexts();
     }
     // ------------------------------------------------------------
-    void LoadTrackAndSongNames()
+    void InitLists()
     {
-        AddFilesToList(Util.TRACK_DIR_PREFIX, "*" + Util.TRACK_FILE_EXTENSION, trackNames);
-        foreach (string extension in APPROVED_SONG_EXTENSIONS)
-        {
-            AddFilesToList(Util.SONG_DIR_PREFIX, "*." + extension, songNames);
-        }
-
+        trackNames = Util.getTrackNames();
+        songNames = Util.getSongNames();
+    }
+    // ------------------------------------------------------------
+    void InitSliders()
+    {
         //Initialize Sliders
         int sliderValue = songNames.Count - 1;
         if (sliderValue < 0) sliderValue = 0;
         songNameSlider.maxValue = sliderValue;
-        //songNameSlider.rec
         
         sliderValue = trackNames.Count - 1;
         if (sliderValue < 0) sliderValue = 0;
@@ -68,21 +65,7 @@ public class Loader : MonoBehaviour
 
     }
     // ------------------------------------------------------------
-    void AddFilesToList(string directory, string pattern, List<string> list)
-    {
-        var dir = new DirectoryInfo(directory);
-        var files = dir.GetFiles(pattern);
-        foreach (FileInfo file in files)
-        {
-            list.Add(file.Name);
-        }
-    }
-    // ------------------------------------------------------------
-    // Update is called once per frame
-    void Update()
-    {
-        UpdateListTexts();
-    }
+   
     // ------------------------------------------------------------
     public void UpdateListTexts()
     {
