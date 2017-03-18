@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114701902099541816}
   - component: {fileID: 108967544325477146}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: BulletRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82,10 +82,16 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 2
-        time: 0
-        value: 0.2962963
-        inSlope: -0.21502069
-        outSlope: -0.21502069
+        time: 0.0032786885
+        value: 1
+        inSlope: -1.2597827
+        outSlope: -1.2597827
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 1
+        value: 0.4021739
+        inSlope: -0.58937204
+        outSlope: -0.58937204
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -149,7 +155,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 7
   m_Type: 2
-  m_Color: {r: 0.99097365, g: 1, b: 0.3455882, a: 1}
+  m_Color: {r: 0.93333334, g: 0.5294118, b: 0.26666668, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
