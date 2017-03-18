@@ -27,7 +27,7 @@ public class HealthIndicator : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         float t = health / 100.0f;
-        Debug.Log(t);
+        // Debug.Log(t);
         light.color = Color.Lerp(deadColor, healthyColor, (health / 100.0f));
 	}
 
