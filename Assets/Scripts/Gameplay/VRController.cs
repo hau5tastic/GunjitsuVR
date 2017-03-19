@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(AudioSource))]
-public class ShootScript : MonoBehaviour {
+public class VRController : MonoBehaviour {
     [SerializeField]
     SteamVR_TrackedController _controller;
 

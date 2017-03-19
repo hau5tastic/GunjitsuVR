@@ -540,7 +540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bpmInputField: {fileID: 0}
-  divisionsDropdown: {fileID: 0}
+  divisionsSlider: {fileID: 0}
   lanes:
   - {fileID: 114558949991823564}
   - {fileID: 114753071145590996}
@@ -551,6 +551,7 @@ MonoBehaviour:
   - {fileID: 114350765450889644}
   - {fileID: 114866598858058158}
   offsetInputField: {fileID: 0}
+  scrollSpeedSlider: {fileID: 0}
   songController: {fileID: 0}
   trackInfoText: {fileID: 0}
 --- !u!114 &114162803111953978
