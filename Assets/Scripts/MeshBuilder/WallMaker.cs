@@ -1,0 +1,37 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class WallMaker : MonoBehaviour {
+
+    public GameObject boxPrefab;
+    public int width;
+    public int height;
+    public float spacing;
+    public float heightOffset;
+    public bool isBrickWall;
+
+	void Awake() {
+        CreateWall();
+	}
+
+    void CreateWall() {
+        float bw = boxPrefab.GetComponent<Renderer>().bounds.size.x;
+        float bh = boxPrefab.GetComponent<Renderer>().bounds.size.y;
+        transform.position = new Vector3(transform.position.x, bh/2 + heightOffset, transform.position.z);
+
+        for (int h = 0; h < height; ++h) {
+            for (int w = 0; w < width; ++w) {
+                Vector3 offset = new Vector3(w * bw, h * bh, 0);
+                if (h % 2 != 0 && isBrickWall) {
+                    offset.x += bw / 2f + spacing;
+                } else {
+                    offset.x += spacing;
+                }
+                GameObject g = Instantiate(boxPrefab, transform, false);
+                g.transform.localPosition = (offset);
+            }
+        }
+    }
+	
+}
