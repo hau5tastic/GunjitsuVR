@@ -96,7 +96,8 @@ public class VRController : MonoBehaviour {
 
             SplitMeshIntoTriangles smit = hit.collider.GetComponent<SplitMeshIntoTriangles>();
             if (smit != null) {
-                smit.SplitMesh();
+                Destroy(smit.gameObject);
+                // smit.SplitMesh();
             }
         }
     }
