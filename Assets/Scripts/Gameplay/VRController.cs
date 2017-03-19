@@ -93,6 +93,11 @@ public class VRController : MonoBehaviour {
                 Debug.Log("spaceship hit");
                 hit.transform.GetComponent<SplitMeshIntoTriangles>().SplitMesh();
             }
+
+            SplitMeshIntoTriangles smit = hit.collider.GetComponent<SplitMeshIntoTriangles>();
+            if (smit != null) {
+                smit.SplitMesh();
+            }
         }
     }
 
