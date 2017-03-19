@@ -71,9 +71,12 @@ public class GJLevel : MonoBehaviour {
     public TrackDifficulty trackDifficulty = TrackDifficulty.NONE;
     float elapsedTime;
 
+    [SerializeField]
     bool isPlaying = false;
-    public bool isPaused = false;//fuck this code
+    [SerializeField]
     bool trackEnded = false;
+    public bool isPaused = false; //fuck this code :{)
+    public bool dontSpawnAnotherDefeatVictoryScreen = false; //forkkk
 
     [Header("Level Spawners")]
     public GJMonsterSpawner[] monsterSpawners;
@@ -135,7 +138,7 @@ public class GJLevel : MonoBehaviour {
     }
 
 	void Update () {
-        
+
         if (synchronization < 100) {
             if (synchronization <= 0) {
                 Debug.Log("Defeat");
@@ -159,9 +162,11 @@ public class GJLevel : MonoBehaviour {
 
         if (!isPlaying) return;
         synchronization += regenerationValue * Time.deltaTime;
-        if (trackEnded) {
+        if (trackEnded)
+        {
             victoryEnd();
         }
+
         elapsedTime += Time.deltaTime;
 
         if (elapsedTime >= 0) {
@@ -388,7 +393,7 @@ public class GJLevel : MonoBehaviour {
         levelMenu.SetActive(false);
         victoryMenu.gameObject.SetActive(false);
         defeatMenu.gameObject.SetActive(false);
-        
+        dontSpawnAnotherDefeatVictoryScreen = true;
     }
 
     public void RestartGame() {
@@ -397,11 +402,12 @@ public class GJLevel : MonoBehaviour {
         victoryMenu.gameObject.SetActive(false);
         defeatMenu.gameObject.SetActive(false);
         Reset();
+        dontSpawnAnotherDefeatVictoryScreen = false;
     }
 
     public void victoryEnd() {
         GetComponent<AudioSource>().volume -= 0.01f;
-        if (GetComponent<AudioSource>().volume <= 0) {
+        if (GetComponent<AudioSource>().volume <= 0 && !dontSpawnAnotherDefeatVictoryScreen) {
             victoryMenu.gameObject.SetActive(true);
             victoryMenu.newAccuracy = (float)hitCount / notesSpawned * 100.0f;
             victoryMenu.newFortune = fortune;
@@ -411,7 +417,7 @@ public class GJLevel : MonoBehaviour {
     public void defeatEnd() {
         isPlaying = false;
         GetComponent<AudioSource>().volume -= 0.01f;
-        if (GetComponent<AudioSource>().volume <= 0) {
+        if (GetComponent<AudioSource>().volume <= 0 && !dontSpawnAnotherDefeatVictoryScreen) { //WTF??? <----
             defeatMenu.gameObject.SetActive(true);
             defeatMenu.newAccuracy = (float)hitCount / notesSpawned * 100.0f;
             defeatMenu.newFortune = fortune;
