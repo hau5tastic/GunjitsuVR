@@ -13,7 +13,7 @@ public class SongSelection : MonoBehaviour {
         trackNames = Util.getTrackNames();
 
         //Create a UI Button per Track Name
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < trackNames.Count; i++)
         {
             GameObject goButton = (GameObject)Instantiate(prefabButton);
             goButton.transform.SetParent(ParentPanel, false);

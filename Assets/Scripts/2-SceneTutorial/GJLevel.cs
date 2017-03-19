@@ -72,6 +72,7 @@ public class GJLevel : MonoBehaviour {
     float elapsedTime;
 
     bool isPlaying = false;
+    public bool isPaused = false;//fuck this code
     bool trackEnded = false;
 
     [Header("Level Spawners")]
@@ -351,6 +352,7 @@ public class GJLevel : MonoBehaviour {
     }
 
     public void PauseGame() {
+
         Time.timeScale = 0f;
         if (GetComponent<AudioSource>().isPlaying) {
             GetComponent<AudioSource>().Pause();
@@ -363,6 +365,7 @@ public class GJLevel : MonoBehaviour {
 
         RenderSettings.ambientIntensity = 0f;
         isPlaying = false;
+        isPaused = true;
         levelMenu.SetActive(true);
     }
 
@@ -375,7 +378,17 @@ public class GJLevel : MonoBehaviour {
         }
         GetComponent<AudioSource>().UnPause();
         isPlaying = true;
+        isPaused = false;
         levelMenu.SetActive(false);
+    }
+
+    public void ShowIntro()
+    {
+        introMenu.SetActive(true); // ??
+        levelMenu.SetActive(false);
+        victoryMenu.gameObject.SetActive(false);
+        defeatMenu.gameObject.SetActive(false);
+        
     }
 
     public void RestartGame() {

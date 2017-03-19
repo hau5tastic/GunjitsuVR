@@ -52,8 +52,8 @@ public class PulseSpawn : MonoBehaviour {
             if (currentObject.layer == 31) return;
             currentObject.SetActive(true);
             BreakMesh bm = currentObject.AddComponent<BreakMesh>();
-            bm.minDuration = 1.0f;
-            bm.maxDuration = 5.0f;
+            bm.minDuration = 0.5f;
+            bm.maxDuration = 2.0f;
             // Instantiate(pulseLightPrefab, currentObject.transform, false);
             pulseQueue.Dequeue();
         }

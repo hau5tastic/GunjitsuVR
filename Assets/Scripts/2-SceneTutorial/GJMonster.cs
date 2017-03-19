@@ -30,7 +30,7 @@ public class GJMonster : MonoBehaviour {
 	}
 
     bool IsWithinKillRange() {
-        return (Vector3.Distance(Camera.main.transform.position, transform.position) <= GameSettings.killRange - 0.5f);
+        return (Vector3.Distance(Camera.main.transform.position, transform.position) <= GameSettings.killRange - 1.5f);
     }
 
     public void Kill(bool killedByShot)
@@ -42,18 +42,26 @@ public class GJMonster : MonoBehaviour {
             GameObject particle = Instantiate(killedParticlePrefab, transform.position, Quaternion.identity);
             Destroy(particle, .5f);
         } else {
-            GJLevel.synchronization-=5;
+            GJLevel.synchronization -= 5;
             GameObject particle = Instantiate(killParticlePrefab, transform.position, Quaternion.identity);
             particle.GetComponent<AudioSource>().Play();
             Destroy(particle, .5f);
         }
-        
-        Destroy(gameObject);
+
+        SplitMeshIntoTriangles splitter = GetComponentInChildren<SplitMeshIntoTriangles>();
+        if (splitter)
+        {
+            splitter.SplitMesh();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     void CreateScorePopup()
     {
-        float distance = Vector3.Distance(Camera.main.transform.position, transform.position);
+        float distance = Mathf.Abs(Vector3.Distance(Camera.main.transform.position, transform.position) - GameSettings.killRange);
 
         GameObject go = Instantiate(scorePrefab, GameObject.Find("ScoreCanvas").transform, true);
         go.transform.position = transform.position + (transform.up * 1.2f);
@@ -79,7 +87,7 @@ public class GJMonster : MonoBehaviour {
             go.GetComponent<GJScorePopup>().Init(GJAccuracy.OK);
         }
 
-        Debug.Log(distance);
+        //Debug.Log("DEATH DISTANCE: " + distance);
 
         go.transform.LookAt(Camera.main.transform);
         go.transform.Rotate(0, 180, 0);

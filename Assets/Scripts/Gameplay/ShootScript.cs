@@ -16,6 +16,8 @@ public class ShootScript : MonoBehaviour {
 
     private Camera UICamera;
 
+    public GJLevel levelPleaseRefactorMeee;
+
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -48,14 +50,26 @@ public class ShootScript : MonoBehaviour {
     private void OnEnable()
     {
         _controller.TriggerClicked += Shoot;
+        _controller.Gripped += OnGrip;
     }
 
     private void OnDisable()
     {
         _controller.TriggerClicked -= Shoot;
+        _controller.Ungripped += OnGrip;
     }
 
-
+    public void OnGrip(object sender, ClickedEventArgs e)
+    {
+        if (levelPleaseRefactorMeee.isPaused)
+        {
+            levelPleaseRefactorMeee.ResumeGame();
+        } else
+        {
+            levelPleaseRefactorMeee.PauseGame();
+        }
+    }
+    
     public void Shoot(object sender, ClickedEventArgs e)
     {
 
@@ -64,15 +78,20 @@ public class ShootScript : MonoBehaviour {
 
         Destroy(Instantiate(bullet, transform.position + (transform.forward * 0.18f) + (transform.up * 0.05f) + (transform.right * -0.02f), transform.rotation), 2.0f);
 
-        Debug.Log("ShootScript/Shoot() - Raycast attempt");
+        //Debug.Log("ShootScript/Shoot() - Raycast attempt");
         if (Physics.Raycast(transform.position + new Vector3(0, 0.085f, 0), transform.forward, out hit, 100f))
         {
 
 
-            Debug.Log("ShootScript/Shoot() -  Raycasted against " + hit.transform.tag);
+            //Debug.Log("ShootScript/Shoot() -  Raycasted against " + hit.transform.tag);
             if (hit.transform.tag == "GJMonster")
             {
                 hit.collider.GetComponent<GJMonster>().Kill(true);
+            }
+            if(hit.transform.name == "GJSpaceshipC")
+            {
+                Debug.Log("spaceship hit");
+                hit.transform.GetComponent<SplitMeshIntoTriangles>().SplitMesh();
             }
         }
     }
