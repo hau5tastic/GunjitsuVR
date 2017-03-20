@@ -43,7 +43,7 @@ public class BreakMesh : MonoBehaviour {
                 mesh.triangles = new int[] { 0, 1, 2, 2, 1, 0 };
 
                 GameObject GO = new GameObject("Triangle " + (i / 3));
-                GO.transform.position = GO.transform.position + new Vector3(Random.Range(1, 100), Random.Range(1, 100), Random.Range(1, 100));
+                GO.transform.position = GO.transform.position + new Vector3(Random.Range(-100, 100), Random.Range(1, 100), Random.Range(-100, 100));
                 // GO.transform.position = Camera.main.transform.position;
                 // GO.transform.position = new Vector3(0, 50, 0);
                 // GO.transform.position = new Vector3(0, -50, 0);

@@ -34,4 +34,10 @@ public class SongSelection : MonoBehaviour {
         this.gameObject.SetActive(false);
         level.RestartGame();
     }
+
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.J)) {
+            OnSongSelect(5);
+        }
+    }
 }
