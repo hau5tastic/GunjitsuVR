@@ -38,6 +38,7 @@ public class GJLevel : MonoBehaviour {
     [Header("Game Settings")]
     public float spawnRange;
     public float killRange;
+    public float killRangeOffset;
     public float overridePlaySpeed;
     public float manualOffset;
 
@@ -99,6 +100,7 @@ public class GJLevel : MonoBehaviour {
     {
         GameSettings.spawnRange = spawnRange;
         GameSettings.killRange = killRange;
+        GameSettings.killRangeOffset = killRangeOffset;
 
         GameSettings.perfect = perfect;
         GameSettings.great = great;
@@ -141,7 +143,6 @@ public class GJLevel : MonoBehaviour {
 
         if (synchronization < 100) {
             if (synchronization <= 0) {
-                Debug.Log("Defeat");
                 synchronization = 0;
                 defeatEnd();
             }
@@ -151,14 +152,6 @@ public class GJLevel : MonoBehaviour {
 
         //synchroSlider.value = synchronization;
         HealthIndicator.reference.SetHealth(synchronization);
-
-        if (Input.GetKeyDown(KeyCode.Alpha1)) {
-            RestartGame();
-        }
-        if(Input.GetKeyDown(KeyCode.Q))
-        {
-            PauseGame();
-        }
 
         if (!isPlaying) return;
         synchronization += regenerationValue * Time.deltaTime;

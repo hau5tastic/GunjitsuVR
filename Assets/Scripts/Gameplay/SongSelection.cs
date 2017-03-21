@@ -28,14 +28,6 @@ public class SongSelection : MonoBehaviour {
         }
     }
 
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            OnSongSelect(1);
-        }
-    }
-
     public void OnSongSelect(int i)
     {
         TrackInfo.TrackName = trackNames[i];

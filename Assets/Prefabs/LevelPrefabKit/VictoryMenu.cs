@@ -43,13 +43,11 @@ public class VictoryMenu : MonoBehaviour {
     private void OnEnable()
     {
         //StackTrace st = new StackTrace(new StackFrame(true));
-        UnityEngine.Debug.Log("WTF IS GOING ON? Stack trace for current level: ");
+        //UnityEngine.Debug.Log("WTF IS GOING ON? Stack trace for current level: ");
         ////StackFrame sf = st.GetFrame(0);
         //Debug.Log(" File: {0}", sf.GetFileName());
         //Debug.Log(" Method: {0}", sf.GetMethod().Name);
         //Debug.Log(" Line Number: {0}", sf.GetFileLineNumber());
         //Debug.Log(" Column Number: {0}", sf.GetFileColumnNumber());
-
-
     }
 }

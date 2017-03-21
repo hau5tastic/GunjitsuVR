@@ -11,14 +11,19 @@ public class GJMonster : MonoBehaviour {
     public GameObject scorePrefab;
     public bool paused = false;
 
-    void Start () {
+    void Awake()
+    {
+        GetComponent<AudioSource>().clip.LoadAudioData();
+        GetComponent<AudioSource>().PlayScheduled(AudioSettings.dspTime + TimeToDeath());
+    }
 
+    void Start () {
         GetComponent<Rigidbody>().freezeRotation = true;
+        // indicators
         //GameObject go = Instantiate(indicatorPrefab, GameObject.Find("WorldCanvas").transform, true);
         //go.transform.position = transform.position;
         //go.GetComponent<GJShootIndicator>().target = gameObject;
         transform.LookAt(Camera.main.transform);
-
     }
 	
 	void Update () {
@@ -44,7 +49,7 @@ public class GJMonster : MonoBehaviour {
         } else {
             GJLevel.synchronization -= 5;
             GameObject particle = Instantiate(killParticlePrefab, transform.position, Quaternion.identity);
-            particle.GetComponent<AudioSource>().Play();
+            //particle.GetComponent<AudioSource>().Play();
             Destroy(particle, .5f);
         }
 
@@ -91,5 +96,11 @@ public class GJMonster : MonoBehaviour {
 
         go.transform.LookAt(Camera.main.transform);
         go.transform.Rotate(0, 180, 0);
+    }
+
+    float TimeToDeath()
+    {
+        float distance = Vector3.Distance(Camera.main.transform.position, transform.position) - (GameSettings.killRange + GameSettings.killRangeOffset);
+        return (distance / GameSettings.playSpeed);
     }
 }
