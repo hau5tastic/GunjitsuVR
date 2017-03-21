@@ -21,7 +21,7 @@ public class GJMonster : MonoBehaviour {
         else
         {
             //GetComponent<AudioSource>().clip.LoadAudioData();
-            GetComponent<AudioSource>().PlayScheduled(AudioSettings.dspTime + TimeToDeath());
+            GetComponent<AudioSource>().PlayScheduled(AudioSettings.dspTime + TimeToDeath(true));
         }
     }
 
@@ -75,8 +75,8 @@ public class GJMonster : MonoBehaviour {
 
     IEnumerator AutoKill()
     {
-        Debug.Log("Time to death: " + TimeToDeath());
-        yield return new WaitForSeconds(TimeToDeath());
+        Debug.Log("Time to death: " + TimeToDeath(false));
+        yield return new WaitForSeconds(TimeToDeath(false));
         Kill(true);
         StopAllCoroutines();
     }
@@ -115,9 +115,18 @@ public class GJMonster : MonoBehaviour {
         go.transform.Rotate(0, 180, 0);
     }
 
-    float TimeToDeath()
+    float TimeToDeath(bool useOffset)
     {
-        float distance = Vector3.Distance(Camera.main.transform.position, transform.position) - (GameSettings.killRange + GameSettings.killRangeOffset);
+        float distance;
+        if (useOffset)
+        {
+            distance = Vector3.Distance(Camera.main.transform.position, transform.position) - (GameSettings.killRange + GameSettings.killRangeOffset);
+        }
+        else
+        {
+            distance = Vector3.Distance(Camera.main.transform.position, transform.position) - (GameSettings.killRange);
+        }
+        
         return (distance / GameSettings.playSpeed);
     }
 }
