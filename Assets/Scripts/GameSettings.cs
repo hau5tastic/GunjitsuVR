@@ -30,4 +30,6 @@ public static class GameSettings {
     public static Color okColor;
 
     public static float displayTime;
+
+    public static bool autoPlaySong;
 }

@@ -41,6 +41,7 @@ public class GJLevel : MonoBehaviour {
     public float killRangeOffset;
     public float overridePlaySpeed;
     public float manualOffset;
+    public bool autoPlaySong = false;
 
     [Header("Score Accuracy")]
     public float perfect = 0.125f;
@@ -118,6 +119,8 @@ public class GJLevel : MonoBehaviour {
         GameSettings.okColor = okColor;
 
         GameSettings.displayTime = displayTime;
+
+        GameSettings.autoPlaySong = autoPlaySong;
     }
 
     void Awake() {

@@ -13,8 +13,16 @@ public class GJMonster : MonoBehaviour {
 
     void Awake()
     {
-        GetComponent<AudioSource>().clip.LoadAudioData();
-        GetComponent<AudioSource>().PlayScheduled(AudioSettings.dspTime + TimeToDeath());
+        if(GameSettings.autoPlaySong)
+        {
+
+            StartCoroutine(AutoKill());
+        }
+        else
+        {
+            //GetComponent<AudioSource>().clip.LoadAudioData();
+            GetComponent<AudioSource>().PlayScheduled(AudioSettings.dspTime + TimeToDeath());
+        }
     }
 
     void Start () {
@@ -42,6 +50,7 @@ public class GJMonster : MonoBehaviour {
     {
         if (killedByShot)
         {
+            GetComponent<AudioSource>().Stop(); // stop scheduled death sound
             CreateScorePopup();
             GJLevel.hitCount++;
             GameObject particle = Instantiate(killedParticlePrefab, transform.position, Quaternion.identity);
@@ -62,6 +71,14 @@ public class GJMonster : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+    }
+
+    IEnumerator AutoKill()
+    {
+        Debug.Log("Time to death: " + TimeToDeath());
+        yield return new WaitForSeconds(TimeToDeath());
+        Kill(true);
+        StopAllCoroutines();
     }
 
     void CreateScorePopup()
