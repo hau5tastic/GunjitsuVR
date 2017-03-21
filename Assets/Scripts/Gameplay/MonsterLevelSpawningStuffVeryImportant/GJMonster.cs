@@ -75,7 +75,7 @@ public class GJMonster : MonoBehaviour {
 
     IEnumerator AutoKill()
     {
-        Debug.Log("Time to death: " + TimeToDeath(false));
+        //Debug.Log("Time to death: " + TimeToDeath(false));
         yield return new WaitForSeconds(TimeToDeath(false));
         Kill(true);
         StopAllCoroutines();
