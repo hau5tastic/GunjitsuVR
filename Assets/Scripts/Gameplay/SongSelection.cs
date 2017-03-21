@@ -24,10 +24,19 @@ public class SongSelection : MonoBehaviour {
             tempButton.GetComponentInChildren<Text>().text = trackNames[i];
 
             tempButton.onClick.AddListener(() => OnSongSelect(tempInt));
+            goButton.AddComponent<SongSelectInEditor>().Init(this, i);
         }
     }
 
-    void OnSongSelect(int i)
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            OnSongSelect(1);
+        }
+    }
+
+    public void OnSongSelect(int i)
     {
         TrackInfo.TrackName = trackNames[i];
         level.StartLevel();

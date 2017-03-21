@@ -50,13 +50,13 @@ public class VRController : MonoBehaviour {
     private void OnEnable()
     {
         _controller.TriggerClicked += Shoot;
-        _controller.Gripped += OnGrip;
+       // _controller.Gripped += OnGrip;
     }
 
     private void OnDisable()
     {
         _controller.TriggerClicked -= Shoot;
-        _controller.Ungripped += OnGrip;
+       // _controller.Ungripped += OnGrip;
     }
 
     public void OnGrip(object sender, ClickedEventArgs e)

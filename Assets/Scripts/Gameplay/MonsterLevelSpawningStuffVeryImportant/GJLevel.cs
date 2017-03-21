@@ -324,7 +324,7 @@ public class GJLevel : MonoBehaviour {
         isPlaying = true;
         Time.timeScale = 1f;
         RenderSettings.ambientIntensity = 1f; // temporary paused indicator
-        GetComponent<AudioSource>().volume = 0.5f;
+        GetComponent<AudioSource>().volume = 1f;
         GetComponent<AudioSource>().Stop();
         synchronization = 100;
         fortune = 0;

@@ -21,6 +21,6 @@ public class GJMonsterSpawner : MonoBehaviour {
 
     void NormalizePosition() {
         Vector3 direction = transform.position - Camera.main.transform.position;
-        transform.position = Camera.main.transform.position + direction.normalized * GameSettings.spawnRange;
+        transform.position = Camera.main.transform.position + direction.normalized * (GameSettings.spawnRange + 2.0f);
     }
 }
