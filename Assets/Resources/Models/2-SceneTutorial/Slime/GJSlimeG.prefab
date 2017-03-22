@@ -68,8 +68,8 @@ GameObject:
   - component: {fileID: 111736655647981872}
   - component: {fileID: 65992519452120756}
   - component: {fileID: 114981899499053638}
-  - component: {fileID: 54560765498065992}
   - component: {fileID: 82589413579832922}
+  - component: {fileID: 54567302511413070}
   m_Layer: 9
   m_Name: GJSlimeG
   m_TagString: GJMonster
@@ -190,7 +190,7 @@ Transform:
   m_Father: {fileID: 4093843169203924}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &54560765498065992
+--- !u!54 &54567302511413070
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

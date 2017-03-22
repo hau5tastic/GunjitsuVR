@@ -26,7 +26,7 @@ public class GJMonster : MonoBehaviour {
     }
 
     void Start () {
-        GetComponent<Rigidbody>().freezeRotation = true;
+        // GetComponent<Rigidbody>().freezeRotation = true;
         // indicators
         //GameObject go = Instantiate(indicatorPrefab, GameObject.Find("WorldCanvas").transform, true);
         //go.transform.position = transform.position;
