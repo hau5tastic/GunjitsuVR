@@ -9,7 +9,6 @@ public static class GameSettings {
     // range in which monsters die
     public static float killRange;
     // range in which you want to kill the monsters
-    public static float killRangeOffset;
     public static float spawnRange;
     public static float playSpeed;
     public static float timeOffset;

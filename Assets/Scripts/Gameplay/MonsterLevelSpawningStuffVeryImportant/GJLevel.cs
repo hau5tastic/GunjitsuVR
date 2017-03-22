@@ -101,7 +101,6 @@ public class GJLevel : MonoBehaviour {
     {
         GameSettings.spawnRange = spawnRange;
         GameSettings.killRange = killRange;
-        GameSettings.killRangeOffset = killRangeOffset;
 
         GameSettings.perfect = perfect;
         GameSettings.great = great;
@@ -163,10 +162,12 @@ public class GJLevel : MonoBehaviour {
             victoryEnd();
         }
 
-        elapsedTime += Time.deltaTime;
 
         if (elapsedTime >= 0) {
             if (!GetComponent<AudioSource>().isPlaying) GetComponent<AudioSource>().Play();
+            elapsedTime = GetComponent<AudioSource>().time;
+        } else {
+            elapsedTime += Time.deltaTime;
         }
 
         if (notesSpawned >= currentTrack.noteCount) {

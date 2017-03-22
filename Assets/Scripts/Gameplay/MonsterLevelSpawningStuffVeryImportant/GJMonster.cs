@@ -118,14 +118,8 @@ public class GJMonster : MonoBehaviour {
     float TimeToDeath(bool useOffset)
     {
         float distance;
-        if (useOffset)
-        {
-            distance = Vector3.Distance(Camera.main.transform.position, transform.position) - (GameSettings.killRange + GameSettings.killRangeOffset);
-        }
-        else
-        {
-            distance = Vector3.Distance(Camera.main.transform.position, transform.position) - (GameSettings.killRange);
-        }
+
+        distance = Vector3.Distance(Camera.main.transform.position, transform.position) - (GameSettings.killRange);
         
         return (distance / GameSettings.playSpeed);
     }
