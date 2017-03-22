@@ -35,6 +35,8 @@ public class GJLevel : MonoBehaviour {
     public float closingDelay;
     float closingTime;
 
+    public static Transform target;
+
     [Header("Game Settings")]
     public float spawnRange;
     public float killRange;
@@ -429,5 +431,10 @@ public class GJLevel : MonoBehaviour {
             }
             //RenderSettings.ambientIntensity = 0f;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(Camera.main.transform.position, GameSettings.killRange);
     }
 }
