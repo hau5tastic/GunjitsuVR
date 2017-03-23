@@ -78,7 +78,7 @@ public class GJMonster : MonoBehaviour {
 
     void CreateScorePopup()
     {
-        float distance = Mathf.Abs(Vector3.Distance(Camera.main.transform.position, transform.position) - GJLevel.instance.killRange);
+        float distance = Mathf.Abs(Vector3.Distance(GJLevel.instance.center.position, transform.position) - GJLevel.instance.killRange);
 
         GameObject go = Instantiate(scorePrefab, GameObject.Find("ScoreCanvas").transform, true);
         go.transform.position = transform.position + (transform.up * 1.2f);
