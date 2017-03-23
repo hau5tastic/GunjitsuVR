@@ -23,18 +23,18 @@ public class VictoryMenu : MonoBehaviour {
     }
 
     void Update() {
-        if (accuracy < GJLevel.accuracy) {
+        if (accuracy < GJLevel.instance.accuracy) {
             accuracy+=0.2f;
             accuracy = Mathf.Round(accuracy * 100f) / 100f;
         }
         textAccuracy.text = "Accuracy: " + accuracy + "%";
 
-        if (fortune < GJLevel.fortune) {
+        if (fortune < GJLevel.instance.fortune) {
             float sfxOffset = 2.0f; // because the sfx doesnt exactly end to its length
-            float accumulation = (float)GJLevel.fortune / (SFXAccumulate.length - sfxOffset);
+            float accumulation = (float)GJLevel.instance.fortune / (SFXAccumulate.length - sfxOffset);
             fortune += (int)(accumulation * Time.deltaTime);
-        } else if (fortune >= GJLevel.fortune) {
-            fortune = GJLevel.fortune;
+        } else if (fortune >= GJLevel.instance.fortune) {
+            fortune = GJLevel.instance.fortune;
         }
         textFortune.text = "Fortune: $ " + fortune;
     }

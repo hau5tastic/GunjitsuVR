@@ -9,23 +9,17 @@ using UnityEngine.SceneManagement;
     using UnityEditor;
 #endif
 
-namespace GJScore
-{
-    public enum GJAccuracy
-    {
-        PERFECT,
-        GREAT,
-        GOOD,
-        OK
-    }
-}
-
 public class GJLevel : MonoBehaviour {
 
     public static GJLevel instance = null;
 
+    // ------ GAME SETTINGS ------
+    [SerializeField]
+    public Transform center;
+
     [Header("UI Prefabs / Scripts")]
-    public float closingDelay;
+    [SerializeField]
+    float closingDelay;
     float closingTime;
 
     [Header("Game Settings")]
@@ -33,34 +27,9 @@ public class GJLevel : MonoBehaviour {
     public float killRange;
     public float overridePlaySpeed;
     public float manualOffset;
+    [SerializeField]
+    float trackStartOffset;
     public bool autoPlaySong = false;
-
-    [Header("Score Accuracy")]
-    public float perfect = 0.125f;
-    public float great = 0.25f;
-    public float good = 0.5f;
-    public float ok = 1.0f;
-
-    [Header("Score Points")]
-    public int perfectScore = 1000;
-    public int greatScore = 500;
-    public int goodScore = 250;
-    public int okScore = 100;
-
-    [Header("Score Colors")]
-    public Color perfectColor = Color.green;
-    public Color greatColor = Color.blue;
-    public Color goodColor = Color.yellow;
-    public Color okColor = Color.red;
-
-    [Header("Display Time")]
-    public float displayTime = 1.5f;
-
-    [Header("Track File")]
-
-
-    public float trackStartOffset;
-    float elapsedTime;
 
     [SerializeField]
     bool isInProgress = false;
@@ -77,13 +46,43 @@ public class GJLevel : MonoBehaviour {
     public GameObject[] monsterPrefabs;
 
     [Header("Player Properties")]
-    public static int hitCount = 0;
-    public static float accuracy = 0;
-    public static int fortune = 0;
-    public static float synchronization = 100; // HP
-
+    public int hitCount = 0;
+    public float accuracy = 0;
+    public int fortune = 0;
+    public float synchronization = 100; // HP
+    float elapsedTime;
+    
     public GJSongTrack currentTrack;
+    [HideInInspector]
     public AudioSource audioSource;
+
+
+    // ------ SCORING ------
+    public enum GJAccuracy {
+        PERFECT,
+        GREAT,
+        GOOD,
+        OK
+    }
+    [Header("Scoring")]
+    public float displayTime = 1.5f;
+    
+    [Space(10f)]
+    public float perfect = 0.125f;
+    public int perfectScore = 1000;
+    public Color perfectColor = Color.green;
+    [Space(10f)]
+    public float great = 0.25f;
+    public int greatScore = 500;
+    public Color greatColor = Color.blue;
+    [Space(10f)]
+    public float good = 0.5f;
+    public int goodScore = 250;
+    public Color goodColor = Color.yellow;
+    [Space(10f)]
+    public float ok = 1.0f;
+    public int okScore = 100;
+    public Color okColor = Color.red;
 
     void Awake() {
         
@@ -308,6 +307,6 @@ public class GJLevel : MonoBehaviour {
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(Camera.main.transform.position, killRange);
+        Gizmos.DrawWireSphere(center.position, killRange);
     }
 }

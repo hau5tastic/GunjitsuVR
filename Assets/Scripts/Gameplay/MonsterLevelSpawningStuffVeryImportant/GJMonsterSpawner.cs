@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GJMonsterSpawner : MonoBehaviour {
 
-
     void Start() {
         NormalizePosition();
 

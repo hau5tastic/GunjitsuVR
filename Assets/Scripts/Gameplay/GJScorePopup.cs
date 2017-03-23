@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using GJScore;
+
 
 
 public class GJScorePopup : MonoBehaviour {
 
-    private GJAccuracy accuracy;
+    private GJLevel.GJAccuracy accuracy;
     private Color color;
     private Text text;
 
@@ -21,24 +21,24 @@ public class GJScorePopup : MonoBehaviour {
         Destroy(this.gameObject, GJLevel.instance.displayTime);
 	}
 
-    public void Init(GJAccuracy _accuracy)
+    public void Init(GJLevel.GJAccuracy _accuracy)
     {
         accuracy = _accuracy;
         switch(accuracy)
         {
-            case GJAccuracy.PERFECT:
+            case GJLevel.GJAccuracy.PERFECT:
                 color = GJLevel.instance.perfectColor;
                 text.text = "Perfect!";
                 break;
-            case GJAccuracy.GREAT:
+            case GJLevel.GJAccuracy.GREAT:
                 color = GJLevel.instance.greatColor;
                 text.text = "Great!";
                 break;
-            case GJAccuracy.GOOD:
+            case GJLevel.GJAccuracy.GOOD:
                 color = GJLevel.instance.goodColor;
                 text.text = "Good";
                 break;
-            case GJAccuracy.OK:
+            case GJLevel.GJAccuracy.OK:
                 color = GJLevel.instance.okColor;
                 text.text = "OK";
                 break;

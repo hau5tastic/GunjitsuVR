@@ -22,7 +22,7 @@ public class ScoreText : MonoBehaviour {
     void Update()
     {
         scoreText.text = score.ToString();
-        GJLevel.fortune = score; //wtf??
+        GJLevel.instance.fortune = score;
     }
 
 	public void AddScore(int val)
