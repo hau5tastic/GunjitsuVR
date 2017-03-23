@@ -2945,10 +2945,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SFXAccumulate: {fileID: 8300000, guid: 56caec62b0827844dbcff426e8e2273a, type: 3}
+  title: {fileID: 0}
   textAccuracy: {fileID: 114451992891945040}
   textFortune: {fileID: 114982161145352778}
-  newAccuracy: 0
-  newFortune: 0
 --- !u!114 &114395123191855976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2988,10 +2987,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SFXAccumulate: {fileID: 8300000, guid: 56caec62b0827844dbcff426e8e2273a, type: 3}
+  title: {fileID: 0}
   textAccuracy: {fileID: 114032837382841828}
   textFortune: {fileID: 114959329329655100}
-  newAccuracy: 0
-  newFortune: 0
 --- !u!114 &114404739461631154
 MonoBehaviour:
   m_ObjectHideFlags: 1

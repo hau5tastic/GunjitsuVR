@@ -19,7 +19,7 @@ public class GJShootIndicator : MonoBehaviour {
 
 	void Start () {
         indicators = GetComponentsInChildren<Image>();
-        startDistance = GameSettings.killRange + (GameSettings.playSpeed * lockTime);
+        startDistance = GJLevel.instance.killRange + (GJLevel.instance.overridePlaySpeed * lockTime);
         indicators[0].color = new Color(1, 1, 1, 0);
         indicators[1].color = new Color(1, 1, 1, 0);
         // transform.Rotate(90, 0, 0); // For Underneath Indication

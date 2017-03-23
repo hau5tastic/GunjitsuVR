@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.SceneManagement;
+
 #if UNITY_EDITOR
     using UnityEditor;
 #endif
-using UnityEngine.SceneManagement;
 
 namespace GJScore
 {
@@ -20,27 +21,16 @@ namespace GJScore
 }
 
 public class GJLevel : MonoBehaviour {
-    [Header("UI Prefabs / Scripts")]
-    [SerializeField]
-    GameObject worldCanvas;
-    [SerializeField]
-    GameObject introMenu;
-    [SerializeField]
-    GameObject levelMenu;
-    [SerializeField]
-    VictoryMenu victoryMenu;
-    [SerializeField]
-    VictoryMenu defeatMenu;
 
+    public static GJLevel instance = null;
+
+    [Header("UI Prefabs / Scripts")]
     public float closingDelay;
     float closingTime;
-
-    public static Transform target;
 
     [Header("Game Settings")]
     public float spawnRange;
     public float killRange;
-    public float killRangeOffset;
     public float overridePlaySpeed;
     public float manualOffset;
     public bool autoPlaySong = false;
@@ -66,21 +56,17 @@ public class GJLevel : MonoBehaviour {
     [Header("Display Time")]
     public float displayTime = 1.5f;
 
-    public enum TrackDifficulty { NONE, BEGINNER }
     [Header("Track File")]
-    public string customTrackName;
-    // [Range(0.0f, 1.0f)]
-    // public float musicStartTime;
+
+
     public float trackStartOffset;
-    public TrackDifficulty trackDifficulty = TrackDifficulty.NONE;
     float elapsedTime;
 
     [SerializeField]
-    bool isPlaying = false;
+    bool isInProgress = false;
     [SerializeField]
     bool trackEnded = false;
-    public bool isPaused = false; //fuck this code :{)
-    public bool dontSpawnAnotherDefeatVictoryScreen = false; //forkkk
+    public bool isPaused = false;
 
     [Header("Level Spawners")]
     public GJMonsterSpawner[] monsterSpawners;
@@ -91,42 +77,23 @@ public class GJLevel : MonoBehaviour {
     public GameObject[] monsterPrefabs;
 
     [Header("Player Properties")]
-    public Slider synchroSlider;
     public static int hitCount = 0;
-    public static int fortune = 12000;
+    public static float accuracy = 0;
+    public static int fortune = 0;
     public static float synchronization = 100; // HP
-    static float regenerationValue = 1; // per second
 
-    GJSongTrack currentTrack;
-
-    void SetGameSettings()
-    {
-        GameSettings.spawnRange = spawnRange;
-        GameSettings.killRange = killRange;
-
-        GameSettings.perfect = perfect;
-        GameSettings.great = great;
-        GameSettings.good = good;
-        GameSettings.ok = ok;
-
-        GameSettings.perfectScore = perfectScore;
-        GameSettings.greatScore = greatScore;
-        GameSettings.goodScore = goodScore;
-        GameSettings.okScore = okScore;
-
-        GameSettings.perfectColor = perfectColor;
-        GameSettings.greatColor = greatColor;
-        GameSettings.goodColor = goodColor;
-        GameSettings.okColor = okColor;
-
-        GameSettings.displayTime = displayTime;
-
-        GameSettings.autoPlaySong = autoPlaySong;
-    }
+    public GJSongTrack currentTrack;
+    public AudioSource audioSource;
 
     void Awake() {
-        SetGameSettings();
-        worldCanvas.SetActive(true);
+        
+        if (!instance)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Start() {
@@ -135,51 +102,69 @@ public class GJLevel : MonoBehaviour {
 
     public void StartLevel()
     {
-        loadTrackName();
-        readFromFile();
-        loadSong();
-        currentTrack.countNotes();
-        currentTrack.sortNotes();
+        GJTrackLoader.loadTrack(TrackInfo.TrackName);
         closingTime = closingDelay;
     }
 
 	void Update () {
+        UpdateGameLogic();
+        UpdateVisuals();
+    }
+    // ---- GAME LOGIC ----
+    void UpdateGameLogic() {
 
-        if (synchronization < 100) {
-            if (synchronization <= 0) {
-                synchronization = 0;
-                defeatEnd();
-            }
-        }  else if (synchronization > 100) {
-            synchronization = 100;
-        }
+        if (!isInProgress) return;
 
-        //synchroSlider.value = synchronization;
-        HealthIndicator.reference.SetHealth(synchronization);
-
-        if (!isPlaying) return;
-        synchronization += regenerationValue * Time.deltaTime;
-        if (trackEnded)
-        {
-            victoryEnd();
-        }
-
-
+        // Use songtime instead of elapsedTime after intro offset for accuracy
         if (elapsedTime >= 0) {
-            if (!GetComponent<AudioSource>().isPlaying) GetComponent<AudioSource>().Play();
-            elapsedTime = GetComponent<AudioSource>().time;
-        } else {
+            if (!audioSource.isPlaying) audioSource.Play();
+            elapsedTime = audioSource.time;
+        }
+        else {
             elapsedTime += Time.deltaTime;
         }
 
+
+        // Check if there are stil notes in the track.. if not.. do something
         if (notesSpawned >= currentTrack.noteCount) {
-            // Track is Over.. Do Something...
             closingTime -= Time.deltaTime;
             if (closingTime <= 0) {
                 trackEnded = true;
             }
         }
 
+        SpawnEnemies();
+
+        // health cannot drop below 0 nor go beyond 100
+        synchronization = Mathf.Clamp(synchronization, 0f, 100f);
+        CheckWinConditions();
+        CheckLoseConditions();
+
+        accuracy = (float)hitCount / notesSpawned * 100.0f;
+
+    }
+
+    void CheckWinConditions() {
+        if (trackEnded && isInProgress) {
+            Debug.Log("Victory");
+            StartCoroutine(FadeMusic(victoryEnd));
+            isInProgress = false;
+        }
+    }
+
+    void CheckLoseConditions() {
+        if (synchronization <= 0 && isInProgress) {
+            Debug.Log("Defeat");
+            StartCoroutine(FadeMusic(defeatEnd));
+            isInProgress = false;
+        }
+    }
+
+    void UpdateVisuals() {
+        HealthIndicator.reference.SetHealth(synchronization);
+    }
+
+    void SpawnEnemies() {
         /// Each spawner has a corresponding index pointer that points to the current note in that lane.
         /// this is so that every update it will only look at those values instead of the whole list, (assuming that the notes are already sorted)
         /// 
@@ -195,136 +180,40 @@ public class GJLevel : MonoBehaviour {
             // If the spawner's pointer index value is greater than the length of that spawner's notes, it is of course -- invalid.
             if (notePointers[i] >= spawnerNotes.Length || spawnerNotes.Length <= 0) {
                 continue; // Move on to the next spawner
-            } else {
+            }
+            else {
                 // Debug.Log("index: " + notePointers[i] + "= " + spawnerNotes[notePointers[i]]);
                 float currentNote = spawnerNotes[notePointers[i]];
                 // Debug.Log("currentNote: " + currentNote + " elapsedTime: " + elapsedTime);
-                if (currentNote + GameSettings.timeOffset <= elapsedTime) {
+                if (currentNote + manualOffset <= elapsedTime) {
                     // SpawnMonsterOnSpawner(Random.Range(0, 8), 0); // The random version
                     SpawnMonsterOnSpawner(i, spawnerNoteTypes[notePointers[i]], spawnerNoteTypes[notePointers[i]]); // The legit version
                     notePointers[i]++;
                     notesSpawned++;
                 }
-                
-            }
-           
-        }
 
-	}
+            }
+
+        }
+    }
 
     void SpawnMonsterOnSpawner(int spawnerIndex, int monsterTypeIndex, int spawnerNoteType) {
         monsterSpawners[spawnerIndex].Spawn(monsterPrefabs[monsterTypeIndex], spawnerNoteType);
     }
 
-    public void readFromFile() {
-        currentTrack = new GJSongTrack();
-        
-        Debug.Log("Reading the track from: " + getFileName());
-        if (File.Exists(getFileName())) {
-            BinaryReader file =
-                new BinaryReader(File.Open(getFileName(), FileMode.Open));
-            try {
-                // Version Number
-                float versionNumber = file.ReadSingle();
-                if (versionNumber != Util.VERSION_NUMBER) {
-                     throw new System.Exception("Editor is incompatible with this track version: " + versionNumber);
-                }
-                
-                currentTrack.songName = file.ReadString();
-                TrackInfo.SongName = currentTrack.songName;
-                currentTrack.bpm = file.ReadInt32();
-                currentTrack.startOffset = file.ReadInt32();
-                currentTrack.scrollSpeed = file.ReadInt32();
-
-                GameSettings.playSpeed = currentTrack.scrollSpeed;
-
-                if (overridePlaySpeed > 0) GameSettings.playSpeed = overridePlaySpeed;
-
-
-                GameSettings.timeOffset = -((GameSettings.spawnRange - GameSettings.killRange) / (GameSettings.playSpeed));
-                GameSettings.timeOffset += currentTrack.startOffset / 1000f;
-                // Debug.Log("Editor Offset: " + currentTrack.startOffset);
-                if (manualOffset > 0) {
-                    GameSettings.timeOffset = manualOffset;
-                }
-
-                currentTrack.notes = new List<float[]>();
-                currentTrack.noteTypes = new List<int[]>();
-              
-                // For each spawner
-                foreach (GJMonsterSpawner ms in monsterSpawners ) {
-                    int noteCount = file.ReadInt32(); // read the number of notes of 'this' spawner
-                    float[] spawnerNotes = new float[noteCount];
-                    int[] spawnerNoteTypes = new int[noteCount];
-
-                    // Load that many notes
-                    for (int i = 0; i < noteCount; i++) {
-                        spawnerNotes[i] = file.ReadSingle();
-                        spawnerNoteTypes[i] = file.ReadInt32();
-                        //Debug.Log(spawnerNoteTypes[i]);
-                    }
-
-                    currentTrack.notes.Add(spawnerNotes);
-                    currentTrack.noteTypes.Add(spawnerNoteTypes);
-                }
-            }
-
-            catch (EndOfStreamException e) {
-                Debug.Log("File Empty or Corrupted" + e.Message);
-            }
-            catch (System.Exception e) {
-                Debug.Log(e.Message);
-            }
-            finally {
-                file.Close();
-            }
-        }
-        else {
-            Debug.Log("File does not exist.");
-        }
-        
-    }
-    public void loadTrackName()
-    {
-        customTrackName = TrackInfo.TrackName;
-    }
-
-    public void loadSong()
-    {
-        AudioSource audioSource = GetComponent<AudioSource>();
-        Util.loadAudioClip(audioSource, TrackInfo.SongName);
-    }
-    
-    public string getFileName() {
-        //string difficultyTag = "";
-        //switch (trackDifficulty) {
-        //    case TrackDifficulty.BEGINNER:
-        //    // case TrackDifficulty.INTERMEDIATE:
-        //    // case TrackDifficulty.EXPERT:
-        //        difficultyTag = " [BEGINNER]";
-        //        break;
-        //    default:
-        //        break;
-
-        //}
-
-        //if (customTrackName == "" ) customTrackName = GetComponent<AudioSource>().clip.name + difficultyTag;
-        return Util.TRACK_DIR_PREFIX + customTrackName; 
-    }
-
     void Reset() {
-        // GetComponent<AudioSource>().time = musicStartTime * GetComponent<AudioSource>().clip.length;
-        // elapsedTime = musicStartTime * GetComponent<AudioSource>().clip.length;
+        // audioSource.time = musicStartTime * audioSource.clip.length;
+        // elapsedTime = musicStartTime * audioSource.clip.length;
         elapsedTime = -trackStartOffset;
 
         trackEnded = false;
         closingTime = closingDelay;
         notesSpawned = hitCount = 0;
-        isPlaying = true;
+        isInProgress = true;
         Time.timeScale = 1f;
-        RenderSettings.ambientIntensity = 1f; // temporary paused indicator
-        GetComponent<AudioSource>().volume = 1f;
-        GetComponent<AudioSource>().Stop();
+        RenderSettings.ambientIntensity = 1f;
+        audioSource.volume = 1f;
+        audioSource.Stop();
         synchronization = 100;
         fortune = 0;
         ScoreText.reference.Reset();
@@ -343,98 +232,82 @@ public class GJLevel : MonoBehaviour {
 
         GJGuideReticle.rReticleQ.Clear();
         GJGuideReticle.lReticleQ.Clear();
-
-        victoryMenu.GetComponent<AudioSource>().Stop();
-        defeatMenu.GetComponent<AudioSource>().Stop();
     }
 
 
-    // UI Methods
+    // --- UI FUNCTIONS ---------
 
     public void ReturnToMain() {
         SceneManager.LoadScene("MainMenuScene");
     }
 
+
     public void PauseGame() {
-
-        Time.timeScale = 0f;
-        if (GetComponent<AudioSource>().isPlaying) {
-            GetComponent<AudioSource>().Pause();
-        }
-
-        GameObject[] monsters = GameObject.FindGameObjectsWithTag("GJMonster");
-        foreach (GameObject go in monsters) {
-            go.GetComponent<GJMonster>().paused = true;
-        }
-
         RenderSettings.ambientIntensity = 0f;
-        isPlaying = false;
+        Time.timeScale = 0f;
+        if (audioSource.isPlaying) {
+            audioSource.Pause();
+        }
+
         isPaused = true;
-        levelMenu.SetActive(true);
+        GJUIManager.instance.Show(GJUIManager.Window.LEVEL_MENU);
     }
 
     public void ResumeGame() {
         RenderSettings.ambientIntensity = 1f;
         Time.timeScale = 1f;
-        GameObject[] monsters = GameObject.FindGameObjectsWithTag("GJMonster");
-        foreach (GameObject go in monsters) {
-            go.GetComponent<GJMonster>().paused = false;
-        }
-        GetComponent<AudioSource>().UnPause();
-        isPlaying = true;
+        setMonsterPause();
+        audioSource.UnPause();
+        isInProgress = true;
         isPaused = false;
-        levelMenu.SetActive(false);
     }
 
     public void ShowIntro()
     {
-        introMenu.SetActive(true); // ??
-        levelMenu.SetActive(false);
-        victoryMenu.gameObject.SetActive(false);
-        defeatMenu.gameObject.SetActive(false);
-        dontSpawnAnotherDefeatVictoryScreen = true;
+        GJUIManager.instance.Show(GJUIManager.Window.INTRO_MENU);
     }
 
     public void RestartGame() {
-        introMenu.SetActive(false);
-        levelMenu.SetActive(false);
-        victoryMenu.gameObject.SetActive(false);
-        defeatMenu.gameObject.SetActive(false);
+        GJUIManager.instance.Show(GJUIManager.Window.NONE);
         Reset();
-        dontSpawnAnotherDefeatVictoryScreen = false;
     }
 
     public void victoryEnd() {
-        GetComponent<AudioSource>().volume -= 0.01f;
-        if (GetComponent<AudioSource>().volume <= 0 && !dontSpawnAnotherDefeatVictoryScreen) {
-            victoryMenu.gameObject.SetActive(true);
-            victoryMenu.newAccuracy = (float)hitCount / notesSpawned * 100.0f;
-            victoryMenu.newFortune = fortune;
-        }
+        GJUIManager.instance.Show(GJUIManager.Window.VICTORY_MENU);
     }
 
     public void defeatEnd() {
-        isPlaying = false;
-        GetComponent<AudioSource>().volume -= 0.01f;
-        if (GetComponent<AudioSource>().volume <= 0 && !dontSpawnAnotherDefeatVictoryScreen) { //WTF??? <----
-            defeatMenu.gameObject.SetActive(true);
-            defeatMenu.newAccuracy = (float)hitCount / notesSpawned * 100.0f;
-            defeatMenu.newFortune = fortune;
+            GJUIManager.instance.Show(GJUIManager.Window.DEFEAT_MENU);
 
-            if (GetComponent<AudioSource>().isPlaying) {
-                GetComponent<AudioSource>().Pause();
+            if (audioSource.isPlaying) {
+                audioSource.Stop();
             }
 
-            GameObject[] monsters = GameObject.FindGameObjectsWithTag("GJMonster");
-            foreach (GameObject go in monsters) {
-                go.GetComponent<GJMonster>().paused = true;
-            }
-            //RenderSettings.ambientIntensity = 0f;
+            setMonsterPause();
+    }
+
+    delegate void OutroFunction();
+    IEnumerator FadeMusic(OutroFunction func) {
+        while (audioSource.volume > 0) {
+            yield return new WaitForSeconds(0.2f);
+            audioSource.volume -= 0.2f;
+        }
+        func.Invoke();
+    }
+
+
+    // Other..
+
+    void setMonsterPause() {
+        GameObject[] monsters = GameObject.FindGameObjectsWithTag("GJMonster");
+        foreach (GameObject go in monsters) {
+            go.GetComponent<GJMonster>().paused = isPaused;
         }
     }
 
+
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(Camera.main.transform.position, GameSettings.killRange);
+        Gizmos.DrawWireSphere(Camera.main.transform.position, killRange);
     }
 }

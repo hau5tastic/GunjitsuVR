@@ -16,8 +16,9 @@ public class GJScorePopup : MonoBehaviour {
         text = GetComponent<Text>();
     }
 
+    
     void Start () {      
-        Destroy(this.gameObject, GameSettings.displayTime);
+        Destroy(this.gameObject, GJLevel.instance.displayTime);
 	}
 
     public void Init(GJAccuracy _accuracy)
@@ -26,19 +27,19 @@ public class GJScorePopup : MonoBehaviour {
         switch(accuracy)
         {
             case GJAccuracy.PERFECT:
-                color = GameSettings.perfectColor;
+                color = GJLevel.instance.perfectColor;
                 text.text = "Perfect!";
                 break;
             case GJAccuracy.GREAT:
-                color = GameSettings.greatColor;
+                color = GJLevel.instance.greatColor;
                 text.text = "Great!";
                 break;
             case GJAccuracy.GOOD:
-                color = GameSettings.goodColor;
+                color = GJLevel.instance.goodColor;
                 text.text = "Good";
                 break;
             case GJAccuracy.OK:
-                color = GameSettings.okColor;
+                color = GJLevel.instance.okColor;
                 text.text = "OK";
                 break;
             default:

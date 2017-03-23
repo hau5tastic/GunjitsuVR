@@ -9,9 +9,9 @@ public class GJMonsterSpawner : MonoBehaviour {
         NormalizePosition();
 
         int d = (int)Vector3.Distance(transform.position, Camera.main.transform.position);
-        if (d != GameSettings.spawnRange)
+        if (d != GJLevel.instance.spawnRange)
             Debug.LogWarning("SpawnerRange settings do not match play settings, Song might be desynced: set: "
-                + GameSettings.spawnRange + " actual: " + d);
+                + GJLevel.instance.spawnRange + " actual: " + d);
     }
 
     public void Spawn(GameObject monsterPrefab, int noteType) {
@@ -26,6 +26,6 @@ public class GJMonsterSpawner : MonoBehaviour {
 
     void NormalizePosition() {
         Vector3 direction = transform.position - Camera.main.transform.position;
-        transform.position = Camera.main.transform.position + direction.normalized * (GameSettings.spawnRange);
+        transform.position = Camera.main.transform.position + direction.normalized * (GJLevel.instance.spawnRange);
     }
 }

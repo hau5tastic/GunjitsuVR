@@ -32,7 +32,6 @@ public class SongSelection : MonoBehaviour {
     {
         TrackInfo.TrackName = trackNames[i];
         level.StartLevel();
-        this.gameObject.SetActive(false);
         level.RestartGame();
     }
 }

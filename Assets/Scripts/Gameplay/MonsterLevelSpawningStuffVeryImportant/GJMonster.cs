@@ -13,7 +13,7 @@ public class GJMonster : MonoBehaviour {
 
     void Awake()
     {
-        if(GameSettings.autoPlaySong)
+        if(GJLevel.instance.autoPlaySong)
         {
 
             StartCoroutine(AutoKill());
@@ -37,13 +37,13 @@ public class GJMonster : MonoBehaviour {
 	void Update () {
         if (paused) return;
         
-        transform.position += transform.forward * GameSettings.playSpeed * Time.deltaTime;
+        transform.position += transform.forward * GJLevel.instance.overridePlaySpeed * Time.deltaTime;
 
         if (IsWithinKillRange()) Kill(false);
 	}
 
     bool IsWithinKillRange() {
-        return (Vector3.Distance(Camera.main.transform.position, transform.position) <= GameSettings.killRange - 1.5f);
+        return (Vector3.Distance(Camera.main.transform.position, transform.position) <= GJLevel.instance.killRange - 1.5f);
     }
 
     public void Kill(bool killedByShot)
@@ -83,29 +83,29 @@ public class GJMonster : MonoBehaviour {
 
     void CreateScorePopup()
     {
-        float distance = Mathf.Abs(Vector3.Distance(Camera.main.transform.position, transform.position) - GameSettings.killRange);
+        float distance = Mathf.Abs(Vector3.Distance(Camera.main.transform.position, transform.position) - GJLevel.instance.killRange);
 
         GameObject go = Instantiate(scorePrefab, GameObject.Find("ScoreCanvas").transform, true);
         go.transform.position = transform.position + (transform.up * 1.2f);
 
-        if (distance <= GameSettings.perfect)
+        if (distance <= GJLevel.instance.perfect)
         {
-            ScoreText.reference.AddScore(GameSettings.perfectScore);
+            ScoreText.reference.AddScore(GJLevel.instance.perfectScore);
             go.GetComponent<GJScorePopup>().Init(GJAccuracy.PERFECT);
         }
-        else if(distance <= GameSettings.great)
+        else if(distance <= GJLevel.instance.great)
         {
-            ScoreText.reference.AddScore(GameSettings.greatScore);
+            ScoreText.reference.AddScore(GJLevel.instance.greatScore);
             go.GetComponent<GJScorePopup>().Init(GJAccuracy.GREAT);
         }
-        else if(distance <= GameSettings.good)
+        else if(distance <= GJLevel.instance.good)
         {
-            ScoreText.reference.AddScore(GameSettings.goodScore);
+            ScoreText.reference.AddScore(GJLevel.instance.goodScore);
             go.GetComponent<GJScorePopup>().Init(GJAccuracy.GOOD);
         }
         else
         {
-            ScoreText.reference.AddScore(GameSettings.okScore);
+            ScoreText.reference.AddScore(GJLevel.instance.okScore);
             go.GetComponent<GJScorePopup>().Init(GJAccuracy.OK);
         }
 
@@ -119,8 +119,8 @@ public class GJMonster : MonoBehaviour {
     {
         float distance;
 
-        distance = Vector3.Distance(Camera.main.transform.position, transform.position) - (GameSettings.killRange);
+        distance = Vector3.Distance(Camera.main.transform.position, transform.position) - (GJLevel.instance.killRange);
         
-        return (distance / GameSettings.playSpeed);
+        return (distance / GJLevel.instance.overridePlaySpeed);
     }
 }

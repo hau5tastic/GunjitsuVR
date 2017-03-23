@@ -54,7 +54,7 @@ public class GJGuideReticle : MonoBehaviour {
             GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
         }
 
-        Vector3 killPos = player.position + (target.transform.position - player.position).normalized * GameSettings.killRange;
+        Vector3 killPos = player.position + (target.transform.position - player.position).normalized * GJLevel.instance.killRange;
         float currentDist = Vector3.Distance(killPos, target.transform.position);
 
         // If target is still out of range...
