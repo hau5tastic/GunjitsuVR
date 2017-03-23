@@ -8,8 +8,6 @@ public class GJMonster : MonoBehaviour {
     public GameObject killParticlePrefab;
     public GameObject indicatorPrefab;
     public GameObject scorePrefab;
-    public bool paused = false;
-
     void Awake()
     {
         if(GJLevel.instance.autoPlaySong)
@@ -34,8 +32,6 @@ public class GJMonster : MonoBehaviour {
     }
 	
 	void Update () {
-        if (paused) return;
-        
         transform.position += transform.forward * GJLevel.instance.overridePlaySpeed * Time.deltaTime;
 
         if (IsWithinKillRange()) Kill(false);

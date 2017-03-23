@@ -201,8 +201,6 @@ public class GJLevel : MonoBehaviour {
     }
 
     void Reset() {
-        // audioSource.time = musicStartTime * audioSource.clip.length;
-        // elapsedTime = musicStartTime * audioSource.clip.length;
         elapsedTime = -trackStartOffset;
 
         trackEnded = false;
@@ -240,14 +238,12 @@ public class GJLevel : MonoBehaviour {
         SceneManager.LoadScene("MainMenuScene");
     }
 
-
     public void PauseGame() {
         RenderSettings.ambientIntensity = 0f;
         Time.timeScale = 0f;
         if (audioSource.isPlaying) {
             audioSource.Pause();
         }
-
         isPaused = true;
         GJUIManager.instance.Show(GJUIManager.Window.LEVEL_MENU);
     }
@@ -255,9 +251,7 @@ public class GJLevel : MonoBehaviour {
     public void ResumeGame() {
         RenderSettings.ambientIntensity = 1f;
         Time.timeScale = 1f;
-        setMonsterPause();
         audioSource.UnPause();
-        isInProgress = true;
         isPaused = false;
     }
 
@@ -273,16 +267,16 @@ public class GJLevel : MonoBehaviour {
 
     public void victoryEnd() {
         GJUIManager.instance.Show(GJUIManager.Window.VICTORY_MENU);
+        if (audioSource.isPlaying) {
+            audioSource.Stop();
+        }
     }
 
     public void defeatEnd() {
-            GJUIManager.instance.Show(GJUIManager.Window.DEFEAT_MENU);
-
-            if (audioSource.isPlaying) {
-                audioSource.Stop();
-            }
-
-            setMonsterPause();
+        GJUIManager.instance.Show(GJUIManager.Window.DEFEAT_MENU);
+        if (audioSource.isPlaying) {
+            audioSource.Stop();
+        }
     }
 
     delegate void OutroFunction();
@@ -296,14 +290,6 @@ public class GJLevel : MonoBehaviour {
 
 
     // Other..
-
-    void setMonsterPause() {
-        GameObject[] monsters = GameObject.FindGameObjectsWithTag("GJMonster");
-        foreach (GameObject go in monsters) {
-            go.GetComponent<GJMonster>().paused = isPaused;
-        }
-    }
-
 
     private void OnDrawGizmos()
     {
