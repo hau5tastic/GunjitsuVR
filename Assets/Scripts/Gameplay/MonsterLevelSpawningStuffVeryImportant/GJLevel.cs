@@ -234,10 +234,6 @@ public class GJLevel : MonoBehaviour {
 
     // --- UI FUNCTIONS ---------
 
-    public void ReturnToMain() {
-        SceneManager.LoadScene("MainMenuScene");
-    }
-
     public void PauseGame() {
         RenderSettings.ambientIntensity = 0f;
         Time.timeScale = 0f;

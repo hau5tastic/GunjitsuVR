@@ -18,7 +18,7 @@ public class GJMonster : MonoBehaviour {
         else
         {
             //GetComponent<AudioSource>().clip.LoadAudioData();
-            GetComponent<AudioSource>().PlayScheduled(AudioSettings.dspTime + TimeToDeath(true));
+            GetComponent<AudioSource>().PlayScheduled(AudioSettings.dspTime + TimeToDeath());
         }
     }
 
@@ -71,7 +71,7 @@ public class GJMonster : MonoBehaviour {
     IEnumerator AutoKill()
     {
         //Debug.Log("Time to death: " + TimeToDeath(false));
-        yield return new WaitForSeconds(TimeToDeath(false));
+        yield return new WaitForSeconds(TimeToDeath());
         Kill(true);
         StopAllCoroutines();
     }
@@ -85,11 +85,13 @@ public class GJMonster : MonoBehaviour {
 
         if (distance <= GJLevel.instance.perfect)
         {
+            Debug.Log(distance);
             ScoreText.reference.AddScore(GJLevel.instance.perfectScore);
             go.GetComponent<GJScorePopup>().Init(GJLevel.GJAccuracy.PERFECT);
         }
         else if(distance <= GJLevel.instance.great)
         {
+            Debug.Log(distance);
             ScoreText.reference.AddScore(GJLevel.instance.greatScore);
             go.GetComponent<GJScorePopup>().Init(GJLevel.GJAccuracy.GREAT);
         }
@@ -110,7 +112,7 @@ public class GJMonster : MonoBehaviour {
         go.transform.Rotate(0, 180, 0);
     }
 
-    float TimeToDeath(bool useOffset)
+    float TimeToDeath()
     {
         float distance;
 

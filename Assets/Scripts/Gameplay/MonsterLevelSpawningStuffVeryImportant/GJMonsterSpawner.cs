@@ -7,8 +7,8 @@ public class GJMonsterSpawner : MonoBehaviour {
     void Start() {
         NormalizePosition();
 
-        int d = (int)Vector3.Distance(transform.position, Camera.main.transform.position);
-        if (d != GJLevel.instance.spawnRange)
+        float d = Vector3.Distance(transform.position, Camera.main.transform.position);
+        if ((int)d != GJLevel.instance.spawnRange)
             Debug.LogWarning("SpawnerRange settings do not match play settings, Song might be desynced: set: "
                 + GJLevel.instance.spawnRange + " actual: " + d);
     }
