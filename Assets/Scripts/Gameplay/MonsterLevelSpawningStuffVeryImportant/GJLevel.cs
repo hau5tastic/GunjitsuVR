@@ -186,9 +186,11 @@ public class GJLevel : MonoBehaviour {
                 // Debug.Log("currentNote: " + currentNote + " elapsedTime: " + elapsedTime);
                 if (currentNote + manualOffset <= elapsedTime) {
                     // SpawnMonsterOnSpawner(Random.Range(0, 8), 0); // The random version
-                    SpawnMonsterOnSpawner(i, spawnerNoteTypes[notePointers[i]], spawnerNoteTypes[notePointers[i]]); // The legit version
                     notePointers[i]++;
                     notesSpawned++;
+                    if (notesSpawned % 2 == 0) return;
+                    SpawnMonsterOnSpawner(i, spawnerNoteTypes[notePointers[i]], spawnerNoteTypes[notePointers[i]]); // The legit version
+
                 }
 
             }
