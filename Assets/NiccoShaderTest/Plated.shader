@@ -5,10 +5,13 @@
 		_Color("Line Color", Color) = (1,1,1,1)
 		_MainTex("Main Texture", 2D) = "white" {}
 		_Thickness("Thickness", Float) = 1
+		_Glossiness("Smoothness", Range(0,1)) = 0.5
+		_Metallic("Metallic", Range(0,1)) = 0.0
 	}
 
 	SubShader
 	{
+
 		Pass
 		{
 			Tags { "RenderType" = "Opaque" "Queue" = "Geometry" }
@@ -113,12 +116,50 @@
 
 					//blend between the lines and the negative space to give illusion of anti aliasing
 					float4 targetColor = _Color; // *tex2D(_MainTex, IN.uv);
-					float4 transCol = _Color *tex2D(_MainTex, IN.uv);
-					transCol.a = 0.9;
+					float4 transCol = tex2D(_MainTex, IN.uv);
+					transCol.a = 0.99;
 					return val * targetColor + (1 - val) * transCol;
 				}
 
 			ENDCG
 		}
+
+		/*
+		Pass
+		{
+			Tags { "RenderType"="Opaque" }
+			LOD 200
+		
+			CGPROGRAM
+			// Physically based Standard lighting model, and enable shadows on all light types
+			#pragma surface surf Standard fullforwardshadows
+
+			// Use shader model 3.0 target, to get nicer looking lighting
+			#pragma target 3.0
+
+			sampler2D _MainTex;
+
+			struct Input {
+				float2 uv_MainTex;
+			};
+
+			half _Glossiness;
+			half _Metallic;
+			float4 _Color;
+
+			void surf (Input IN, inout SurfaceOutputStandard o) {
+				// Albedo comes from a texture tinted by color
+				float4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
+				o.Albedo = c.rgb;
+				// Metallic and smoothness come from slider variables
+				o.Metallic = _Metallic;
+				o.Smoothness = _Glossiness;
+				o.Alpha = c.a;
+			}
+			ENDCG
+		}
+		*/
+
+
 	}
 }
