@@ -44,4 +44,8 @@ public class VictoryMenu : MonoBehaviour {
         title.color = color;
     }
 
+    private void OnEnable()
+    {
+        GetComponent<Canvas>().worldCamera = ViveControllerInput.Instance.ControllerCamera;
+    }
 }

@@ -36,9 +36,8 @@ public class GJTrackLoader : MonoBehaviour {
 
                 if (GJLevel.instance.overridePlaySpeed == 0) GJLevel.instance.overridePlaySpeed = GJLevel.instance.currentTrack.scrollSpeed;
 
-                GJLevel.instance.manualOffset += -((GJLevel.instance.spawnRange - GJLevel.instance.killRange) / (GJLevel.instance.overridePlaySpeed));
+                GJLevel.instance.manualOffset = -((GJLevel.instance.spawnRange - GJLevel.instance.killRange) / (GJLevel.instance.overridePlaySpeed));
                 GJLevel.instance.manualOffset += GJLevel.instance.currentTrack.startOffset / 1000f;
-
 
                 GJLevel.instance.currentTrack.notes = new List<float[]>();
                 GJLevel.instance.currentTrack.noteTypes = new List<int[]>();

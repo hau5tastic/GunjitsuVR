@@ -15,7 +15,7 @@ public class GJGuideReticle : MonoBehaviour {
     public static Queue<GameObject> lReticleQ;
 
     // [SerializeField]
-    GameObject target;
+    public GameObject target;
     Vector3 oldSpawnPos; // The position of the target on the time it was set.
     Vector3 newSpawnPos;
     public float reticleOffset;

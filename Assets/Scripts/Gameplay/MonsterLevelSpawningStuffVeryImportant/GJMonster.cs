@@ -31,7 +31,7 @@ public class GJMonster : MonoBehaviour {
         transform.LookAt(GJLevel.instance.center);
     }
 	
-	void Update () {
+	void FixedUpdate () {
         transform.position += transform.forward * GJLevel.instance.overridePlaySpeed * Time.deltaTime;
 
         if (IsWithinKillRange()) Kill(false);
@@ -106,7 +106,7 @@ public class GJMonster : MonoBehaviour {
             go.GetComponent<GJScorePopup>().Init(GJLevel.GJAccuracy.OK);
         }
 
-        //Debug.Log("DEATH DISTANCE: " + distance);
+        Debug.Log("DEATH DISTANCE: " + distance);
 
         go.transform.LookAt(Camera.main.transform);
         go.transform.Rotate(0, 180, 0);
