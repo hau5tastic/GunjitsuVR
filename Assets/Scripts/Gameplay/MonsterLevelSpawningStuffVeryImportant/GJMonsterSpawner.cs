@@ -13,13 +13,15 @@ public class GJMonsterSpawner : MonoBehaviour {
                 + GJLevel.instance.spawnRange + " actual: " + d);
     }
 
-    public void Spawn(GameObject monsterPrefab, int noteType) {
+    public void Spawn(GameObject monsterPrefab, int noteType, float killTime) {
+        GameObject go = Instantiate(monsterPrefab, transform.position, Quaternion.identity);
+        go.GetComponent<GJMonster>().killTime = killTime;
         if ((Note.NOTE_TYPE)noteType == Note.NOTE_TYPE.LEFT)
         {
-            GJGuideReticle.lReticleQ.Enqueue(Instantiate(monsterPrefab, transform.position, Quaternion.identity));
+            GJGuideReticle.lReticleQ.Enqueue(go);
         } else //Assume right :7
         {
-            GJGuideReticle.rReticleQ.Enqueue(Instantiate(monsterPrefab, transform.position, Quaternion.identity));
+            GJGuideReticle.rReticleQ.Enqueue(go);
         }
     }
 

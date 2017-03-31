@@ -188,8 +188,8 @@ public class GJLevel : MonoBehaviour {
                     // SpawnMonsterOnSpawner(Random.Range(0, 8), 0); // The random version
                     notePointers[i]++;
                     notesSpawned++;
-                    if (notesSpawned % 2 == 0) return;
-                    SpawnMonsterOnSpawner(i, spawnerNoteTypes[notePointers[i]], spawnerNoteTypes[notePointers[i]]); // The legit version
+                    // if (notesSpawned % 2 == 0) return;
+                    SpawnMonsterOnSpawner(i, spawnerNoteTypes[notePointers[i]], spawnerNoteTypes[notePointers[i]], currentNote); // The legit version
 
                 }
 
@@ -198,8 +198,8 @@ public class GJLevel : MonoBehaviour {
         }
     }
 
-    void SpawnMonsterOnSpawner(int spawnerIndex, int monsterTypeIndex, int spawnerNoteType) {
-        monsterSpawners[spawnerIndex].Spawn(monsterPrefabs[monsterTypeIndex], spawnerNoteType);
+    void SpawnMonsterOnSpawner(int spawnerIndex, int monsterTypeIndex, int spawnerNoteType, float killTime) {
+        monsterSpawners[spawnerIndex].Spawn(monsterPrefabs[monsterTypeIndex], spawnerNoteType, killTime);
     }
 
     void Reset() {
@@ -292,5 +292,9 @@ public class GJLevel : MonoBehaviour {
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(center.position, killRange);
+    }
+
+    public float SongTime() {
+        return audioSource.time;
     }
 }

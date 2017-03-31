@@ -8,6 +8,9 @@ public class GJMonster : MonoBehaviour {
     public GameObject killParticlePrefab;
     public GameObject indicatorPrefab;
     public GameObject scorePrefab;
+
+    public float killTime;
+
     void Awake()
     {
         if(GJLevel.instance.autoPlaySong)
@@ -78,24 +81,23 @@ public class GJMonster : MonoBehaviour {
 
     void CreateScorePopup()
     {
-        float distance = Mathf.Abs(Vector3.Distance(GJLevel.instance.center.position, transform.position) - GJLevel.instance.killRange);
+        float songTime = GJLevel.instance.SongTime();
+        float deviation = Mathf.Abs(killTime - songTime);
 
         GameObject go = Instantiate(scorePrefab, GameObject.Find("ScoreCanvas").transform, true);
         go.transform.position = transform.position + (transform.up * 1.2f);
 
-        if (distance <= GJLevel.instance.perfect)
+        if (deviation <= GJLevel.instance.perfect)
         {
-            Debug.Log(distance);
             ScoreText.reference.AddScore(GJLevel.instance.perfectScore);
             go.GetComponent<GJScorePopup>().Init(GJLevel.GJAccuracy.PERFECT);
         }
-        else if(distance <= GJLevel.instance.great)
+        else if(deviation <= GJLevel.instance.great)
         {
-            Debug.Log(distance);
             ScoreText.reference.AddScore(GJLevel.instance.greatScore);
             go.GetComponent<GJScorePopup>().Init(GJLevel.GJAccuracy.GREAT);
         }
-        else if(distance <= GJLevel.instance.good)
+        else if(deviation <= GJLevel.instance.good)
         {
             ScoreText.reference.AddScore(GJLevel.instance.goodScore);
             go.GetComponent<GJScorePopup>().Init(GJLevel.GJAccuracy.GOOD);
@@ -106,10 +108,11 @@ public class GJMonster : MonoBehaviour {
             go.GetComponent<GJScorePopup>().Init(GJLevel.GJAccuracy.OK);
         }
 
-        Debug.Log("DEATH DISTANCE: " + distance);
+        Debug.Log("DEATH deviation: " + deviation);
 
         go.transform.LookAt(Camera.main.transform);
         go.transform.Rotate(0, 180, 0);
+
     }
 
     float TimeToDeath()
