@@ -81,7 +81,8 @@ public class GJMonster : MonoBehaviour {
 
     void CreateScorePopup()
     {
-        float songTime = GJLevel.instance.SongTime();
+        
+        float songTime = GJLevel.instance.SongTime() - (GJLevel.instance.currentTrack.startOffset / 1000f);
         float deviation = Mathf.Abs(killTime - songTime);
 
         GameObject go = Instantiate(scorePrefab, GameObject.Find("ScoreCanvas").transform, true);
