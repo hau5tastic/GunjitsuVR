@@ -47,10 +47,16 @@ public class GJGuideReticle : MonoBehaviour {
         // Attempt to acquire a target
         if (target == null) AcquireTarget();
         if (target == null) {
+            GetComponent<AudioSource>().Stop();
             GetComponent<RectTransform>().localScale = Vector3.zero;
             GetComponent<RectTransform>().position = Vector3.zero;
             return;
         } else {
+            if (!isOnScreen) {
+                if (!GetComponent<AudioSource>().isPlaying)GetComponent<AudioSource>().Play();
+            }
+            else GetComponent<AudioSource>().Stop();
+
             GetComponent<RectTransform>().localScale = new Vector3(1,1,1);
         }
 
