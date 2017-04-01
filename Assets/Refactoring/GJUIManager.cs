@@ -31,7 +31,6 @@ public class GJUIManager : MonoBehaviour {
                 RenderSettings.ambientIntensity = 1f;
             }
         } else {
-
             bool exists = false;
             foreach (GJUIWindow window in uiWindows) {
                 if (window.ID == windowID) {
