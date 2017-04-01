@@ -12,6 +12,10 @@ public class GJUIManager : MonoBehaviour {
     [SerializeField]
     GJUIWindow[] uiWindows;
 
+    [Header("Score Popup")]
+    [SerializeField]
+    GameObject scorePopupPrefab;
+
 
     void Awake() {
         if (!instance)
@@ -44,6 +48,16 @@ public class GJUIManager : MonoBehaviour {
 
         }
 
+    }
+
+    public void CreatePopupAt(Vector3 location, GJLevel.GJAccuracy accuracy) {
+        GameObject go = Instantiate(scorePopupPrefab, GameObject.Find("ScoreCanvas").transform, true);
+        go.transform.position = location;
+
+        go.GetComponent<GJScorePopup>().Init(accuracy);
+
+        go.transform.LookAt(Camera.main.transform);
+        go.transform.Rotate(0, 180, 0);
     }
    
 }

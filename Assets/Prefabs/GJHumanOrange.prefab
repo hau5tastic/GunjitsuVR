@@ -1346,7 +1346,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -1395,6 +1395,7 @@ MonoBehaviour:
     type: 2}
   scorePrefab: {fileID: 1678603672714268, guid: 61e6bfa918d16784aa435797526be367,
     type: 2}
+  killTime: 0
 --- !u!136 &136489129730946868
 CapsuleCollider:
   m_ObjectHideFlags: 1

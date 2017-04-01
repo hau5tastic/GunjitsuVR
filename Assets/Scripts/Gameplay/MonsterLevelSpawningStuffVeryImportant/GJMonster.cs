@@ -7,7 +7,6 @@ public class GJMonster : MonoBehaviour {
     public GameObject killedParticlePrefab;
     public GameObject killParticlePrefab;
     public GameObject indicatorPrefab;
-    public GameObject scorePrefab;
 
     public float killTime;
 
@@ -85,34 +84,18 @@ public class GJMonster : MonoBehaviour {
         float songTime = GJLevel.instance.SongTime() - (GJLevel.instance.currentTrack.startOffset / 1000f);
         float deviation = Mathf.Abs(killTime - songTime);
 
-        GameObject go = Instantiate(scorePrefab, GameObject.Find("ScoreCanvas").transform, true);
-        go.transform.position = transform.position + (transform.up * 1.2f);
-
+        Vector3 popupPosition = transform.position + (transform.up * 1.2f);
         if (deviation <= GJLevel.instance.perfect)
-        {
-            ScoreText.reference.AddScore(GJLevel.instance.perfectScore);
-            go.GetComponent<GJScorePopup>().Init(GJLevel.GJAccuracy.PERFECT);
-        }
+            GJUIManager.instance.CreatePopupAt(popupPosition, GJLevel.GJAccuracy.PERFECT);
         else if(deviation <= GJLevel.instance.great)
-        {
-            ScoreText.reference.AddScore(GJLevel.instance.greatScore);
-            go.GetComponent<GJScorePopup>().Init(GJLevel.GJAccuracy.GREAT);
-        }
+            GJUIManager.instance.CreatePopupAt(popupPosition, GJLevel.GJAccuracy.GREAT);
         else if(deviation <= GJLevel.instance.good)
-        {
-            ScoreText.reference.AddScore(GJLevel.instance.goodScore);
-            go.GetComponent<GJScorePopup>().Init(GJLevel.GJAccuracy.GOOD);
-        }
+            GJUIManager.instance.CreatePopupAt(popupPosition, GJLevel.GJAccuracy.GOOD);
         else
-        {
-            ScoreText.reference.AddScore(GJLevel.instance.okScore);
-            go.GetComponent<GJScorePopup>().Init(GJLevel.GJAccuracy.OK);
-        }
+            GJUIManager.instance.CreatePopupAt(popupPosition, GJLevel.GJAccuracy.OK);
 
         Debug.Log("DEATH deviation: " + deviation);
 
-        go.transform.LookAt(Camera.main.transform);
-        go.transform.Rotate(0, 180, 0);
 
     }
 
