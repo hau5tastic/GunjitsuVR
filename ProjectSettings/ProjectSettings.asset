@@ -472,7 +472,7 @@ PlayerSettings:
   XboxOnePersistentLocalStorageSize: 0
   vrEditorSettings: {}
   cloudServicesEnabled:
-    Collab: 1
+    Collab: 0
     UNet: 1
   cloudProjectId: 6a8ad9ad-7ade-4a62-9d22-bd2042fd52b9
   projectName: GunjitsuVR

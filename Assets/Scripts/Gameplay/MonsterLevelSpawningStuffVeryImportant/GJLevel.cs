@@ -93,6 +93,9 @@ public class GJLevel : MonoBehaviour {
 
 
         audioSource = GetComponent<AudioSource>();
+
+
+     
     }
 
     void Start() {
@@ -288,9 +291,10 @@ public class GJLevel : MonoBehaviour {
 
 
     // Other..
-
     private void OnDrawGizmos()
     {
+        GJSpawnerSpacer ss = GameObject.FindObjectOfType<GJSpawnerSpacer>();
+        if (ss) ss.Set(spawnRange);
         Gizmos.DrawWireSphere(center.position, killRange);
     }
 
