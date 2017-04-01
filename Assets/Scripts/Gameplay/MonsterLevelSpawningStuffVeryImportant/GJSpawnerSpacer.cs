@@ -6,6 +6,7 @@ public class GJSpawnerSpacer : MonoBehaviour {
 
     public float rotationSpeed;
     public float spreadSpeed;
+    public float elevationSpeed;
     public float angle;
 
     public void SetRange(float spawnRange) {
@@ -19,14 +20,25 @@ public class GJSpawnerSpacer : MonoBehaviour {
 
     void FixedUpdate() {
         Rotate();
-        angle += spreadSpeed * Time.deltaTime;
-        angle = Mathf.Clamp(angle, 90, 180);
+        Spread();
+        Elevate();
         SetRange(GJLevel.instance.spawnRange);
     }
 
     // Prototype Controls .. Faking 360
     public void Rotate() {
         transform.Rotate(0, rotationSpeed * Time.deltaTime, 0);
+    }
+
+    public void Spread() {
+        angle += spreadSpeed * Time.deltaTime;
+        angle = Mathf.Clamp(angle, 90, 180);
+    }
+
+    public void Elevate() {
+        Vector3 delta = Vector3.up * elevationSpeed * Time.deltaTime;
+        transform.position += delta;
+        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, 3, 10), transform.position.z);
     }
     
 }

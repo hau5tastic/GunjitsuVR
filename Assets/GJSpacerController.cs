@@ -16,7 +16,7 @@ public class GJSpacerController : MonoBehaviour {
 
     IEnumerator Perform() {
         while (true) {
-            int random = Random.Range(0, 5);
+            int random = Random.Range(0, 6);
             switch (random) {
                 case 0:
                     spacer.rotationSpeed = 5;
@@ -29,6 +29,12 @@ public class GJSpacerController : MonoBehaviour {
                     break;
                 case 3:
                     spacer.spreadSpeed = -5;
+                    break;
+                case 4:
+                    spacer.elevationSpeed = 5;
+                    break;
+                case 5:
+                    spacer.elevationSpeed = -5;
                     break;
                 default:
                     break;
