@@ -1285,7 +1285,7 @@ AudioSource:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1220727978839582}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: bcd5081a6d78d0d429cbe07f11cb60cd, type: 3}
@@ -1328,7 +1328,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 2
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1346,7 +1346,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -1393,8 +1393,7 @@ MonoBehaviour:
     type: 2}
   indicatorPrefab: {fileID: 1257461749962070, guid: 6acc7c2cbef8b6f49bdf740c7f643345,
     type: 2}
-  scorePrefab: {fileID: 1678603672714268, guid: 61e6bfa918d16784aa435797526be367,
-    type: 2}
+  killTime: 0
 --- !u!136 &136382227026393394
 CapsuleCollider:
   m_ObjectHideFlags: 1

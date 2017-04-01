@@ -294,7 +294,7 @@ public class GJLevel : MonoBehaviour {
     private void OnDrawGizmos()
     {
         GJSpawnerSpacer ss = GameObject.FindObjectOfType<GJSpawnerSpacer>();
-        if (ss) ss.Set(spawnRange);
+        if (ss) ss.SetRange(spawnRange);
         Gizmos.DrawWireSphere(center.position, killRange);
     }
 
