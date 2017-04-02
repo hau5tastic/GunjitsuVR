@@ -9,6 +9,6 @@ public class GJUIWindow : MonoBehaviour  {
 
     private void OnEnable()
     {
-        GetComponent<Canvas>().worldCamera = ViveControllerInput.Instance.ControllerCamera;
+        //GetComponent<Canvas>().worldCamera = ViveControllerInput.Instance.ControllerCamera;
     }
 }

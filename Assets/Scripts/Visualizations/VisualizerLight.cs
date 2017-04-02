@@ -7,7 +7,7 @@ public class VisualizerLight : MonoBehaviour
 {
     public int band;
     public float minIntensity, maxIntensity;
-    Light light;
+    new Light light;
 
     void Start()
     {

@@ -9,7 +9,7 @@ public class HealthIndicator : MonoBehaviour {
     [SerializeField]
     Color deadColor;
 
-    Light light;
+    new Light light;
     float health;
 
     public static HealthIndicator reference;

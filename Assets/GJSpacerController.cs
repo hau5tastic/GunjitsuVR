@@ -40,7 +40,7 @@ public class GJSpacerController : MonoBehaviour {
                     break;
             }
 
-            Debug.Log("Performing...");
+            //Debug.Log("Performing...");
             yield return new WaitForSeconds(interval);
         }
     }
