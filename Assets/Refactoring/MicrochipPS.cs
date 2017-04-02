@@ -16,7 +16,8 @@ public class MicrochipPS : MonoBehaviour {
     IEnumerator Emit() {
         while (true) {
             for (int i = 0; i < amount; ++i) {
-                Destroy(Instantiate(microParticle, transform.position, Quaternion.identity), lifetime);
+                Vector3 offset = new Vector3(Random.Range(0f, 1f), 0, Random.Range(0f, 1f));
+                Destroy(Instantiate(microParticle, transform.position + offset, Quaternion.identity), lifetime);
             }
             yield return new WaitForSeconds(interval);
         }
