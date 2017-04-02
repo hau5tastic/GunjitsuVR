@@ -36,14 +36,14 @@ public class GJMonster : MonoBehaviour {
 	void FixedUpdate () {
         transform.position += transform.forward * GJLevel.instance.overridePlaySpeed * Time.deltaTime;
 
-        if (IsWithinKillRange()) Kill(false);
+        if (IsWithinKillRange()) Kill(false, Vector3.zero);
 	}
 
     bool IsWithinKillRange() {
         return (Vector3.Distance(GJLevel.instance.center.position, transform.position) <= GJLevel.instance.killRange - 1.5f);
     }
 
-    public void Kill(bool killedByShot)
+    public void Kill(bool killedByShot, Vector3 hitpoint)
     {
         if (killedByShot)
         {
@@ -54,15 +54,18 @@ public class GJMonster : MonoBehaviour {
             Destroy(particle, .5f);
         } else {
             GJLevel.instance.synchronization -= 5;
-            GameObject particle = Instantiate(killParticlePrefab, transform.position, Quaternion.identity);
-            //particle.GetComponent<AudioSource>().Play();
-            Destroy(particle, .5f);
+            // GameObject particle = Instantiate(killParticlePrefab, transform.position, Quaternion.identity);
+            // particle.GetComponent<AudioSource>().Play();
+            // Destroy(particle, .5f);
         }
 
         SplitMeshIntoTriangles splitter = GetComponentInChildren<SplitMeshIntoTriangles>();
+        CollapseMesh splitter2 = GetComponentInChildren<CollapseMesh>();
         if (splitter)
         {
             splitter.SplitMesh();
+        } else if (splitter2) {
+            splitter2.SplitMesh(hitpoint);
         }
         else
         {
@@ -74,7 +77,7 @@ public class GJMonster : MonoBehaviour {
     {
         //Debug.Log("Time to death: " + TimeToDeath(false));
         yield return new WaitForSeconds(TimeToDeath());
-        Kill(true);
+        Kill(true, transform.position);
         StopAllCoroutines();
     }
 
