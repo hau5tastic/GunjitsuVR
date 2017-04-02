@@ -14,7 +14,7 @@ public class GJMonsterSpawner : MonoBehaviour {
     }
 
     public void Spawn(GameObject monsterPrefab, int noteType, float killTime) {
-        GameObject go = Instantiate(monsterPrefab, transform.position, Quaternion.identity);
+        GameObject go = Instantiate(monsterPrefab, transform.position - Vector3.up * 1.2f, Quaternion.identity);
         go.GetComponent<GJMonster>().killTime = killTime;
         if ((Note.NOTE_TYPE)noteType == Note.NOTE_TYPE.LEFT)
         {
