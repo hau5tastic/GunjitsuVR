@@ -11,15 +11,27 @@ public class GJScorePopup : MonoBehaviour {
     private Color color;
     private Text text;
 
+    private float animDuration;
+    private float elapsed;
+    Vector3 direction;
+    Vector3 target;
+    Vector3 velRef = Vector3.zero;
+
     void Awake()
     {
         text = GetComponent<Text>();
     }
 
     
-    void Start () {      
-        Destroy(this.gameObject, GJLevel.instance.displayTime);
-	}
+    void Start () {
+        animDuration = GJLevel.instance.displayTime;
+        Destroy(this.gameObject, animDuration);
+        int i = Random.Range(0, 1);
+        direction = (i == 0) ? Vector3.right : Vector3.left;
+        target.Normalize();
+        Debug.Log("Position: " + transform.position);
+        Debug.Log("Target: " + target);
+    }
 
     public void Init(GJLevel.GJAccuracy _accuracy)
     {
@@ -52,5 +64,21 @@ public class GJScorePopup : MonoBehaviour {
         }
 
         text.color = color;
+    }
+
+    void Animate()
+    {
+
+    }
+
+    void Update()
+    {
+        if(elapsed < animDuration)
+        {
+            target = transform.position + new Vector3(1.0f, 1.0f, 0.0f);
+            color.a -= 0.01f;
+            text.color = color;
+            transform.position = Vector3.SmoothDamp(transform.position, target, ref velRef, animDuration);
+        }
     }
 }

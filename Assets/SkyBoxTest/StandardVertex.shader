@@ -12,6 +12,7 @@
          CGPROGRAM
          #pragma surface surf Standard vertex:vert fullforwardshadows
          #pragma target 3.0
+
          struct Input {
              float2 uv_MainTex;
              float3 vertexColor; // Vertex color stored here by vert() method
