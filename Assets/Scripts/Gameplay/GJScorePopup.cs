@@ -29,8 +29,8 @@ public class GJScorePopup : MonoBehaviour {
         int i = Random.Range(0, 1);
         direction = (i == 0) ? Vector3.right : Vector3.left;
         target.Normalize();
-        Debug.Log("Position: " + transform.position);
-        Debug.Log("Target: " + target);
+        //Debug.Log("Position: " + transform.position);
+        //Debug.Log("Target: " + target);
     }
 
     public void Init(GJLevel.GJAccuracy _accuracy)

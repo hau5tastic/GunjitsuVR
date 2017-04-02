@@ -129,6 +129,7 @@ GameObject:
   - component: {fileID: 82225197715804302}
   - component: {fileID: 136382227026393394}
   - component: {fileID: 114110936204412292}
+  - component: {fileID: 114415344326383352}
   m_Layer: 9
   m_Name: GJHumanBlue
   m_TagString: GJMonster
@@ -1213,8 +1214,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1220727978839582}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.1784363, y: 0, z: -1.8738098}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -7.060961, y: -10.483305, z: 7.7533965}
   m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
   m_Children:
   - {fileID: 4513392699806148}
@@ -1394,6 +1395,17 @@ MonoBehaviour:
   indicatorPrefab: {fileID: 1257461749962070, guid: 6acc7c2cbef8b6f49bdf740c7f643345,
     type: 2}
   killTime: 0
+--- !u!114 &114415344326383352
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1220727978839582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 471718c6f4e7e5a4d952c798745f7c9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &136382227026393394
 CapsuleCollider:
   m_ObjectHideFlags: 1

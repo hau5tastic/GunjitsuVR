@@ -2,26 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SplitMeshIntoTriangles : MonoBehaviour {
- 
-   public virtual void SplitMesh() {
-        Debug.Log("SplitMesh() Called");
-        MeshFilter MF = GetComponent<MeshFilter>();
-        MeshRenderer MR = GetComponent<MeshRenderer>();
-        Mesh M = MF.mesh;
+public class CollapseMesh : SplitMeshIntoTriangles {
+
+    Vector3 pointOfImpact;
+
+    public void SetPointOfImpact(Vector3 _pointOfImpact)
+    {
+        pointOfImpact = _pointOfImpact + Vector3.forward * 2.0f;
+    }
+
+    public override void SplitMesh()
+    {
+        //Debug.Log("SplitMesh() Called");
+        //MeshFilter MF = GetComponent<MeshFilter>();
+
+        SkinnedMeshRenderer MR = GetComponentInChildren<SkinnedMeshRenderer>();
+        Mesh M = MR.sharedMesh;
         Vector3[] verts = M.vertices;
         Vector3[] normals = M.normals;
         Vector2[] uvs = M.uv;
 
         // For the number of submeshes
-        for (int submesh = 0; submesh < M.subMeshCount; submesh++) {
+        for (int submesh = 0; submesh < M.subMeshCount; submesh++)
+        {
             int[] indices = M.GetTriangles(submesh);
             // For the number of triangles of each submesh
-            for (int i = 0; i < indices.Length; i += 3) {
+            for (int i = 0; i < indices.Length; i += 3)
+            {
                 Vector3[] newVerts = new Vector3[3];
                 Vector3[] newNormals = new Vector3[3];
                 Vector2[] newUvs = new Vector2[3];
-                for (int n = 0; n < 3; n++) {
+                for (int n = 0; n < 3; n++)
+                {
                     int index = indices[i + n];
                     newVerts[n] = verts[index];
                     newUvs[n] = uvs[index];
@@ -41,9 +53,10 @@ public class SplitMeshIntoTriangles : MonoBehaviour {
                 GO.AddComponent<MeshRenderer>().material = MR.materials[submesh];
                 GO.AddComponent<MeshFilter>().mesh = mesh;
                 GO.AddComponent<BoxCollider>();
-                GO.AddComponent<Rigidbody>().AddExplosionForce(100, transform.position, 30);
+                GO.AddComponent<Rigidbody>().AddExplosionForce(10, pointOfImpact, 30);
+                GO.layer = LayerMask.NameToLayer("MeshFragment");
 
-                Destroy(GO, 5 + Random.Range(0.0f, 2.0f));
+                Destroy(GO, Random.Range(0.1f, 1.0f));
             }
         }
         MR.enabled = false;

@@ -86,6 +86,9 @@ public class VRController : MonoBehaviour {
             //Debug.Log("ShootScript/Shoot() -  Raycasted against " + hit.transform.tag);
             if (hit.transform.tag == "GJMonster")
             {
+                //Debug.Log(hit.point);
+                //hit.collider.GetComponent<CollapseMesh>().SetPointOfImpact(hit.point);
+                //hit.collider.GetComponent<CollapseMesh>().SplitMesh();
                 hit.collider.GetComponent<GJMonster>().Kill(true);
             }
             if(hit.transform.name == "GJSpaceshipC")
