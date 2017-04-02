@@ -17,9 +17,11 @@ public class ScoreText : MonoBehaviour {
 
 	void Start () {
         scoreText = GetComponent<Text>();
-	}
+        UpdateScoreAndText();
 
-    void Update()
+    }
+
+    void UpdateScoreAndText()
     {
         scoreText.text = score.ToString();
         GJLevel.instance.fortune = score;
@@ -28,10 +30,12 @@ public class ScoreText : MonoBehaviour {
 	public void AddScore(int val)
     {
         score += val;
+        UpdateScoreAndText();
     }
 
     public void Reset()
     {
         score = 0;
+        UpdateScoreAndText(); 
     }
 }

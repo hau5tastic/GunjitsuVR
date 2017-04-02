@@ -25,9 +25,12 @@ public class VictoryMenu : MonoBehaviour {
     void Update() {
         if (accuracy < GJLevel.instance.accuracy) {
             accuracy+=0.2f;
-            accuracy = Mathf.Round(accuracy * 100f) / 100f;
+        } else
+        {
+            accuracy = GJLevel.instance.accuracy;
         }
-        textAccuracy.text = "Accuracy: " + accuracy + "%";
+        float displayAccuracy = Mathf.Round(accuracy * 100f) / 100f;
+        textAccuracy.text = "Accuracy: " + displayAccuracy + "%";
 
         if (fortune < GJLevel.instance.fortune) {
             float sfxOffset = 2.0f; // because the sfx doesnt exactly end to its length

@@ -142,8 +142,13 @@ public class GJLevel : MonoBehaviour {
         CheckWinConditions();
         CheckLoseConditions();
 
-        accuracy = (float)hitCount / notesSpawned * 100.0f;
-
+        if (hitCount == 0) //Avoids division by zero
+        {
+            accuracy = 100;
+        } else
+        {
+            accuracy = (float)fortune / (hitCount * perfectScore) * 100.0f;
+        }
     }
 
     void CheckWinConditions() {
