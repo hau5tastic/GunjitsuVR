@@ -86,6 +86,7 @@ public class VRController : MonoBehaviour {
             //Debug.Log("ShootScript/Shoot() -  Raycasted against " + hit.transform.tag);
             if (hit.transform.tag == "GJMonster")
             {
+                // trying to collapse the mesh
                 //Debug.Log(hit.point);
                 //hit.collider.GetComponent<CollapseMesh>().SetPointOfImpact(hit.point);
                 //hit.collider.GetComponent<CollapseMesh>().SplitMesh();
@@ -98,7 +99,8 @@ public class VRController : MonoBehaviour {
             }
 
             SplitMeshIntoTriangles smit = hit.collider.GetComponent<SplitMeshIntoTriangles>();
-            if (smit != null) {
+            if (smit != null)
+            {
                 Destroy(smit.gameObject);
                 // smit.SplitMesh();
             }

@@ -2,22 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollapseMesh : SplitMeshIntoTriangles {
+public class CollapseMesh : MonoBehaviour {
 
     Vector3 pointOfImpact;
 
-    public void SetPointOfImpact(Vector3 _pointOfImpact)
+    public Transform modelTransform;
+
+    void Awake()
     {
-        pointOfImpact = _pointOfImpact + Vector3.forward * 2.0f;
+        Vector3 offset = Vector3.zero - pointOfImpact;
+        offset.Normalize();
+        pointOfImpact = transform.position + (offset * 2.0f);
     }
 
-    public override void SplitMesh()
+    public void SetPointOfImpact(Vector3 _pointOfImpact)
+    {
+
+        pointOfImpact = _pointOfImpact;// +;
+    }
+
+    public void SplitMesh()
     {
         //Debug.Log("SplitMesh() Called");
         //MeshFilter MF = GetComponent<MeshFilter>();
 
         SkinnedMeshRenderer MR = GetComponentInChildren<SkinnedMeshRenderer>();
         Mesh M = MR.sharedMesh;
+        //MR.BakeMesh(M);
         Vector3[] verts = M.vertices;
         Vector3[] normals = M.normals;
         Vector2[] uvs = M.uv;
@@ -48,15 +59,16 @@ public class CollapseMesh : SplitMeshIntoTriangles {
 
                 GameObject GO = new GameObject("Triangle " + (i / 3));
                 GO.transform.position = transform.position;
-                GO.transform.rotation = transform.rotation;
+                GO.transform.rotation = modelTransform.rotation;
                 GO.transform.localScale = transform.localScale;
                 GO.AddComponent<MeshRenderer>().material = MR.materials[submesh];
                 GO.AddComponent<MeshFilter>().mesh = mesh;
+                //GO.AddComponent<Rigidbody>();
                 GO.AddComponent<BoxCollider>();
-                GO.AddComponent<Rigidbody>().AddExplosionForce(10, pointOfImpact, 30);
+                GO.AddComponent<Rigidbody>().AddExplosionForce(250, pointOfImpact, 30);
                 GO.layer = LayerMask.NameToLayer("MeshFragment");
 
-                Destroy(GO, Random.Range(0.1f, 1.0f));
+                Destroy(GO, Random.Range(0.1f, 0.5f));
             }
         }
         MR.enabled = false;
