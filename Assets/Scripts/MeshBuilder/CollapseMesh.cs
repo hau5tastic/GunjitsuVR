@@ -21,7 +21,7 @@ public class CollapseMesh : MonoBehaviour {
         pointOfImpact = _pointOfImpact;// +;
     }
 
-    public void SplitMesh()
+    public void SplitMesh(Vector3 pointOfImpact)
     {
         //Debug.Log("SplitMesh() Called");
         //MeshFilter MF = GetComponent<MeshFilter>();
@@ -40,6 +40,8 @@ public class CollapseMesh : MonoBehaviour {
             // For the number of triangles of each submesh
             for (int i = 0; i < indices.Length; i += 3)
             {
+                if (i % 6 == 0) continue;
+                if (i >= (3 * 200)) break;
                 Vector3[] newVerts = new Vector3[3];
                 Vector3[] newNormals = new Vector3[3];
                 Vector2[] newUvs = new Vector2[3];

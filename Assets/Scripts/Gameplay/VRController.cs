@@ -88,9 +88,9 @@ public class VRController : MonoBehaviour {
             {
                 // trying to collapse the mesh
                 //Debug.Log(hit.point);
-                //hit.collider.GetComponent<CollapseMesh>().SetPointOfImpact(hit.point);
-                //hit.collider.GetComponent<CollapseMesh>().SplitMesh();
-                hit.collider.GetComponent<GJMonster>().Kill(true);
+                // hit.collider.GetComponent<CollapseMesh>().SetPointOfImpact(hit.point);
+                // hit.collider.GetComponent<CollapseMesh>().SplitMesh();
+                hit.collider.GetComponent<GJMonster>().Kill(true, hit.point);
             }
             if(hit.transform.name == "GJSpaceshipC")
             {
