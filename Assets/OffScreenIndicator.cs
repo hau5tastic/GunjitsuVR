@@ -8,7 +8,7 @@ public class OffScreenIndicator : MonoBehaviour {
     [SerializeField]
     GJGuideReticle reticle;
 
-    MeshRenderer[] mrends;
+    MeshRenderer mr;
 
     Quaternion newRotation;
     GameObject target;
@@ -17,7 +17,7 @@ public class OffScreenIndicator : MonoBehaviour {
 
     void Awake()
     {
-        mrends = GetComponentsInChildren<MeshRenderer>();
+        mr = GetComponentInChildren<MeshRenderer>();
         SetVisible(false);
     }
 
@@ -50,10 +50,6 @@ public class OffScreenIndicator : MonoBehaviour {
         }
 
         transform.localScale = Vector3.one * ezDisappearanceNumber;
-        foreach (MeshRenderer mr in mrends) {
-            mr.enabled = value;
-        }
-
-        
+        mr.enabled = value;       
     }
 }
