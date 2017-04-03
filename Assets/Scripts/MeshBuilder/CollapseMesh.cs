@@ -67,10 +67,14 @@ public class CollapseMesh : MonoBehaviour {
                 GO.AddComponent<MeshFilter>().mesh = mesh;
                 //GO.AddComponent<Rigidbody>();
                 GO.AddComponent<BoxCollider>();
-                GO.AddComponent<Rigidbody>().AddExplosionForce(250, pointOfImpact, 30);
+                // GO.AddComponent<Rigidbody>().AddExplosionForce(300, pointOfImpact + (transform.forward), 30);
+                GO.AddComponent<Rigidbody>().AddExplosionForce(100, pointOfImpact + (transform.forward), 30);
+                // GO.AddComponent<Rigidbody>().AddExplosionForce(50, pointOfImpact, 30);
+                // GO.AddComponent<Rigidbody>().AddExplosionForce(100, pointOfImpact - transform.forward, 30);
+                GO.GetComponent<Rigidbody>().useGravity = false;
                 GO.layer = LayerMask.NameToLayer("MeshFragment");
 
-                Destroy(GO, Random.Range(0.1f, 0.5f));
+                Destroy(GO, Random.Range(0.5f, 1f));
             }
         }
         MR.enabled = false;
