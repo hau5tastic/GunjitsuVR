@@ -17,7 +17,7 @@ public class SplitMeshIntoTriangles : MonoBehaviour {
         for (int submesh = 0; submesh < M.subMeshCount; submesh++) {
             int[] indices = M.GetTriangles(submesh);
             // For the number of triangles of each submesh
-            for (int i = 0; i < indices.Length; i += 3) {
+            for (int i = 0; i < indices.Length; i += 6) {
                 Vector3[] newVerts = new Vector3[3];
                 Vector3[] newNormals = new Vector3[3];
                 Vector2[] newUvs = new Vector2[3];
@@ -42,6 +42,7 @@ public class SplitMeshIntoTriangles : MonoBehaviour {
                 GO.AddComponent<MeshFilter>().mesh = mesh;
                 GO.AddComponent<BoxCollider>();
                 GO.AddComponent<Rigidbody>().AddExplosionForce(100, transform.position, 30);
+                GO.layer = LayerMask.NameToLayer("MeshBuild");
 
                 Destroy(GO, 5 + Random.Range(0.0f, 2.0f));
             }

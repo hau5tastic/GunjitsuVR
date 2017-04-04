@@ -11,26 +11,28 @@ public class ScoreArea : MonoBehaviour {
     [SerializeField]
     float animationSpeed;
     [SerializeField]
-    int size = 4;
+    float size = 10;
 
-    int numObjects = 4;
+    int numObjects = 5;
 
     CircleAnimation[] childCircles;
     int index = 0;
 
 	void Awake() {
-        float s = GJLevel.instance.perfect;
-        CreateChildren();
+        CreateChildren();      
     }
 
     void CreateChildren()
     {
         // create the meshes first
         Mesh[] circles = new Mesh[numObjects];       
-        circles[0] = CreateCircleMesh(GJLevel.instance.perfect * size);
-        circles[1] = CreateCircleMesh(GJLevel.instance.great * size);
-        circles[2] = CreateCircleMesh(GJLevel.instance.good * size);
-        circles[3] = CreateCircleMesh(GJLevel.instance.ok * size);
+        circles[0] = CreateCircleMesh(GJLevel.instance.killRange - (GJLevel.instance.perfect * size));
+        circles[1] = CreateCircleMesh(GJLevel.instance.killRange + (GJLevel.instance.great * size));
+        circles[2] = CreateCircleMesh(GJLevel.instance.killRange + (GJLevel.instance.good * size));
+        circles[3] = CreateCircleMesh(GJLevel.instance.killRange + (GJLevel.instance.ok * size));
+        circles[4] = CreateCircleMesh(GJLevel.instance.killRange + (GJLevel.instance.ok + 1.0f * size));
+        //CreateCircleMesh(GJLevel.instance.spawnRange);
+        //CreateCircleMesh(GJLevel.instance.killRange + (GJLevel.instance.ok+ 2.6f * size)); //arbitrary radius for last circle
 
         GameObject[] gameObjects = new GameObject[numObjects];
         childCircles = new CircleAnimation[numObjects];
@@ -45,10 +47,11 @@ public class ScoreArea : MonoBehaviour {
             childCircles[i].Init(circles[i], numObjects / numSubDivisions / animationSpeed);
         }
 
-        childCircles[0].SetColor(GJLevel.instance.perfectColor);
-        childCircles[1].SetColor(GJLevel.instance.greatColor);
-        childCircles[2].SetColor(GJLevel.instance.goodColor);
-        childCircles[3].SetColor(GJLevel.instance.okColor);
+        childCircles[0].SetColor(Color.black);
+        childCircles[1].SetColor(GJLevel.instance.perfectColor);
+        childCircles[2].SetColor(GJLevel.instance.greatColor);
+        childCircles[3].SetColor(GJLevel.instance.goodColor);
+        childCircles[4].SetColor(GJLevel.instance.okColor);
     }
 
     Mesh CreateCircleMesh(float radius)

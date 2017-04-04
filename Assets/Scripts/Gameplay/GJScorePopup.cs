@@ -50,12 +50,12 @@ public class GJScorePopup : MonoBehaviour {
                 break;
             case GJLevel.GJAccuracy.GOOD:
                 color = GJLevel.instance.goodColor;
-                text.text = "Good";
+                text.text = "OK";
                 ScoreText.reference.AddScore(GJLevel.instance.goodScore);
                 break;
             case GJLevel.GJAccuracy.OK:
                 color = GJLevel.instance.okColor;
-                text.text = "OK";
+                text.text = "Bad";
                 ScoreText.reference.AddScore(GJLevel.instance.okScore);
                 break;
             default:

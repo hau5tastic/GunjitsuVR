@@ -53,7 +53,7 @@ public class GJMonster : MonoBehaviour {
             GameObject particle = Instantiate(killedParticlePrefab, transform.position, Quaternion.identity);
             Destroy(particle, .5f);
         } else {
-            GJLevel.instance.synchronization -= 5;
+            GJLevel.instance.synchronization -= 3;
             // GameObject particle = Instantiate(killParticlePrefab, transform.position, Quaternion.identity);
             // particle.GetComponent<AudioSource>().Play();
             // Destroy(particle, .5f);
