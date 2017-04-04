@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 065be64bd43edf04c8dae04f3f576aff
+timeCreated: 1489789173
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Devil Breeze
+  fontNames:
+  - Devil Breeze
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
