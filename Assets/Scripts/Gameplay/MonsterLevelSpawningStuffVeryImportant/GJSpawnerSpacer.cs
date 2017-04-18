@@ -32,7 +32,7 @@ public class GJSpawnerSpacer : MonoBehaviour {
 
     public void Spread() {
         angle += spreadSpeed * Time.deltaTime;
-        angle = Mathf.Clamp(angle, 90, 180);
+        angle = Mathf.Clamp(angle, 70, 90);
     }
 
     public void Elevate() {
